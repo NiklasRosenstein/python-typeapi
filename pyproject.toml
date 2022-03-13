@@ -1,0 +1,45 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "typeapi"
+version = "0.1.0"
+description = ""
+authors = ["Niklas Rosenstein <rosensteinniklas@gmail.com>"]
+license = "MIT"
+readme = "readme.md"
+packages = [{ include = "typeapi", from = "src" }]
+classifiers = []
+keywords = []
+
+[tool.poetry.urls]
+# "Bug Tracker" = ""
+# Documentation = ""
+# Homepage = ""
+# Repository = ""
+
+[tool.poetry.dependencies]
+python = "^3.7"
+
+[tool.poetry.dev-dependencies]
+mypy = "*"
+pytest = "*"
+
+[tool.slam]
+typed = true
+
+[tool.slam.test]
+check = "slam check"
+mypy = "mypy src/"
+pytest = "pytest test/"
+
+[tool.mypy]
+pretty = true
+namespace_packages = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+show_error_context = true
+show_error_codes = true
