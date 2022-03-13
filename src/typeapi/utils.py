@@ -6,10 +6,10 @@ import typing as t
 import typing_extensions as te
 
 TypeArg = t.Union[
-  't.ParamSpec',
+  te.ParamSpec,
   t.TypeVar,
   t.Tuple[()],
-  types.EllipsisType,
+  'types.EllipsisType',
   t.Type,
 ]
 
