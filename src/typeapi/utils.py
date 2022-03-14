@@ -5,11 +5,14 @@ import types
 import typing as t
 import typing_extensions as te
 
+if t.TYPE_CHECKING:
+  import builtins
+
 TypeArg = t.Union[
   te.ParamSpec,
   t.TypeVar,
   t.Tuple[()],
-  'types.EllipsisType',
+  'builtins.ellipsis',
   t.Type,
 ]
 
