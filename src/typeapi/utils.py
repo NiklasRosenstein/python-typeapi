@@ -50,6 +50,14 @@ else:
     _nparams: int
 
 
+if sys.version_info <= (3, 9):
+  class UnionType(te.Protocol):
+    __args__: t.Tuple[TypeArg, ...]
+    __parameters__: t.Tuple[t.TypeVar, ...]
+else:
+  UnionType = types.UnionType
+
+
 class AnnotatedAlias(_BaseGenericAlias, te.Protocol):
   __metadata__: t.Tuple[t.Any, ...]
 
@@ -87,21 +95,36 @@ def is_generic_alias(hint: t.Any) -> te.TypeGuard[GenericAlias]:
   """
 
   if isinstance(hint, t._GenericAlias):  # type: ignore[attr-defined]
+    if hint.__origin__ == t.Union:
+      return False
     if sys.version_info[:2] <= (3, 8):
       return not hint._special
     return True  # type: ignore[unreachable]
 
   _GenericAlias = getattr(types, 'GenericAlias', None)
-  if _GenericAlias is not None and isinstance(hint, _GenericAlias):
+  if _GenericAlias is not None and isinstance(hint, _GenericAlias) and hint.__origin__ != t.Union:
     return True
 
   return False
 
 
+def is_union_type(hint: t.Any) -> te.TypeGuard[UnionType]:
+  """
+  Returns:
+    `True` if *hint* is a #typing.Union or #types.UnionType.
+  """
+
+  if isinstance(hint, t._GenericAlias) and hint.__origin__ == t.Union:  # type: ignore[attr-defined]
+    return True
+
+  if sys.version_info[:2] >= (3, 10):
+    return isinstance(hint, types.UnionType)
+
+
 def is_special_generic_alias(hint: t.Any) -> te.TypeGuard[SpecialGenericAlias]:
   """
   Returns:
-    `True` if *hint* is a #._SpecialGenericAlias (like #typing.List or #typing.Mapping).
+    `True` if *hint* is a #typing._SpecialGenericAlias (like #typing.List or #typing.Mapping).
 
   !!! note
 
@@ -123,7 +146,7 @@ def is_special_generic_alias(hint: t.Any) -> te.TypeGuard[SpecialGenericAlias]:
 def is_special_form(hint: t.Any) -> te.TypeGuard[SpecialGenericAlias]:
   """
   Returns:
-    `True` if *hint* is a #._SpecialForm (like #typing.Final or #typing.Union).
+    `True` if *hint* is a #typing._SpecialForm (like #typing.Final or #typing.Union).
   """
 
   return isinstance(hint, t._SpecialForm)

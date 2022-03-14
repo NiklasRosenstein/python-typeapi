@@ -6,7 +6,7 @@ import typing_extensions as te
 
 from .api import Annotated, Any, ClassVar, Final, ForwardRef, Hint, Literal, NewType, NoReturn, Type, TypeGuard, Union, Unknown
 from .deconstruct import deconstruct_type, TypeInfo
-from .utils import is_annotated_alias, is_generic, is_generic_alias, is_new_type, is_special_form, is_special_generic_alias
+from .utils import is_annotated_alias, is_generic, is_generic_alias, is_new_type, is_special_form, is_special_generic_alias, is_union_type
 
 _TypeHintHandler = t.Callable[[t.Any], t.Optional[Hint]]
 _handlers: t.List[_TypeHintHandler] = []
@@ -75,7 +75,7 @@ def _handle_type_guard(hint: t.Any) -> t.Optional[Hint]:
 
 @_handler
 def _handle_union(hint: t.Any) -> t.Optional[Hint]:
-  if is_generic_alias(hint) and hint.__origin__ == t.Union:
+  if is_union_type(hint):
     assert len(hint.__args__) >= 2, hint
     return Union(hint.__args__)
   return None

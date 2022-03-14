@@ -20,10 +20,11 @@ def test_is_generic_alias():
 
   assert is_generic_alias(t.Tuple[int, str])
   assert is_generic_alias(t.Tuple[int, ...])
-  assert is_generic_alias(t.Union[int, str])
-  assert is_generic_alias(t.Union[None, int])
-  assert is_generic_alias(t.Optional[int])
   assert is_generic_alias(te.Annotated[int, 42])
+
+  assert not is_generic_alias(t.Optional[int])
+  assert not is_generic_alias(t.Union[int, str])
+  assert not is_generic_alias(t.Union[None, int])
 
 
 @pytest.mark.skipif(sys.version_info[:2] < (3, 10), reason='PEP 585 is implemented starting with Python 3.10')
@@ -32,8 +33,10 @@ def test_is_generic_alias_pep585():
   assert is_generic_alias(dict[str, str])
   assert is_generic_alias(tuple[int, ...])
   assert is_generic_alias(tuple[str, int])
-  assert is_generic_alias(str | int | None)
-  assert is_generic_alias(str | None)
+
+  assert not is_generic_alias(int | None)
+  assert not is_generic_alias(int | str)
+  assert not is_generic_alias(None | int)
 
 
 def test_is_special_form():
