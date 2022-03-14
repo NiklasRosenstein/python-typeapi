@@ -142,7 +142,7 @@ def parse_type_hint(hint: t.Any) -> Hint:
 
 
 @t.overload
-def parse_type_hint(hint: t.Any, *, debug: t.Literal[True]) -> t.Tuple[Hint, t.Optional[str]]:
+def parse_type_hint(hint: t.Any, *, debug: te.Literal[True]) -> t.Tuple[Hint, t.Optional[str]]:
   """ Same as #parse_type_hint(), but returns the name of the handler function that accepted the
   type hint and converted it to a #Hint object. """
 
