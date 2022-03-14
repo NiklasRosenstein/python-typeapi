@@ -85,7 +85,7 @@ def is_special_generic_alias(hint: t.Any) -> te.TypeGuard[SpecialGenericAlias]:
       return hint._special
     return False
   else:
-    return isinstance(hint, t._SpecialGenericAlias)  ## type: ignore[attr-defined]
+    return isinstance(hint, t._SpecialGenericAlias)  # type: ignore[attr-defined]
 
 
 def is_special_form(hint: t.Any) -> te.TypeGuard[SpecialGenericAlias]:
