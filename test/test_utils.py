@@ -1,6 +1,9 @@
 
+import sys
 import typing as t
 import typing_extensions as te
+
+import pytest
 from typeapi.utils import get_special_forms, get_special_generic_aliases, is_annotated_alias, is_generic_alias, is_special_form, is_special_generic_alias
 
 T = t.TypeVar('T')
@@ -15,7 +18,22 @@ def test_is_generic_alias():
   assert is_generic_alias(MyGeneric[int])
   assert not is_generic_alias(MyGeneric)
 
+  assert is_generic_alias(t.Tuple[int, str])
+  assert is_generic_alias(t.Tuple[int, ...])
+  assert is_generic_alias(t.Union[int, str])
+  assert is_generic_alias(t.Union[None, int])
+  assert is_generic_alias(t.Optional[int])
   assert is_generic_alias(te.Annotated[int, 42])
+
+
+@pytest.mark.skipif(sys.version_info[:2] < (3, 10), reason='PEP 585 is implemented starting with Python 3.10')
+def test_is_generic_alias_pep585():
+  assert is_generic_alias(list[str])
+  assert is_generic_alias(dict[str, str])
+  assert is_generic_alias(tuple[int, ...])
+  assert is_generic_alias(tuple[str, int])
+  assert is_generic_alias(str | int | None)
+  assert is_generic_alias(str | None)
 
 
 def test_is_special_form():
