@@ -15,7 +15,7 @@ def test_is_generic_alias():
   assert is_generic_alias(MyGeneric[int])
   assert not is_generic_alias(MyGeneric)
 
-  assert not is_generic_alias(te.Annotated[int, 42])
+  assert is_generic_alias(te.Annotated[int, 42])
 
 
 def test_is_special_form():

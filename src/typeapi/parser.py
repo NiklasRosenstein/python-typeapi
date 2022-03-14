@@ -70,8 +70,6 @@ def _handle_type_guard(hint: t.Any) -> t.Optional[Hint]:
   if is_generic_alias(hint) and hint.__origin__ == te.TypeGuard:
     assert len(hint.__args__) == 1, hint
     return TypeGuard(hint.__args__[0])
-  if hint == t.NoReturn:
-    return NoReturn()
   return None
 
 
@@ -99,16 +97,28 @@ def _handle_new_type(hint: t.Any) -> t.Optional[Hint]:
 
 
 @_handler
-def _handle_concrete_type(hint: t.Any) -> t.Optional[Hint]:
-  if isinstance(hint, type) and hint.__module__ not in ('typing', 'typing_extensions'):
-    return Type(hint, None)
+def _handle_generic_alias_of_concrete_type(hint: t.Any) -> t.Optional[Hint]:
+  """ Handles #typing._GenericAlias and #types.GenericAlias objects that originate from a
+  concrete type. This includes aliases for special generic aliases such as #typing.List, etc.
+  because their `__origin__` points to the native Python type.
+
+  !!! note
+
+      It is important that this handler is run before #_handle_concrete_type(). Starting with
+      Python 3.9, aliases of #typing.Generic subclasses are represented as instance of
+      #types.GenericAlias, which in turn return positive if tested for `isinstance(alias, type)`
+      and could thus be recognized as a concrete type.
+  """
+
+  if is_generic_alias(hint) and isinstance(hint.__origin__, type):
+    return Type(hint.__origin__, hint.__args__)
   return None
 
 
 @_handler
-def _handle_generic_alias(hint: t.Any) -> t.Optional[Hint]:
-  if is_generic_alias(hint) and isinstance(hint.__origin__, type):
-    return Type(hint.__origin__, hint.__args__)
+def _handle_concrete_type(hint: t.Any) -> t.Optional[Hint]:
+  if isinstance(hint, type) and hint.__module__ not in ('typing', 'typing_extensions'):
+    return Type(hint, None)
   return None
 
 
@@ -119,9 +129,27 @@ def _handle_special_generic_alias(hint: t.Any) -> t.Optional[Hint]:
   return None
 
 
+@t.overload
 def parse_type_hint(hint: t.Any) -> Hint:
+  """ Parse the given type hint to a #Hint object. If the type hint is not accepted by any of the
+  handlers, an instance of #Unknown is returned instead.
+
+  Arguments:
+    hint: The type hint to adapt.
+  Returns:
+    A #Hint object that should make it easier to introspect the type hint with a stable API.
+  """
+
+
+@t.overload
+def parse_type_hint(hint: t.Any, *, debug: t.Literal[True]) -> t.Tuple[Hint, t.Optional[str]]:
+  """ Same as #parse_type_hint(), but returns the name of the handler function that accepted the
+  type hint and converted it to a #Hint object. """
+
+
+def parse_type_hint(hint: t.Any, *, debug: bool = False) -> t.Union[Hint, t.Tuple[Hint, t.Optional[str]]]:
   for handler in _handlers:
     result = handler(hint)
     if result is not None:
-      return result
-  return Unknown(hint)
+      return (result, handler.__name__) if debug else result
+  return (Unknown(hint), None) if debug else Unknown(hint)

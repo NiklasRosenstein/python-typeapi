@@ -90,7 +90,7 @@ def test_parse_type_hint_special_generic_alias_pep585():
   assert parse_type_hint(list[T]) == Type(list, (T,))  # _handle_generic_alias()
 
 
-def test_parse_type_hint_generic_alias():
+def test_parse_type_hint_generic_alias_of_concrete_type():
   class MyGeneric(t.Generic[T]): pass
   assert parse_type_hint(MyGeneric) == Type(MyGeneric, None)
   assert parse_type_hint(MyGeneric[int]) == Type(MyGeneric, (int,))

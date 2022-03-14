@@ -86,7 +86,7 @@ def is_generic_alias(hint: t.Any) -> te.TypeGuard[GenericAlias]:
       they share the same type.
   """
 
-  if type(hint) is t._GenericAlias:  # type: ignore[attr-defined]
+  if isinstance(hint, t._GenericAlias):  # type: ignore[attr-defined]
     if sys.version_info[:2] <= (3, 8):
       return not hint._special
     return True  # type: ignore[unreachable]
