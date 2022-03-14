@@ -1,6 +1,7 @@
 
 from __future__ import annotations
 import functools
+import sys
 import types
 import typing as t
 import typing_extensions as te
@@ -29,11 +30,21 @@ class Generic(te.Protocol):
 
 
 class GenericAlias(_BaseGenericAlias, te.Protocol):
+  __parameters__: t.Tuple[t.TypeVar, ...]
   __args__: t.Tuple[TypeArg, ...]
 
+  if sys.version_info[:2] <= (3, 8):
+    _special: te.Literal[False]
 
-class SpecialGenericAlias(_BaseGenericAlias, te.Protocol):
-  _nparams: int
+
+if sys.version_info[:2] <= (3, 8):
+  class SpecialGenericAlias(_BaseGenericAlias, te.Protocol):
+    __parameters__: t.Tuple[t.TypeVar, ...]
+    __args__: t.Tuple[TypeArg, ...]
+    _special: te.Literal[True]
+else:
+  class SpecialGenericAlias(_BaseGenericAlias, te.Protocol):
+    _nparams: int
 
 
 class AnnotatedAlias(_BaseGenericAlias, te.Protocol):
@@ -45,14 +56,16 @@ class SpecialForm(te.Protocol):
 
 
 def is_generic(hint: t.Any) -> te.TypeGuard[t.Type[Generic]]:
-  return isinstance(hint, type) and issubclass(hint, t.Generic)  # type: ignore
+  return isinstance(hint, type) and issubclass(hint, t.Generic)  # type: ignore[arg-type]
 
 
 def is_generic_alias(hint: t.Any) -> te.TypeGuard[GenericAlias]:
   """ Returns `True` if *hint* is a #t._GenericAlias or #types.GenericAlias. """
 
-  if type(hint) is t._GenericAlias:  # type: ignore
-    return True
+  if type(hint) is t._GenericAlias:  # type: ignore[attr-defined]
+    if sys.version_info[:2] <= (3, 8):
+      return not hint._special
+    return True  # type: ignore[unreachable]
 
   _GenericAlias = getattr(types, 'GenericAlias', None)
   if _GenericAlias is not None and isinstance(hint, _GenericAlias):
@@ -64,7 +77,15 @@ def is_generic_alias(hint: t.Any) -> te.TypeGuard[GenericAlias]:
 def is_special_generic_alias(hint: t.Any) -> te.TypeGuard[SpecialGenericAlias]:
   """ Returns `True` if *hint* is a #._SpecialGenericAlias (like #t.List or #t.Mapping). """
 
-  return isinstance(hint, t._SpecialGenericAlias)  # type: ignore
+  print(hint, getattr(hint, '_special', None))
+  if sys.version_info[:2] <= (3, 8):
+    # We use isinstance() here instead of checking the exact type because typing.Tuple or
+    # typing.Callable in 3.8 or earlier are instances of typing._VariadicGenericAliases.
+    if isinstance(hint, t._GenericAlias):  # type: ignore[attr-defined]
+      return hint._special
+    return False
+  else:
+    return isinstance(hint, t._SpecialGenericAlias)  ## type: ignore[attr-defined]
 
 
 def is_special_form(hint: t.Any) -> te.TypeGuard[SpecialGenericAlias]:
@@ -76,7 +97,7 @@ def is_special_form(hint: t.Any) -> te.TypeGuard[SpecialGenericAlias]:
 def is_annotated_alias(hint: t.Any) -> te.TypeGuard[AnnotatedAlias]:
   """ Returns `True` if *hint* is a #._AnnotatedAlias (e.g. `typing.Annotated[int, 42]`). """
 
-  return isinstance(hint, t._AnnotatedAlias)  # type: ignore
+  return isinstance(hint, t._AnnotatedAlias)  # type: ignore[attr-defined]
 
 
 @functools.lru_cache()

@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 from pydoc import describe
+import sys
 import typing as t
 from .utils import get_origins_to_special_generic_aliases, is_generic, is_generic_alias, is_special_generic_alias, TypeArg
 
@@ -22,8 +23,12 @@ def deconstruct_type(type_: t.Any) -> TypeInfo:
   def _raise() -> t.NoReturn: raise ValueError(f'unable to deconstruct {type_!r}')
 
   if is_special_generic_alias(type_):
+    if sys.version_info[:2] <= (3, 8):
+      nparams = len(type_.__parameters__)
+    else:
+      nparams = type_._nparams
     # Special generic aliases do no have explicit type variables associated in their definition.
-    return TypeInfo(type_.__origin__, type_._nparams, None, None)
+    return TypeInfo(type_.__origin__, nparams, None, None)
 
   if is_generic_alias(type_):
     # If the alias' origin points to a type that can only be represented by a special form from

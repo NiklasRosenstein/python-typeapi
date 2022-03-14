@@ -14,9 +14,9 @@ classifiers = []
 keywords = []
 
 [tool.poetry.urls]
-# "Bug Tracker" = ""
+"Bug Tracker" = "https://github.com/NiklasRosenstein/python-typeapi/issues"
 # Documentation = ""
-# Homepage = ""
+Homepage = "https://github.com/NiklasRosenstein/python-typeapi"
 # Repository = ""
 
 [tool.poetry.dependencies]

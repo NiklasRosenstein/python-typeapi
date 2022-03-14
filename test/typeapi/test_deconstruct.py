@@ -31,4 +31,4 @@ def test_deconstruct_special_generic():
 def test_deconstruct_annotated_errors():
   with pytest.raises(ValueError) as excinfo:
     assert deconstruct_type(te.Annotated[int, 42])
-  assert str(excinfo.value) == 'unable to deconstruct typing.Annotated[int, 42]'
+  assert str(excinfo.value) == 'unable to deconstruct {}'.format(te.Annotated[int, 42])
