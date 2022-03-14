@@ -50,7 +50,7 @@ else:
     _nparams: int
 
 
-if sys.version_info <= (3, 9):
+if sys.version_info[:2] <= (3, 9):
   class UnionType(te.Protocol):
     __args__: t.Tuple[TypeArg, ...]
     __parameters__: t.Tuple[t.TypeVar, ...]
