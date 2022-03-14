@@ -5,6 +5,7 @@ import typing_extensions as te
 
 import pytest
 from typeapi.deconstruct import deconstruct_type, TypeInfo
+from utils import parametrize_typing_module
 
 T = t.TypeVar('T')
 K = t.TypeVar('K')
@@ -38,7 +39,8 @@ def test_deconstruct_special_generic():
   assert deconstruct_type(t.Mapping[K, V]) == TypeInfo(collections.abc.Mapping, 2, None, (K, V,))
 
 
-def test_deconstruct_annotated_errors():
+@parametrize_typing_module('Annotated')
+def test_deconstruct_annotated_errors(m):
   with pytest.raises(ValueError) as excinfo:
-    assert deconstruct_type(te.Annotated[int, 42])
-  assert str(excinfo.value) == 'unable to deconstruct {}'.format(te.Annotated[int, 42])
+    assert deconstruct_type(m.Annotated[int, 42])
+  assert str(excinfo.value) == 'unable to deconstruct {}'.format(m.Annotated[int, 42])

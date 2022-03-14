@@ -35,6 +35,9 @@ check = "slam check"
 mypy = "mypy src/"
 pytest = "pytest test/"
 
+[tool.slam.run]
+"docs:dev" = "cd docs && novella --serve"
+
 [tool.mypy]
 pretty = true
 namespace_packages = true

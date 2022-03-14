@@ -25,6 +25,7 @@ class _BaseGenericAlias(te.Protocol):
   _inst: bool
   _name: str
   __origin__: type
+  __args__: t.Tuple[TypeArg, ...]
 
 
 class Generic(te.Protocol):
@@ -34,7 +35,6 @@ class Generic(te.Protocol):
 
 class GenericAlias(_BaseGenericAlias, te.Protocol):
   __parameters__: t.Tuple[t.TypeVar, ...]
-  __args__: t.Tuple[TypeArg, ...]
 
   if sys.version_info[:2] <= (3, 8):
     _special: te.Literal[False]
@@ -59,11 +59,27 @@ class SpecialForm(te.Protocol):
 
 
 def is_generic(hint: t.Any) -> te.TypeGuard[t.Type[Generic]]:
+  """
+  Returns:
+    `True` if *hint* is a subclass fo #typing.Generic (and not an alias of it).
+  """
   return isinstance(hint, type) and issubclass(hint, t.Generic)  # type: ignore[arg-type]
 
 
 def is_generic_alias(hint: t.Any) -> te.TypeGuard[GenericAlias]:
-  """ Returns `True` if *hint* is a #t._GenericAlias or #types.GenericAlias. """
+  """
+  Returns:
+    `True` if *hint* is a #typing._GenericAlias or #types.GenericAlias ([PEP 585][] since Python 3.10+).
+
+  [PEP 585]: https://peps.python.org/pep-0585/
+
+  !!! note
+
+      In Python versions 3.8 and older, #typing._GenericAlias is used also for special generic
+      aliases (see #is_special_generic_alias()). This function will return `False` for these
+      types of aliases to clearly distinct between special aliases and normal aliases, even if
+      they share the same type.
+  """
 
   if type(hint) is t._GenericAlias:  # type: ignore[attr-defined]
     if sys.version_info[:2] <= (3, 8):
@@ -100,20 +116,26 @@ def is_special_generic_alias(hint: t.Any) -> te.TypeGuard[SpecialGenericAlias]:
 
 
 def is_special_form(hint: t.Any) -> te.TypeGuard[SpecialGenericAlias]:
-  """ Returns `True` if *hint* is a #._SpecialForm (like #t.Final or #t.Union). """
+  """
+  Returns:
+    `True` if *hint* is a #._SpecialForm (like #typing.Final or #typing.Union).
+  """
 
   return isinstance(hint, t._SpecialForm)
 
 
 def is_annotated_alias(hint: t.Any) -> te.TypeGuard[AnnotatedAlias]:
-  """ Returns `True` if *hint* is a #._AnnotatedAlias (e.g. `typing.Annotated[int, 42]`). """
+  """
+  Returns:
+    `True` if *hint* is a #typing._AnnotatedAlias (e.g. `typing.Annotated[int, 42]`).
+  """
 
   return isinstance(hint, te._AnnotatedAlias)  # type: ignore[attr-defined]
 
 
 @functools.lru_cache()
 def get_special_generic_aliases() -> t.Dict[str, SpecialGenericAlias]:
-  """ Returns a dictionary that contains all special generic aliases (like #t.List and #t.Mapping)
+  """ Returns a dictionary that contains all special generic aliases (like #typing.List and #typing.Mapping)
   defined in the #typing module.
 
   Example:
@@ -151,7 +173,7 @@ def get_origins_to_special_generic_aliases() -> t.Dict[type, SpecialGenericAlias
 
 @functools.lru_cache()
 def get_special_forms() -> t.Dict[str, SpecialGenericAlias]:
-  """ Returns a dictionary that contains all special forms (like #t.Final and #t.Union)
+  """ Returns a dictionary that contains all special forms (like #typing.Final and #typing.Union)
   defined in the #typing module.
 
   Example:
@@ -170,3 +192,27 @@ def get_special_forms() -> t.Dict[str, SpecialGenericAlias]:
     if is_special_form(value):
       result[key] = value
   return result
+
+
+def type_repr(obj):
+  """ #typing._type_repr() stolen from Python 3.8. """
+
+  if isinstance(obj, type):
+    if obj.__module__ == 'builtins':
+      return obj.__qualname__
+    return f'{obj.__module__}.{obj.__qualname__}'
+  if obj is ...:
+    return('...')
+  if isinstance(obj, types.FunctionType):
+    return obj.__name__
+  return repr(obj)
+
+
+def get_type_hints(type_: t.Any) -> t.Dict[str, t.Any]:
+  """ Like #typing.get_type_hints(), but always includes extras. This is important when we want to inspect
+  #typing.Annotated hints (without extras the annotations are removed). """
+
+  if sys.version_info[:2] <= (3, 8):
+    return t.get_type_hints(type_, include_extras=True)
+  else:
+    return t.get_type_hints(type_)

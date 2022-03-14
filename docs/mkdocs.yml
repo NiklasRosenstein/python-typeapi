@@ -1,0 +1,5 @@
+nav:
+  - Home: index.md
+  - API:
+    - typeapi.deconstruct: api/typeapi.deconstruct.md
+    - typeapi.utils: api/typeapi.utils.md
