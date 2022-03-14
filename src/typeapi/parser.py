@@ -85,7 +85,7 @@ def _handle_union(hint: t.Any) -> t.Optional[Hint]:
 
 @_handler
 def _handle_literal(hint: t.Any) -> t.Optional[Hint]:
-  if is_generic_alias(hint) and hint.__origin__ == t.Literal:
+  if is_generic_alias(hint) and hint.__origin__ == te.Literal:
     assert len(hint.__args__) >= 1, hint
     return Literal(hint.__args__)
   return None
