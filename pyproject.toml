@@ -39,7 +39,7 @@ mypy = "mypy src/"
 pytest = "pytest test/ -vv"
 
 [tool.slam.run]
-"docs:build" = "cd docs && novella --site-dir $PWD/_site"
+"docs:build" = "cd docs && novella"
 "docs:dev" = "cd docs && novella --serve"
 
 [tool.mypy]
