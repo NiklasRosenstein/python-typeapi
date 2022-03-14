@@ -52,7 +52,7 @@ def _handle_class_var(hint: t.Any) -> t.Optional[Hint]:
 
 @_handler
 def _handle_final(hint: t.Any) -> t.Optional[Hint]:
-  if is_generic_alias(hint) and hint.__origin__ == t.Final:
+  if is_generic_alias(hint) and hint.__origin__ == te.Final:
     assert len(hint.__args__) == 1, hint
     return Final(hint.__args__[0])
   return None

@@ -30,9 +30,10 @@ def test_parse_type_hint_class_var():
   assert parse_type_hint(t.ClassVar[int]) == ClassVar(int)
 
 
-def test_parse_type_hint_final():
-  assert parse_type_hint(t.Final) == Unknown(t.Final)
-  assert parse_type_hint(t.Final[int]) == Final(int)
+@parametrize_typing_module('Final')
+def test_parse_type_hint_final(m):
+  assert parse_type_hint(m.Final) == Unknown(m.Final)
+  assert parse_type_hint(m.Final[int]) == Final(int)
 
 
 def test_parse_type_hint_no_return():
