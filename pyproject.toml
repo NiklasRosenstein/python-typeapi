@@ -33,7 +33,7 @@ typed = true
 [tool.slam.test]
 check = "slam check"
 mypy = "mypy src/"
-pytest = "pytest test/"
+pytest = "pytest test/ -vv"
 
 [tool.slam.run]
 "docs:dev" = "cd docs && novella --serve"
