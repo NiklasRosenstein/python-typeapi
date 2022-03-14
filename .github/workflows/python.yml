@@ -21,3 +21,13 @@ jobs:
       with: { python-version: "${{ matrix.python-version }}" }
     - run: slam install --no-venv-check
     - run: slam test
+
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: NiklasRosenstein/slam@github-action/install/v1
+    - run: slam install --only-extras docs --no-venv-check
+    - run: slam run docs:prod
+    - uses: JamesIves/github-pages-deploy-action@4.1.4
+      with: { branch: gh-pages, folder: _site, ssh-key: "${{ secrets.DEPLOY_KEY }}" }

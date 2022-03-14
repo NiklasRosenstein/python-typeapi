@@ -27,6 +27,9 @@ typing-extensions = ">=3.0.0"
 mypy = "*"
 pytest = "*"
 
+[tool.poetry.extras]
+docs = ["novella==0.1.12", "pydoc-markdown==4.6.3"]
+
 [tool.slam]
 typed = true
 
@@ -36,6 +39,7 @@ mypy = "mypy src/"
 pytest = "pytest test/ -vv"
 
 [tool.slam.run]
+"docs:build" = "cd docs && novella --site-dir $PWD/_site"
 "docs:dev" = "cd docs && novella --serve"
 
 [tool.mypy]
