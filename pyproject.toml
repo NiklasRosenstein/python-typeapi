@@ -15,7 +15,7 @@ keywords = []
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/NiklasRosenstein/python-typeapi/issues"
-# Documentation = ""
+Documentation = "https://niklasrosenstein.github.io/python-typeapi/"
 Homepage = "https://github.com/NiklasRosenstein/python-typeapi"
 # Repository = ""
 
