@@ -120,7 +120,7 @@ def is_union_type(hint: t.Any) -> te.TypeGuard[UnionType]:
   if sys.version_info[:2] >= (3, 10):
     return isinstance(hint, types.UnionType)
 
-  return False
+  return False  # type: ignore[unreachable]
 
 
 def is_special_generic_alias(hint: t.Any) -> te.TypeGuard[SpecialGenericAlias]:
