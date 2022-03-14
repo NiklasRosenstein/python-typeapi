@@ -28,6 +28,6 @@ jobs:
     - uses: actions/checkout@v2
     - uses: NiklasRosenstein/slam@github-action/install/v1
     - run: slam install --only-extras docs --no-venv-check
-    - run: slam run docs:prod
+    - run: slam run docs:build
     - uses: JamesIves/github-pages-deploy-action@4.1.4
       with: { branch: gh-pages, folder: _site, ssh-key: "${{ secrets.DEPLOY_KEY }}" }
