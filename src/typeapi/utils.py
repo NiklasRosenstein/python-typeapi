@@ -58,6 +58,11 @@ class SpecialForm(te.Protocol):
   pass
 
 
+class NewType(te.Protocol):
+  __name__: str
+  __supertype__: t.Type
+
+
 def is_generic(hint: t.Any) -> te.TypeGuard[t.Type[Generic]]:
   """
   Returns:
@@ -131,6 +136,18 @@ def is_annotated_alias(hint: t.Any) -> te.TypeGuard[AnnotatedAlias]:
   """
 
   return isinstance(hint, te._AnnotatedAlias)  # type: ignore[attr-defined]
+
+
+def is_new_type(hint: t.Any) -> te.TypeGuard[NewType]:
+  """
+  Returns:
+    `True` if *hint* is a #typing.NewType object.
+  """
+
+  if sys.version_info[:2] <= (3, 9):
+    return isinstance(hint, types.FunctionType) and hasattr(hint, '__supertype__')
+  else:
+    return isinstance(hint, t.NewType)  # type: ignore[arg-type]
 
 
 @functools.lru_cache()
@@ -213,6 +230,6 @@ def get_type_hints(type_: t.Any) -> t.Dict[str, t.Any]:
   #typing.Annotated hints (without extras the annotations are removed). """
 
   if sys.version_info[:2] <= (3, 8):
-    return t.get_type_hints(type_, include_extras=True)
-  else:
     return t.get_type_hints(type_)
+  else:
+    return t.get_type_hints(type_, include_extras=True)

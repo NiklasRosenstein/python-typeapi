@@ -1,15 +1,15 @@
 
-import enum
+import dataclasses
 import typing as t
-from .deconstruct import TypeInfo
 from .utils import TypeArg, type_repr
 
 
-class Hint(t.NamedTuple):
+class Hint:
   """ Base for classes that represent type hints. """
 
 
-class Type(Hint, t.NamedTuple):
+@dataclasses.dataclass
+class Type(Hint):
   """ Represents a concrete type, including type arguments if applicable. """
 
   #: The native Python type. Note that this may be #types.NoneType if the type hint
@@ -18,7 +18,7 @@ class Type(Hint, t.NamedTuple):
 
   #: The type arguments, if applicable. This may yet contain type variables if that
   #: is what the original generic alias was created with.
-  args: t.Optional[t.Tuple[t.Union[Hint, t.TypeVar], ...]]
+  args: t.Optional[t.Tuple[TypeArg, ...]]
 
   def __repr__(self) -> str:
     if self.args is None:
@@ -26,14 +26,16 @@ class Type(Hint, t.NamedTuple):
     return '{}({}, ({}))'.format(self.__class__.__name__, type_repr(self.type), ', '.join(map(type_repr, self.args)))
 
 
-class Union(Hint, t.NamedTuple):
+@dataclasses.dataclass
+class Union(Hint):
   """ Represents #typing.Union or #typing.Optional. """
 
   #: The types in this union.
   types: t.Tuple[TypeArg, ...]
 
 
-class Annotated(Hint, t.NamedTuple):
+@dataclasses.dataclass
+class Annotated(Hint):
   """ Represents a type wrapped in #typing.Annotated. """
 
   #: The type that is annotated.
@@ -46,7 +48,8 @@ class Annotated(Hint, t.NamedTuple):
     return 'Annotated({}, {})'.format(type_repr(self.wrapped), ', '.join(map(repr, self.metadata)))
 
 
-class ForwardRef(Hint, t.NamedTuple):
+@dataclasses.dataclass
+class ForwardRef(Hint):
   """ Represents a forward reference. """
 
   #: The expression of the forward reference.
@@ -59,43 +62,50 @@ class ForwardRef(Hint, t.NamedTuple):
     raise NotImplementedError
 
 
-class Any(Hint, t.NamedTuple):
+@dataclasses.dataclass
+class Any(Hint):  # type: ignore[misc]
   """ Represents #typing.Any. """
 
 
-class ClassVar(Hint, t.NamedTuple):
+@dataclasses.dataclass
+class ClassVar(Hint):
   """ Represents #typing.ClassVar. """
 
   #: The inner type.
   wrapped: TypeArg
 
 
-class Final(Hint, t.NamedTuple):
+@dataclasses.dataclass
+class Final(Hint):
   """ Represents #typing.Final. """
 
   #: The inner type.
   wrapped: TypeArg
 
 
-class NoReturn(Hint, t.NamedTuple):
+@dataclasses.dataclass
+class NoReturn(Hint):
   """ Represents #typing.NoReturn. """
 
 
-class TypeGuard(Hint, t.NamedTuple):
+@dataclasses.dataclass
+class TypeGuard(Hint):
   """ Represents #typing.TypeGuard. """
 
   #: The wrapped type.
   wrapped: TypeArg
 
 
-class Literal(Hint, t.NamedTuple):
+@dataclasses.dataclass
+class Literal(Hint):
   """ Represents #typing.Literal. """
 
   #: The possible values represented by the literal.
   values: t.Tuple[t.Any, ...]
 
 
-class NewType(Hint, t.NamedTuple):
+@dataclasses.dataclass
+class NewType(Hint):
   """ Represents #typing.NewType. """
 
   #: The name of the new type.
@@ -105,7 +115,8 @@ class NewType(Hint, t.NamedTuple):
   supertype: t.Type
 
 
-class Unknown(Hint, t.NamedTuple):
+@dataclasses.dataclass
+class Unknown(Hint):
   """ Represents an type hint that is not understood. """
 
   #: The type hint that was not understood.

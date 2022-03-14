@@ -6,7 +6,7 @@ import typing_extensions as te
 
 from .api import Annotated, Any, ClassVar, Final, ForwardRef, Hint, Literal, NewType, NoReturn, Type, TypeGuard, Union, Unknown
 from .deconstruct import deconstruct_type, TypeInfo
-from .utils import is_annotated_alias, is_generic, is_generic_alias, is_special_form, is_special_generic_alias
+from .utils import is_annotated_alias, is_generic, is_generic_alias, is_new_type, is_special_form, is_special_generic_alias
 
 _TypeHintHandler = t.Callable[[t.Any], t.Optional[Hint]]
 _handlers: t.List[_TypeHintHandler] = []
@@ -93,12 +93,8 @@ def _handle_literal(hint: t.Any) -> t.Optional[Hint]:
 
 @_handler
 def _handle_new_type(hint: t.Any) -> t.Optional[Hint]:
-  if sys.version_info[:2] <= (3, 9):
-    if isinstance(hint, types.FunctionType) and hasattr(hint, '__supertype__'):
-      return NewType(hint.__name__, hint.__supertype__)
-  else:
-    if isinstance(hint, t.NewType):  # type: ignore[arg-type]
-      return NewType(hint.__name__, hint.__supertype__)
+  if is_new_type(hint):
+    return NewType(hint.__name__, hint.__supertype__)
   return None
 
 
@@ -120,6 +116,7 @@ def _handle_generic_alias(hint: t.Any) -> t.Optional[Hint]:
 def _handle_special_generic_alias(hint: t.Any) -> t.Optional[Hint]:
   if is_special_generic_alias(hint):
     return Type(hint.__origin__, None)
+  return None
 
 
 def parse_type_hint(hint: t.Any) -> Hint:
