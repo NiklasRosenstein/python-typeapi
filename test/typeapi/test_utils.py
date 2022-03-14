@@ -38,7 +38,7 @@ def test_is_special_generic_alias():
 
 
 def test_get_special_generic_aliases():
-  assert set(get_special_generic_aliases().keys()).issuperset(['List', 'Mapping', 'MutableMapping', 'Dict'])
+  assert set(get_special_generic_aliases().keys()).issuperset(['List', 'Mapping', 'MutableMapping', 'Dict', 'Callable', 'Tuple'])
 
 
 def test_get_special_forms():

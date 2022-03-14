@@ -29,7 +29,7 @@ class _BaseGenericAlias(te.Protocol):
 
 class Generic(te.Protocol):
   __orig_bases__: t.ClassVar[t.Tuple[t.Type, ...]]
-  __parameters__: t.Tuple[t.TypeVar, ...]
+  __parameters__: t.ClassVar[t.Tuple[t.TypeVar, ...]]
 
 
 class GenericAlias(_BaseGenericAlias, te.Protocol):
@@ -106,7 +106,16 @@ def is_annotated_alias(hint: t.Any) -> te.TypeGuard[AnnotatedAlias]:
 @functools.lru_cache()
 def get_special_generic_aliases() -> t.Dict[str, SpecialGenericAlias]:
   """ Returns a dictionary that contains all special generic aliases (like #t.List and #t.Mapping)
-  defined in the #typing module. """
+  defined in the #typing module.
+
+  Example:
+
+  ```py
+  import typing
+  from typeapi.utils import get_special_generic_aliases
+  mapping = get_special_generic_aliases()
+  assert mapping['List'] is typing.List
+  ```"""
 
   result = {}
   for key, value in vars(t).items():
@@ -117,13 +126,36 @@ def get_special_generic_aliases() -> t.Dict[str, SpecialGenericAlias]:
 
 @functools.lru_cache()
 def get_origins_to_special_generic_aliases() -> t.Dict[type, SpecialGenericAlias]:
+  """ Returns a dictionary that maps a native Python type to the #typing special generic alias.
+
+  Example:
+
+  ```py
+  import typing
+  from typeapi.utils import get_origins_to_special_generic_aliases
+  mapping = get_origins_to_special_generic_aliases()
+  assert mapping[list] is typing.List
+  ```
+  """
+
   return {v.__origin__: v for v in get_special_generic_aliases().values()}
 
 
 @functools.lru_cache()
 def get_special_forms() -> t.Dict[str, SpecialGenericAlias]:
   """ Returns a dictionary that contains all special forms (like #t.Final and #t.Union)
-  defined in the #typing module. """
+  defined in the #typing module.
+
+  Example:
+
+  ```py
+  import typing
+  from typeapi.utils import get_special_forms
+  mapping = get_special_forms()
+  assert mapping['Any'] is typing.Any
+  assert mapping['Union'] is typing.Union
+  ```
+  """
 
   result = {}
   for key, value in vars(t).items():
