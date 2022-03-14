@@ -22,6 +22,9 @@ def deconstruct_type(type_: t.Any) -> TypeInfo:
 
   def _raise() -> t.NoReturn: raise ValueError(f'unable to deconstruct {type_!r}')
 
+  if type_ is t.Any:
+    return TypeInfo(object, 0, None, None)
+
   if is_special_generic_alias(type_):
     if sys.version_info[:2] <= (3, 8):
       nparams = len(type_.__parameters__)

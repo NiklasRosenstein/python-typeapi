@@ -1,10 +1,18 @@
 
-import pytest
+import collections.abc
 import typing as t
 import typing_extensions as te
+
+import pytest
 from typeapi.deconstruct import deconstruct_type, TypeInfo
 
 T = t.TypeVar('T')
+K = t.TypeVar('K')
+V = t.TypeVar('V')
+
+
+def test_deconstruct_any():
+  assert deconstruct_type(t.Any) == TypeInfo(object, 0, None, None)
 
 
 def test_deconstruct_generic():
@@ -26,6 +34,8 @@ def test_deconstruct_special_generic():
   assert deconstruct_type(t.List) == TypeInfo(list, 1, None, None)
   assert deconstruct_type(t.List[int]) == TypeInfo(list, 1, None, (int,))
   assert deconstruct_type(t.List[T]) == TypeInfo(list, 1, None, (T,))
+  assert deconstruct_type(t.Mapping[str, int]) == TypeInfo(collections.abc.Mapping, 2, None, (str, int,))
+  assert deconstruct_type(t.Mapping[K, V]) == TypeInfo(collections.abc.Mapping, 2, None, (K, V,))
 
 
 def test_deconstruct_annotated_errors():

@@ -78,9 +78,17 @@ def is_generic_alias(hint: t.Any) -> te.TypeGuard[GenericAlias]:
 
 
 def is_special_generic_alias(hint: t.Any) -> te.TypeGuard[SpecialGenericAlias]:
-  """ Returns `True` if *hint* is a #._SpecialGenericAlias (like #t.List or #t.Mapping). """
+  """
+  Returns:
+    `True` if *hint* is a #._SpecialGenericAlias (like #typing.List or #typing.Mapping).
 
-  print(hint, getattr(hint, '_special', None))
+  !!! note
+
+      For Python versions 3.8 and older, the function treats #typing._GenericAliases
+      as special if their `_special` attribute is set to `True`. #typing._SpecialGenericAlias
+      was introduced in Python 3.9.
+  """
+
   if sys.version_info[:2] <= (3, 8):
     # We use isinstance() here instead of checking the exact type because typing.Tuple or
     # typing.Callable in 3.8 or earlier are instances of typing._VariadicGenericAliases.
@@ -100,7 +108,7 @@ def is_special_form(hint: t.Any) -> te.TypeGuard[SpecialGenericAlias]:
 def is_annotated_alias(hint: t.Any) -> te.TypeGuard[AnnotatedAlias]:
   """ Returns `True` if *hint* is a #._AnnotatedAlias (e.g. `typing.Annotated[int, 42]`). """
 
-  return isinstance(hint, t._AnnotatedAlias)  # type: ignore[attr-defined]
+  return isinstance(hint, te._AnnotatedAlias)  # type: ignore[attr-defined]
 
 
 @functools.lru_cache()
