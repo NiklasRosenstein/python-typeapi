@@ -1,4 +1,7 @@
 
+""" Provides utilities to introspect #typing type hints. The goal is to assign the same semantics
+to all viable members of the #typing module independent of the Python version. """
+
 from __future__ import annotations
 import functools
 import sys

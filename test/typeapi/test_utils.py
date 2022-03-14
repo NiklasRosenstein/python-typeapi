@@ -19,7 +19,7 @@ def test_is_generic_alias():
 
 
 def test_is_special_form():
-  assert not is_special_form(t.Any)
+  assert is_special_form(t.Any)
   assert is_special_form(t.ClassVar)
   assert is_special_form(t.Union)
   assert not is_special_form(t.List)
@@ -42,4 +42,4 @@ def test_get_special_generic_aliases():
 
 
 def test_get_special_forms():
-  assert set(get_special_forms().keys()).issuperset(['Union', 'NoReturn', 'ClassVar'])
+  assert set(get_special_forms().keys()).issuperset(['Any', 'Union', 'NoReturn', 'ClassVar'])
