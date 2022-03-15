@@ -5,3 +5,5 @@ nav:
     - typeapi.deconstruct: api/typeapi.deconstruct.md
     - typeapi.parser: api/typeapi.parser.md
     - typeapi.utils: api/typeapi.utils.md
+  - Other:
+    - Changelog: changelog.md
