@@ -25,6 +25,5 @@ from .parser import parse_type_hint as of
 
 __all__ = [
   'Hint', 'Type', 'Union', 'Annotated', 'ForwardRef', 'Any', 'ClassVar', 'Final', 'NoReturn', 'TypeGuard', 'Literal', 'NewType', 'Unknown',
-  'TypeInfo',
   'of',
 ]

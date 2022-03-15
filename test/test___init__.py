@@ -14,3 +14,7 @@ def test_typeapi_example():
 def test_typeapi_example_pep585():
   hint = typeapi.of(int | str | None)
   assert hint == typeapi.Union((int, str, type(None)))
+
+
+def test_import_all():
+  exec('from typeapi import *')
