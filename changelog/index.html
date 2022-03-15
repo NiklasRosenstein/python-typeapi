@@ -63,7 +63,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#010a2-2022-03-15" class="md-skip">
+        <a href="#unreleased" class="md-skip">
           Skip to content
         </a>
       
@@ -387,6 +387,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#unreleased" class="md-nav__link">
+    Unreleased
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#010a2-2022-03-15" class="md-nav__link">
     0.1.0a2 (2022-03-15)
   </a>
@@ -433,6 +440,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#unreleased" class="md-nav__link">
+    Unreleased
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#010a2-2022-03-15" class="md-nav__link">
     0.1.0a2 (2022-03-15)
   </a>
@@ -451,13 +465,29 @@
             <article class="md-content__inner md-typeset">
               
                 
-<a href="https://github.com/NiklasRosenstein/python-typeapi/blob/None/docs/content/changelog.md" title="Edit this page" class="md-content__button md-icon">
+<a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/content/changelog.md" title="Edit this page" class="md-content__button md-icon">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
 </a>
 
 
 
   <h1>Changelog</h1>
+
+<h2 id="unreleased">Unreleased</h2>
+<table><tr><th>Type</th><th>Description</th><th>PR</th><th>Issues</th><th>Author</th></tr>
+  <tr><td>Breaking change</td><td>
+
+remove `Type.args` field and instead make it a property</td><td></td><td></td><td>@NiklasRosenstein</td></tr>
+  <tr><td>Breaking change</td><td>
+
+Added `Type.info` property</td><td></td><td></td><td>@NiklasRosenstein</td></tr>
+  <tr><td>Feature</td><td>
+
+`deconstruct_type()` now supports concrete types</td><td></td><td></td><td>@NiklasRosenstein</td></tr>
+  <tr><td>Feature</td><td>
+
+export members from `typeapi.api`, `typeapi.parser` and `typeapi.deconstruct`, most notably `typeapi.of()` is not available as an alias for `typeapi.parser.parse_type_hint()`</td><td></td><td></td><td>@NiklasRosenstein</td></tr>
+</table>
 
 <h2 id="010a2-2022-03-15">0.1.0a2 (2022-03-15)</h2>
 <table><tr><th>Type</th><th>Description</th><th>PR</th><th>Issues</th><th>Author</th></tr>

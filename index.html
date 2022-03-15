@@ -469,30 +469,30 @@
             <article class="md-content__inner md-typeset">
               
                 
-<a href="https://github.com/NiklasRosenstein/python-typeapi/blob/None/docs/content/index.md" title="Edit this page" class="md-content__button md-icon">
+<a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/content/index.md" title="Edit this page" class="md-content__button md-icon">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
 </a>
 
 
 
 <h1 id="typeapi">typeapi</h1>
-<p>Typeapi provides a sane and stable API to introspect Python type hints.</p>
+<p>Typeapi provides a stable and documented API to introspect Python <code>typing</code> type hints.</p>
 <h2 id="installation">Installation</h2>
 <div class="highlight"><pre><span></span><code>$ pip install typeapi
 </code></pre></div>
 <h2 id="quickstart">Quickstart</h2>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">typing</span>
-<span class="kn">from</span> <span class="nn">typeapi</span> <span class="kn">import</span> <span class="n">parse_type_hint</span>
+<span class="kn">import</span> <span class="nn">typeapi</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">parse_type_hint</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">))</span>                  <span class="c1"># Type(object)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">parse_type_hint</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">))</span>                 <span class="c1"># Type(list)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">parse_type_hint</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]))</span>    <span class="c1"># Type(collections.abc.Mapping, (Type(str), Type(int)))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">parse_type_hint</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]))</span>      <span class="c1"># Union(int, str)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">parse_type_hint</span><span class="p">(</span><span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">))</span>                   <span class="c1"># Union(int, str)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">parse_type_hint</span><span class="p">(</span><span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">))</span>            <span class="c1"># Optional(Union[int, str])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">parse_type_hint</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="mi">42</span><span class="p">]))</span>   <span class="c1"># Annotated(int, 42)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">parse_type_hint</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="mi">42</span><span class="p">]))</span>   <span class="c1"># Annotated(int, 42)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">parse_type_hint</span><span class="p">(</span><span class="s1">&#39;str&#39;</span><span class="p">,</span> <span class="vm">__name__</span><span class="p">))</span>             <span class="c1"># Type(str)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">typeapi</span><span class="o">.</span><span class="n">of</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">))</span>                  <span class="c1"># Type(object)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">typeapi</span><span class="o">.</span><span class="n">of</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">))</span>                 <span class="c1"># Type(list)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">typeapi</span><span class="o">.</span><span class="n">of</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]))</span>    <span class="c1"># Type(collections.abc.Mapping, (Type(str), Type(int)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">typeapi</span><span class="o">.</span><span class="n">of</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]))</span>      <span class="c1"># Union(int, str)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">typeapi</span><span class="o">.</span><span class="n">of</span><span class="p">(</span><span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">))</span>                   <span class="c1"># Union(int, str)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">typeapi</span><span class="o">.</span><span class="n">of</span><span class="p">(</span><span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">))</span>            <span class="c1"># Optional(Union[int, str])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">typeapi</span><span class="o">.</span><span class="n">of</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="mi">42</span><span class="p">]))</span>   <span class="c1"># Annotated(int, 42)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">typeapi</span><span class="o">.</span><span class="n">of</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="mi">42</span><span class="p">]))</span>   <span class="c1"># Annotated(int, 42)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">typeapi</span><span class="o">.</span><span class="n">of</span><span class="p">(</span><span class="s1">&#39;str&#39;</span><span class="p">,</span> <span class="vm">__name__</span><span class="p">))</span>             <span class="c1"># Type(str)</span>
 </code></pre></div>
 
               
