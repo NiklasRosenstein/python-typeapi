@@ -21,3 +21,9 @@ id = "7bfd6ab7-4989-468f-b1a9-b9693fc78093"
 type = "feature"
 description = "export members from `typeapi.api`, `typeapi.parser` and `typeapi.deconstruct`, most notably `typeapi.of()` is not available as an alias for `typeapi.parser.parse_type_hint()`"
 author = "@NiklasRosenstein"
+
+[[entries]]
+id = "a6495338-0ca5-4223-ad96-c869642e40ff"
+type = "breaking change"
+description = "rename `Hint.source` to `Hint.original`"
+author = "@NiklasRosenstein"

@@ -11,7 +11,7 @@ class Hint:
   """ Base for classes that represent type hints. """
 
   #: The original #typing hint.
-  source: t.Any = dataclasses.field(repr=False)
+  original: t.Any = dataclasses.field(repr=False)
 
   def __post_init__(self) -> None:
     if type(self) is Hint:
@@ -40,7 +40,7 @@ class Type(Hint):
     arguments, the type parameters and type arguments (if the type hint was a generic alias). """
 
     if self._info is None:
-      self._info = deconstruct_type(self.source)
+      self._info = deconstruct_type(self.original)
     return self._info
 
   @property
