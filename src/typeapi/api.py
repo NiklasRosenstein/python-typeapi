@@ -1,6 +1,8 @@
 
 import dataclasses
 import typing as t
+
+from typeapi.deconstruct import TypeInfo, deconstruct_type
 from .utils import TypeArg, type_repr
 
 
@@ -24,14 +26,29 @@ class Type(Hint):
   #: represented is `None`.
   type: t.Type
 
-  #: The type arguments, if applicable. This may yet contain type variables if that
-  #: is what the original generic alias was created with.
-  args: t.Optional[t.Tuple[TypeArg, ...]]
+  def __post_init__(self) -> None:
+    self._info: t.Optional[TypeInfo] = None
 
   def __repr__(self) -> str:
     if self.args is None:
       return '{}({})'.format(self.__class__.__name__, type_repr(self.type))
     return '{}({}, ({}))'.format(self.__class__.__name__, type_repr(self.type), ', '.join(map(type_repr, self.args)))
+
+  @property
+  def info(self) -> TypeInfo:
+    """ Return the deconstructed #TypeInfo for the original type hint, providing information on the number of type
+    arguments, the type parameters and type arguments (if the type hint was a generic alias). """
+
+    if self._info is None:
+      self._info = deconstruct_type(self.source)
+    return self._info
+
+  @property
+  def args(self) -> t.Optional[t.Tuple[TypeArg, ...]]:
+    """ The type arguments, if applicable. This may yet contain type variables if that is what the original generic
+    alias was created with. This is an alias for accesing #TypeInfo.args from #info. """
+
+    return self.info.args
 
 
 @dataclasses.dataclass

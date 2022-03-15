@@ -94,4 +94,7 @@ def deconstruct_type(type_: t.Any) -> TypeInfo:
   if is_generic(type_):
     return TypeInfo(type_, len(type_.__parameters__), type_.__parameters__, None)
 
+  if isinstance(type_, type):
+    return TypeInfo(type_, 0, None, None)
+
   _raise()

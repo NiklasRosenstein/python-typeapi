@@ -7,8 +7,8 @@ T = t.TypeVar('T')
 
 
 def test_Type_str():
-  assert str(Type(int, int, None)) == 'Type(int)'
-  assert str(Type(t.Dict[T, int], dict, (T, int))) == 'Type(dict, (~T, int))'
+  assert str(Type(int, int)) == 'Type(int)'
+  assert str(Type(t.Dict[T, int], dict)) == 'Type(dict, (~T, int))'
 
 
 def test_Annotated_str():

@@ -44,3 +44,7 @@ def test_deconstruct_annotated_errors(m):
   with pytest.raises(ValueError) as excinfo:
     assert deconstruct_type(m.Annotated[int, 42])
   assert str(excinfo.value) == 'unable to deconstruct {}'.format(m.Annotated[int, 42])
+
+
+def test_deconstruct_concrete_type():
+  assert deconstruct_type(int) == TypeInfo(int, 0, None, None)

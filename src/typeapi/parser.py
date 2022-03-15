@@ -111,21 +111,21 @@ def _handle_generic_alias_of_concrete_type(hint: t.Any) -> t.Optional[Hint]:
   """
 
   if is_generic_alias(hint) and isinstance(hint.__origin__, type):
-    return Type(hint, hint.__origin__, hint.__args__)
+    return Type(hint, hint.__origin__)
   return None
 
 
 @_handler
 def _handle_concrete_type(hint: t.Any) -> t.Optional[Hint]:
   if isinstance(hint, type) and hint.__module__ not in ('typing', 'typing_extensions'):
-    return Type(hint, hint, None)
+    return Type(hint, hint)
   return None
 
 
 @_handler
 def _handle_special_generic_alias(hint: t.Any) -> t.Optional[Hint]:
   if is_special_generic_alias(hint):
-    return Type(hint, hint.__origin__, None)
+    return Type(hint, hint.__origin__)
   return None
 
 

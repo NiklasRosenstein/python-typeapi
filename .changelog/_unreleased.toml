@@ -1,0 +1,23 @@
+[[entries]]
+id = "a7a7e129-2276-4919-9126-ee13aefdf416"
+type = "breaking change"
+description = "remove `Type.args` field and instead make it a property"
+author = "@NiklasRosenstein"
+
+[[entries]]
+id = "18faef5d-d844-475d-8df3-4b4c128a6538"
+type = "breaking change"
+description = "Added `Type.info` property"
+author = "@NiklasRosenstein"
+
+[[entries]]
+id = "2b620341-9e9e-41ed-9286-765805bc02aa"
+type = "feature"
+description = "`deconstruct_type()` now supports concrete types"
+author = "@NiklasRosenstein"
+
+[[entries]]
+id = "7bfd6ab7-4989-468f-b1a9-b9693fc78093"
+type = "feature"
+description = "export members from `typeapi.api`, `typeapi.parser` and `typeapi.deconstruct`, most notably `typeapi.of()` is not available as an alias for `typeapi.parser.parse_type_hint()`"
+author = "@NiklasRosenstein"

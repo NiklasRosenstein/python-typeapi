@@ -73,37 +73,37 @@ def test_parse_type_hint_new_type():
 
 
 def test_parse_type_hint_concrete_type():
-  assert parse_type_hint(int) == Type(int, int, None)
-  assert parse_type_hint(object) == Type(object, object, None)
-  assert parse_type_hint(collections.abc.Iterable) == Type(collections.abc.Iterable, collections.abc.Iterable, None)
+  assert parse_type_hint(int) == Type(int, int)
+  assert parse_type_hint(object) == Type(object, object)
+  assert parse_type_hint(collections.abc.Iterable) == Type(collections.abc.Iterable, collections.abc.Iterable)
 
 
 def test_parse_type_hint_special_generic_alias():
-  assert parse_type_hint(t.List) == Type(t.List, list, None)  # _handle_special_generic_alias()
-  assert parse_type_hint(t.List[int]) == Type(t.List[int], list, (int,))  # _handle_generic_alias()
-  assert parse_type_hint(t.List[T]) == Type(t.List[T], list, (T,))  # _handle_generic_alias()
+  assert parse_type_hint(t.List) == Type(t.List, list)  # _handle_special_generic_alias()
+  assert parse_type_hint(t.List[int]) == Type(t.List[int], list)  # _handle_generic_alias()
+  assert parse_type_hint(t.List[T]) == Type(t.List[T], list)  # _handle_generic_alias()
 
 
 @pytest.mark.skipif(sys.version_info[:2] < (3, 10), reason='PEP 585 is implemented starting with Python 3.10')
 def test_parse_type_hint_special_generic_alias_pep585():
-  assert parse_type_hint(list) == Type(list, list, None)  # _handle_concrete_type()
-  assert parse_type_hint(list[int]) == Type(list[int], list, (int,))  # _handle_generic_alias()
-  assert parse_type_hint(list[T]) == Type(list[T], list, (T,))  # _handle_generic_alias()
+  assert parse_type_hint(list) == Type(list, list)  # _handle_concrete_type()
+  assert parse_type_hint(list[int]) == Type(list[int], list)  # _handle_generic_alias()
+  assert parse_type_hint(list[T]) == Type(list[T], list)  # _handle_generic_alias()
 
 
 def test_parse_type_hint_generic_alias_of_concrete_type():
   class MyGeneric(t.Generic[T]): pass
-  assert parse_type_hint(MyGeneric) == Type(MyGeneric, MyGeneric, None)
-  assert parse_type_hint(MyGeneric[int]) == Type(MyGeneric[int], MyGeneric, (int,))
-  assert parse_type_hint(MyGeneric[T]) == Type(MyGeneric[T], MyGeneric, (T,))
+  assert parse_type_hint(MyGeneric) == Type(MyGeneric, MyGeneric)
+  assert parse_type_hint(MyGeneric[int]) == Type(MyGeneric[int], MyGeneric)
+  assert parse_type_hint(MyGeneric[T]) == Type(MyGeneric[T], MyGeneric)
 
   class MyList(t.List[T]): pass
-  assert parse_type_hint(MyList) == Type(MyList, MyList, None)
-  assert parse_type_hint(MyList[int]) == Type(MyList[int], MyList, (int,))
-  assert parse_type_hint(MyList[T]) == Type(MyList[T], MyList, (T,))
+  assert parse_type_hint(MyList) == Type(MyList, MyList)
+  assert parse_type_hint(MyList[int]) == Type(MyList[int], MyList)
+  assert parse_type_hint(MyList[T]) == Type(MyList[T], MyList)
 
   class MyConcreteList(t.List[int]): pass
-  assert parse_type_hint(MyConcreteList) == Type(MyConcreteList, MyConcreteList, None)
+  assert parse_type_hint(MyConcreteList) == Type(MyConcreteList, MyConcreteList)
 
 
 def test_parse_type_hint_unknown():
