@@ -13,7 +13,7 @@
     
     
       
-        <title>typeapi.api - python-typeapi</title>
+        <title>typeapi.model - python-typeapi</title>
       
     
     
@@ -24,7 +24,7 @@
         
           
           
-          <meta name="theme-color" content="#7e56c2">
+          <meta name="theme-color" content="#ffec3d">
         
       
     
@@ -53,7 +53,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="teal">
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="yellow" data-md-color-accent="deep-orange">
   
     
     
@@ -96,7 +96,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              typeapi.api
+              typeapi.model
             
           </span>
         </div>
@@ -259,6 +259,20 @@
               
   
   
+  
+    <li class="md-nav__item">
+      <a href="../typeapi/" class="md-nav__link">
+        typeapi
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
     
   
   
@@ -269,12 +283,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          typeapi.api
+          typeapi.model
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        typeapi.api
+        typeapi.model
       </a>
       
         
@@ -295,19 +309,6 @@
     Class Hint
   </a>
   
-    <nav class="md-nav" aria-label="Class Hint">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#original" class="md-nav__link">
-    original
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -326,8 +327,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#info" class="md-nav__link">
-    info
+  <a href="#nparams" class="md-nav__link">
+    nparams
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    parameters
   </a>
   
 </li>
@@ -335,6 +343,20 @@
           <li class="md-nav__item">
   <a href="#args" class="md-nav__link">
     args
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#with_args" class="md-nav__link">
+    with_args
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#of" class="md-nav__link">
+    of
   </a>
   
 </li>
@@ -544,26 +566,25 @@
     Class Unknown
   </a>
   
+    <nav class="md-nav" aria-label="Class Unknown">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hint" class="md-nav__link">
+    hint
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
   
 </nav>
       
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../typeapi.deconstruct/" class="md-nav__link">
-        typeapi.deconstruct
-      </a>
     </li>
   
 
@@ -686,19 +707,6 @@
     Class Hint
   </a>
   
-    <nav class="md-nav" aria-label="Class Hint">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#original" class="md-nav__link">
-    original
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -717,8 +725,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#info" class="md-nav__link">
-    info
+  <a href="#nparams" class="md-nav__link">
+    nparams
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    parameters
   </a>
   
 </li>
@@ -726,6 +741,20 @@
           <li class="md-nav__item">
   <a href="#args" class="md-nav__link">
     args
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#with_args" class="md-nav__link">
+    with_args
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#of" class="md-nav__link">
+    of
   </a>
   
 </li>
@@ -935,6 +964,19 @@
     Class Unknown
   </a>
   
+    <nav class="md-nav" aria-label="Class Unknown">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hint" class="md-nav__link">
+    hint
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -949,189 +991,212 @@
             <article class="md-content__inner md-typeset">
               
                 
-<a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/content/api/typeapi.api.md" title="Edit this page" class="md-content__button md-icon">
+<a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/content/api/typeapi.model.md" title="Edit this page" class="md-content__button md-icon">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
 </a>
 
 
 
-  <h1>typeapi.api</h1>
+  <h1>typeapi.model</h1>
 
-<p><a id="typeapi.api.Hint"></a></p>
-<p><a id="pydoc:typeapi.api.Hint"></a></p>
+<p><a id="typeapi.model.Hint"></a></p>
+<p><a id="pydoc:typeapi.model.Hint"></a></p>
 <h2 id="class-hint">Class Hint</h2>
-<div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
-<span class="k">class</span> <span class="nc">Hint</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Hint</span><span class="p">()</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/api.py#L10">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L9">[view_source]</a></p>
 <p>Base for classes that represent type hints.</p>
-<p><a id="typeapi.api.Hint.original"></a></p>
-<p><a id="pydoc:typeapi.api.Hint.original"></a></p>
-<h4 id="original">original</h4>
-<p>The original <code>typing</code> hint.</p>
-<p><a id="typeapi.api.Type"></a></p>
-<p><a id="pydoc:typeapi.api.Type"></a></p>
+<p><a id="typeapi.model.Type"></a></p>
+<p><a id="pydoc:typeapi.model.Type"></a></p>
 <h2 id="class-type">Class Type</h2>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">Type</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/api.py#L22">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L18">[view_source]</a></p>
 <p>Represents a concrete type, including type arguments if applicable.</p>
-<p><a id="typeapi.api.Type.type"></a></p>
-<p><a id="pydoc:typeapi.api.Type.type"></a></p>
+<p><a id="typeapi.model.Type.type"></a></p>
+<p><a id="pydoc:typeapi.model.Type.type"></a></p>
 <h4 id="type">type</h4>
-<p>The native Python type. Note that this may be <code>types.NoneType</code> if the type hint
-represented is <code>None</code>.</p>
-<p><a id="typeapi.api.Type.info"></a></p>
-<p><a id="pydoc:typeapi.api.Type.info"></a></p>
-<h4 id="info">info</h4>
-<div class="highlight"><pre><span></span><code><span class="nd">@property</span>
-<span class="k">def</span> <span class="nf">info</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">TypeInfo</span>
-</code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/api.py#L38">[view_source]</a></p>
-<p>Return the deconstructed <a href="/api/typeapi.deconstruct#pydoc:typeapi.deconstruct.TypeInfo">TypeInfo</a> for the original type hint, providing information on the number of type
-arguments, the type parameters and type arguments (if the type hint was a generic alias).</p>
-<p><a id="typeapi.api.Type.args"></a></p>
-<p><a id="pydoc:typeapi.api.Type.args"></a></p>
+<p>The original Python type underlying the type hint.</p>
+<p><a id="typeapi.model.Type.nparams"></a></p>
+<p><a id="pydoc:typeapi.model.Type.nparams"></a></p>
+<h4 id="nparams">nparams</h4>
+<p>The number of type parameters that the <code>origin</code> type accepts.</p>
+<p><a id="typeapi.model.Type.parameters"></a></p>
+<p><a id="pydoc:typeapi.model.Type.parameters"></a></p>
+<h4 id="parameters">parameters</h4>
+<p>The type variables from the <code>origin</code> type's original definition. Note that this may be <code>None</code>
+even if <a href="#pydoc:typeapi.model.Type.nparams">nparams</a> is greater than zero. This is usually the case for special generic aliases
+like <code>typing.List</code> for which no explicit type variables are defined in the <code>typing</code> module.</p>
+<p><a id="typeapi.model.Type.args"></a></p>
+<p><a id="pydoc:typeapi.model.Type.args"></a></p>
 <h4 id="args">args</h4>
-<div class="highlight"><pre><span></span><code><span class="nd">@property</span>
-<span class="k">def</span> <span class="nf">args</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="n">TypeArg</span><span class="p">,</span> <span class="o">...</span><span class="p">]]</span>
+<p>The type arguments that the <code>origin</code> was parametrized with. This is <code>None</code> if the type is not
+explicitly parametrized. It may still contain <code>typing.TypeVars</code> if that is what the type was
+parametrized with.</p>
+<p><a id="typeapi.model.Type.with_args"></a></p>
+<p><a id="pydoc:typeapi.model.Type.with_args"></a></p>
+<h4 id="with_args">with_args</h4>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">with_args</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="n">utils</span><span class="o">.</span><span class="n">TypeArg</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Type</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/api.py#L47">[view_source]</a></p>
-<p>The type arguments, if applicable. This may yet contain type variables if that is what the original generic
-alias was created with. This is an alias for accesing <a href="/api/typeapi.deconstruct#pydoc:typeapi.deconstruct.TypeInfo.args">TypeInfo.args</a> from <a href="#pydoc:typeapi.api.Type.info">info</a>.</p>
-<p><a id="typeapi.api.Union"></a></p>
-<p><a id="pydoc:typeapi.api.Union"></a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L45">[view_source]</a></p>
+<p>Return a copy of the <a href="#pydoc:typeapi.model.Type">Type</a> object, but <a href="#pydoc:typeapi.model.Type.args">args</a> replaced by the <em>args</em> parameter value.</p>
+<p><a id="typeapi.model.Type.of"></a></p>
+<p><a id="pydoc:typeapi.model.Type.of"></a></p>
+<h4 id="of">of</h4>
+<div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span> <span class="nf">of</span><span class="p">(</span><span class="n">type_</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Type</span>
+</code></pre></div>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L51">[view_source]</a></p>
+<p>Deconstruct a type hint that is concrete type or generic alias, i.e. one that is not a "special form" like
+<code>typing.Union</code> or <code>typing.Any</code>. Examples of types being accepted are any actual Python types, <code>typing.Any</code>, special
+generic aliases like <code>typing.List</code> (unspecialized) or generic aliases (like <code>typing.List[int]</code> or a parametrization
+of a <code>typing.Generic</code> subclass).</p>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><code>type_</code> <em>any</em> - The type hint to deconstruct.</li>
+</ul>
+<p><strong>Raises</strong>:</p>
+<ul>
+<li><code>ValueError</code> - If the <em>type_</em> parameter cannot be deconstructed into a <a href="#pydoc:typeapi.model.Type">Type</a>. For example,
+  passing a <code>typing.Annotated</code> object or <code>typing.ClassVar</code> will cause this error to be raised.</li>
+</ul>
+<p><a id="typeapi.model.Union"></a></p>
+<p><a id="pydoc:typeapi.model.Union"></a></p>
 <h2 id="class-union">Class Union</h2>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">Union</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/api.py#L55">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L107">[view_source]</a></p>
 <p>Represents <code>typing.Union</code> or <code>typing.Optional</code>.</p>
-<p><a id="typeapi.api.Union.types"></a></p>
-<p><a id="pydoc:typeapi.api.Union.types"></a></p>
+<p><a id="typeapi.model.Union.types"></a></p>
+<p><a id="pydoc:typeapi.model.Union.types"></a></p>
 <h4 id="types">types</h4>
 <p>The types in this union.</p>
-<p><a id="typeapi.api.Annotated"></a></p>
-<p><a id="pydoc:typeapi.api.Annotated"></a></p>
+<p><a id="typeapi.model.Annotated"></a></p>
+<p><a id="pydoc:typeapi.model.Annotated"></a></p>
 <h2 id="class-annotated">Class Annotated</h2>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">Annotated</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/api.py#L63">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L115">[view_source]</a></p>
 <p>Represents a type wrapped in <code>typing.Annotated</code>.</p>
-<p><a id="typeapi.api.Annotated.wrapped"></a></p>
-<p><a id="pydoc:typeapi.api.Annotated.wrapped"></a></p>
+<p><a id="typeapi.model.Annotated.wrapped"></a></p>
+<p><a id="pydoc:typeapi.model.Annotated.wrapped"></a></p>
 <h4 id="wrapped">wrapped</h4>
 <p>The type that is annotated.</p>
-<p><a id="typeapi.api.Annotated.metadata"></a></p>
-<p><a id="pydoc:typeapi.api.Annotated.metadata"></a></p>
+<p><a id="typeapi.model.Annotated.metadata"></a></p>
+<p><a id="pydoc:typeapi.model.Annotated.metadata"></a></p>
 <h4 id="metadata">metadata</h4>
 <p>The metadata in the annotation.</p>
-<p><a id="typeapi.api.ForwardRef"></a></p>
-<p><a id="pydoc:typeapi.api.ForwardRef"></a></p>
+<p><a id="typeapi.model.ForwardRef"></a></p>
+<p><a id="pydoc:typeapi.model.ForwardRef"></a></p>
 <h2 id="class-forwardref">Class ForwardRef</h2>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">ForwardRef</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/api.py#L77">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L129">[view_source]</a></p>
 <p>Represents a forward reference.</p>
-<p><a id="typeapi.api.ForwardRef.expr"></a></p>
-<p><a id="pydoc:typeapi.api.ForwardRef.expr"></a></p>
+<p><a id="typeapi.model.ForwardRef.expr"></a></p>
+<p><a id="pydoc:typeapi.model.ForwardRef.expr"></a></p>
 <h4 id="expr">expr</h4>
 <p>The expression of the forward reference.</p>
-<p><a id="typeapi.api.ForwardRef.module"></a></p>
-<p><a id="pydoc:typeapi.api.ForwardRef.module"></a></p>
+<p><a id="typeapi.model.ForwardRef.module"></a></p>
+<p><a id="pydoc:typeapi.model.ForwardRef.module"></a></p>
 <h4 id="module">module</h4>
 <p>The module that is associated with the forward reference.</p>
-<p><a id="typeapi.api.Any"></a></p>
-<p><a id="pydoc:typeapi.api.Any"></a></p>
+<p><a id="typeapi.model.Any"></a></p>
+<p><a id="pydoc:typeapi.model.Any"></a></p>
 <h2 id="class-any">Class Any</h2>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">Any</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/api.py#L91">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L143">[view_source]</a></p>
 <p>Represents <code>typing.Any</code>.</p>
-<p><a id="typeapi.api.ClassVar"></a></p>
-<p><a id="pydoc:typeapi.api.ClassVar"></a></p>
+<p><a id="typeapi.model.ClassVar"></a></p>
+<p><a id="pydoc:typeapi.model.ClassVar"></a></p>
 <h2 id="class-classvar">Class ClassVar</h2>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">ClassVar</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/api.py#L96">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L148">[view_source]</a></p>
 <p>Represents <code>typing.ClassVar</code>.</p>
-<p><a id="typeapi.api.ClassVar.wrapped"></a></p>
-<p><a id="pydoc:typeapi.api.ClassVar.wrapped"></a></p>
+<p><a id="typeapi.model.ClassVar.wrapped"></a></p>
+<p><a id="pydoc:typeapi.model.ClassVar.wrapped"></a></p>
 <h4 id="wrapped_1">wrapped</h4>
 <p>The inner type.</p>
-<p><a id="typeapi.api.Final"></a></p>
-<p><a id="pydoc:typeapi.api.Final"></a></p>
+<p><a id="typeapi.model.Final"></a></p>
+<p><a id="pydoc:typeapi.model.Final"></a></p>
 <h2 id="class-final">Class Final</h2>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">Final</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/api.py#L104">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L156">[view_source]</a></p>
 <p>Represents <code>typing.Final</code>.</p>
-<p><a id="typeapi.api.Final.wrapped"></a></p>
-<p><a id="pydoc:typeapi.api.Final.wrapped"></a></p>
+<p><a id="typeapi.model.Final.wrapped"></a></p>
+<p><a id="pydoc:typeapi.model.Final.wrapped"></a></p>
 <h4 id="wrapped_2">wrapped</h4>
 <p>The inner type.</p>
-<p><a id="typeapi.api.NoReturn"></a></p>
-<p><a id="pydoc:typeapi.api.NoReturn"></a></p>
+<p><a id="typeapi.model.NoReturn"></a></p>
+<p><a id="pydoc:typeapi.model.NoReturn"></a></p>
 <h2 id="class-noreturn">Class NoReturn</h2>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">NoReturn</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/api.py#L112">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L164">[view_source]</a></p>
 <p>Represents <code>typing.NoReturn</code>.</p>
-<p><a id="typeapi.api.TypeGuard"></a></p>
-<p><a id="pydoc:typeapi.api.TypeGuard"></a></p>
+<p><a id="typeapi.model.TypeGuard"></a></p>
+<p><a id="pydoc:typeapi.model.TypeGuard"></a></p>
 <h2 id="class-typeguard">Class TypeGuard</h2>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">TypeGuard</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/api.py#L117">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L169">[view_source]</a></p>
 <p>Represents <code>typing.TypeGuard</code>.</p>
-<p><a id="typeapi.api.TypeGuard.wrapped"></a></p>
-<p><a id="pydoc:typeapi.api.TypeGuard.wrapped"></a></p>
+<p><a id="typeapi.model.TypeGuard.wrapped"></a></p>
+<p><a id="pydoc:typeapi.model.TypeGuard.wrapped"></a></p>
 <h4 id="wrapped_3">wrapped</h4>
 <p>The wrapped type.</p>
-<p><a id="typeapi.api.Literal"></a></p>
-<p><a id="pydoc:typeapi.api.Literal"></a></p>
+<p><a id="typeapi.model.Literal"></a></p>
+<p><a id="pydoc:typeapi.model.Literal"></a></p>
 <h2 id="class-literal">Class Literal</h2>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">Literal</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/api.py#L125">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L177">[view_source]</a></p>
 <p>Represents <code>typing.Literal</code>.</p>
-<p><a id="typeapi.api.Literal.values"></a></p>
-<p><a id="pydoc:typeapi.api.Literal.values"></a></p>
+<p><a id="typeapi.model.Literal.values"></a></p>
+<p><a id="pydoc:typeapi.model.Literal.values"></a></p>
 <h4 id="values">values</h4>
 <p>The possible values represented by the literal.</p>
-<p><a id="typeapi.api.NewType"></a></p>
-<p><a id="pydoc:typeapi.api.NewType"></a></p>
+<p><a id="typeapi.model.NewType"></a></p>
+<p><a id="pydoc:typeapi.model.NewType"></a></p>
 <h2 id="class-newtype">Class NewType</h2>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">NewType</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/api.py#L133">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L185">[view_source]</a></p>
 <p>Represents <code>typing.NewType</code>.</p>
-<p><a id="typeapi.api.NewType.name"></a></p>
-<p><a id="pydoc:typeapi.api.NewType.name"></a></p>
+<p><a id="typeapi.model.NewType.name"></a></p>
+<p><a id="pydoc:typeapi.model.NewType.name"></a></p>
 <h4 id="name">name</h4>
 <p>The name of the new type.</p>
-<p><a id="typeapi.api.NewType.supertype"></a></p>
-<p><a id="pydoc:typeapi.api.NewType.supertype"></a></p>
+<p><a id="typeapi.model.NewType.supertype"></a></p>
+<p><a id="pydoc:typeapi.model.NewType.supertype"></a></p>
 <h4 id="supertype">supertype</h4>
 <p>The underlying type for the new type.</p>
-<p><a id="typeapi.api.Unknown"></a></p>
-<p><a id="pydoc:typeapi.api.Unknown"></a></p>
+<p><a id="typeapi.model.Unknown"></a></p>
+<p><a id="pydoc:typeapi.model.Unknown"></a></p>
 <h2 id="class-unknown">Class Unknown</h2>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">Unknown</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/api.py#L144">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L196">[view_source]</a></p>
 <p>Represents an type hint that is not understood.</p>
+<p><a id="typeapi.model.Unknown.hint"></a></p>
+<p><a id="pydoc:typeapi.model.Unknown.hint"></a></p>
+<h4 id="hint">hint</h4>
+<p>The type hint that could not be converted into the typeapi.</p>
 
               
             </article>
@@ -1150,7 +1215,7 @@ alias was created with. This is an alias for accesing <a href="/api/typeapi.deco
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../.." class="md-footer__link md-footer__link--prev" aria-label="Previous: Home" rel="prev">
+        <a href="../typeapi/" class="md-footer__link md-footer__link--prev" aria-label="Previous: typeapi" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1159,20 +1224,20 @@ alias was created with. This is an alias for accesing <a href="/api/typeapi.deco
               <span class="md-footer__direction">
                 Previous
               </span>
-              Home
+              typeapi
             </div>
           </div>
         </a>
       
       
         
-        <a href="../typeapi.deconstruct/" class="md-footer__link md-footer__link--next" aria-label="Next: typeapi.deconstruct" rel="next">
+        <a href="../typeapi.parser/" class="md-footer__link md-footer__link--next" aria-label="Next: typeapi.parser" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              typeapi.deconstruct
+              typeapi.parser
             </div>
           </div>
           <div class="md-footer__button md-icon">

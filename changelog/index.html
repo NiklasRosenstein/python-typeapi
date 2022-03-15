@@ -24,7 +24,7 @@
         
           
           
-          <meta name="theme-color" content="#7e56c2">
+          <meta name="theme-color" content="#ffec3d">
         
       
     
@@ -53,7 +53,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="teal">
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="yellow" data-md-color-accent="deep-orange">
   
     
     
@@ -259,8 +259,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/typeapi.api/" class="md-nav__link">
-        typeapi.api
+      <a href="../api/typeapi/" class="md-nav__link">
+        typeapi
       </a>
     </li>
   
@@ -273,8 +273,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/typeapi.deconstruct/" class="md-nav__link">
-        typeapi.deconstruct
+      <a href="../api/typeapi.model/" class="md-nav__link">
+        typeapi.model
       </a>
     </li>
   
@@ -489,7 +489,10 @@ Added `Type.info` property</td><td></td><td></td><td>@NiklasRosenstein</td></tr>
 export members from `typeapi.api`, `typeapi.parser` and `typeapi.deconstruct`, most notably `typeapi.of()` is not available as an alias for `typeapi.parser.parse_type_hint()`</td><td></td><td></td><td>@NiklasRosenstein</td></tr>
   <tr><td>Breaking change</td><td>
 
-rename `Hint.source` to `Hint.original`</td><td></td><td></td><td>@NiklasRosenstein</td></tr>
+remove `Hint.source`</td><td></td><td></td><td>@NiklasRosenstein</td></tr>
+  <tr><td>Breaking change</td><td>
+
+remove `typeapi.deconstruct` module, make `typeapi.model.Type` have the fields that `TypeInfo` used to have and move `deconstruct_type()` to `Type.of()`</td><td></td><td></td><td>@NiklasRosenstein</td></tr>
 </table>
 
 <h2 id="010a2-2022-03-15">0.1.0a2 (2022-03-15)</h2>
