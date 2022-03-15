@@ -25,5 +25,11 @@ author = "@NiklasRosenstein"
 [[entries]]
 id = "a6495338-0ca5-4223-ad96-c869642e40ff"
 type = "breaking change"
-description = "rename `Hint.source` to `Hint.original`"
+description = "remove `Hint.source`"
+author = "@NiklasRosenstein"
+
+[[entries]]
+id = "d60b9457-2427-4c66-87bf-ce63285a452a"
+type = "breaking change"
+description = "remove `typeapi.deconstruct` module, make `typeapi.model.Type` have the fields that `TypeInfo` used to have and move `deconstruct_type()` to `Type.of()`"
 author = "@NiklasRosenstein"
