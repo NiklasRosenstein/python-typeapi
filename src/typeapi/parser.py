@@ -22,23 +22,23 @@ def _handler(func: _TypeHintHandler) -> _TypeHintHandler:
 @_handler
 def _handle_any(hint: t.Any) -> t.Optional[Hint]:
   if hint is t.Any:
-    return Any()
+    return Any(hint)
   return None
 
 
 @_handler
 def _handle_annotated(hint: t.Any) -> t.Optional[Hint]:
   if is_annotated_alias(hint):
-    return Annotated(hint.__origin__, hint.__metadata__)
+    return Annotated(hint, hint.__origin__, hint.__metadata__)
   return None
 
 
 @_handler
 def _handle_forward_ref(hint: t.Any) -> t.Optional[Hint]:
   if isinstance(hint, t.ForwardRef):
-    return ForwardRef(hint.__forward_arg__, getattr(hint, '__forward_module__', None))
+    return ForwardRef(hint, hint.__forward_arg__, getattr(hint, '__forward_module__', None))
   elif isinstance(hint, str):
-    return ForwardRef(hint, None)
+    return ForwardRef(hint, hint, None)
   return None
 
 
@@ -46,7 +46,7 @@ def _handle_forward_ref(hint: t.Any) -> t.Optional[Hint]:
 def _handle_class_var(hint: t.Any) -> t.Optional[Hint]:
   if is_generic_alias(hint) and hint.__origin__ == t.ClassVar:
     assert len(hint.__args__) == 1, hint
-    return ClassVar(hint.__args__[0])
+    return ClassVar(hint, hint.__args__[0])
   return None
 
 
@@ -54,14 +54,14 @@ def _handle_class_var(hint: t.Any) -> t.Optional[Hint]:
 def _handle_final(hint: t.Any) -> t.Optional[Hint]:
   if is_generic_alias(hint) and hint.__origin__ == te.Final:
     assert len(hint.__args__) == 1, hint
-    return Final(hint.__args__[0])
+    return Final(hint, hint.__args__[0])
   return None
 
 
 @_handler
 def _handle_no_return(hint: t.Any) -> t.Optional[Hint]:
   if hint == t.NoReturn:
-    return NoReturn()
+    return NoReturn(hint)
   return None
 
 
@@ -69,7 +69,7 @@ def _handle_no_return(hint: t.Any) -> t.Optional[Hint]:
 def _handle_type_guard(hint: t.Any) -> t.Optional[Hint]:
   if is_generic_alias(hint) and hint.__origin__ == te.TypeGuard:
     assert len(hint.__args__) == 1, hint
-    return TypeGuard(hint.__args__[0])
+    return TypeGuard(hint, hint.__args__[0])
   return None
 
 
@@ -77,7 +77,7 @@ def _handle_type_guard(hint: t.Any) -> t.Optional[Hint]:
 def _handle_union(hint: t.Any) -> t.Optional[Hint]:
   if is_union_type(hint):
     assert len(hint.__args__) >= 2, hint
-    return Union(hint.__args__)
+    return Union(hint, hint.__args__)
   return None
 
 
@@ -85,14 +85,14 @@ def _handle_union(hint: t.Any) -> t.Optional[Hint]:
 def _handle_literal(hint: t.Any) -> t.Optional[Hint]:
   if is_generic_alias(hint) and hint.__origin__ == te.Literal:
     assert len(hint.__args__) >= 1, hint
-    return Literal(hint.__args__)
+    return Literal(hint, hint.__args__)
   return None
 
 
 @_handler
 def _handle_new_type(hint: t.Any) -> t.Optional[Hint]:
   if is_new_type(hint):
-    return NewType(hint.__name__, hint.__supertype__)
+    return NewType(hint, hint.__name__, hint.__supertype__)
   return None
 
 
@@ -111,21 +111,21 @@ def _handle_generic_alias_of_concrete_type(hint: t.Any) -> t.Optional[Hint]:
   """
 
   if is_generic_alias(hint) and isinstance(hint.__origin__, type):
-    return Type(hint.__origin__, hint.__args__)
+    return Type(hint, hint.__origin__, hint.__args__)
   return None
 
 
 @_handler
 def _handle_concrete_type(hint: t.Any) -> t.Optional[Hint]:
   if isinstance(hint, type) and hint.__module__ not in ('typing', 'typing_extensions'):
-    return Type(hint, None)
+    return Type(hint, hint, None)
   return None
 
 
 @_handler
 def _handle_special_generic_alias(hint: t.Any) -> t.Optional[Hint]:
   if is_special_generic_alias(hint):
-    return Type(hint.__origin__, None)
+    return Type(hint, hint.__origin__, None)
   return None
 
 

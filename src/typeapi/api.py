@@ -4,8 +4,16 @@ import typing as t
 from .utils import TypeArg, type_repr
 
 
+@dataclasses.dataclass
 class Hint:
   """ Base for classes that represent type hints. """
+
+  #: The original #typing hint.
+  source: t.Any = dataclasses.field(repr=False)
+
+  def __post_init__(self) -> None:
+    if type(self) is Hint:
+      raise TypeError('Hint cannot be constructed')
 
 
 @dataclasses.dataclass
@@ -118,6 +126,3 @@ class NewType(Hint):
 @dataclasses.dataclass
 class Unknown(Hint):
   """ Represents an type hint that is not understood. """
-
-  #: The type hint that was not understood.
-  hint: t.Any

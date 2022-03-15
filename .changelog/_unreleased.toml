@@ -1,0 +1,5 @@
+[[entries]]
+id = "2511c59d-c8c6-486a-aaff-8ccd06f91ae4"
+type = "breaking change"
+description = "add `Hint.source` field"
+author = "@NiklasRosenstein"
