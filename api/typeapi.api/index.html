@@ -935,7 +935,7 @@
             <article class="md-content__inner md-typeset">
               
                 
-<a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/content/api/typeapi.api.md" title="Edit this page" class="md-content__button md-icon">
+<a href="https://github.com/NiklasRosenstein/python-typeapi/blob/None/docs/content/api/typeapi.api.md" title="Edit this page" class="md-content__button md-icon">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
 </a>
 
@@ -949,7 +949,7 @@
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">Hint</span><span class="p">()</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/api.py#L8">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/49777d3b497ebbb2a10d4c1fce18c3f6d870ddbe/docs/../src/typeapi/api.py#L8">[view_source]</a></p>
 <p>Base for classes that represent type hints.</p>
 <p><a id="typeapi.api.Hint.source"></a></p>
 <p><a id="pydoc:typeapi.api.Hint.source"></a></p>
@@ -961,7 +961,7 @@
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">Type</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/api.py#L20">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/49777d3b497ebbb2a10d4c1fce18c3f6d870ddbe/docs/../src/typeapi/api.py#L20">[view_source]</a></p>
 <p>Represents a concrete type, including type arguments if applicable.</p>
 <p><a id="typeapi.api.Type.type"></a></p>
 <p><a id="pydoc:typeapi.api.Type.type"></a></p>
@@ -979,7 +979,7 @@ is what the original generic alias was created with.</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">Union</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/api.py#L38">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/49777d3b497ebbb2a10d4c1fce18c3f6d870ddbe/docs/../src/typeapi/api.py#L38">[view_source]</a></p>
 <p>Represents <code>typing.Union</code> or <code>typing.Optional</code>.</p>
 <p><a id="typeapi.api.Union.types"></a></p>
 <p><a id="pydoc:typeapi.api.Union.types"></a></p>
@@ -991,7 +991,7 @@ is what the original generic alias was created with.</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">Annotated</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/api.py#L46">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/49777d3b497ebbb2a10d4c1fce18c3f6d870ddbe/docs/../src/typeapi/api.py#L46">[view_source]</a></p>
 <p>Represents a type wrapped in <code>typing.Annotated</code>.</p>
 <p><a id="typeapi.api.Annotated.wrapped"></a></p>
 <p><a id="pydoc:typeapi.api.Annotated.wrapped"></a></p>
@@ -1007,7 +1007,7 @@ is what the original generic alias was created with.</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">ForwardRef</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/api.py#L60">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/49777d3b497ebbb2a10d4c1fce18c3f6d870ddbe/docs/../src/typeapi/api.py#L60">[view_source]</a></p>
 <p>Represents a forward reference.</p>
 <p><a id="typeapi.api.ForwardRef.expr"></a></p>
 <p><a id="pydoc:typeapi.api.ForwardRef.expr"></a></p>
@@ -1023,7 +1023,7 @@ is what the original generic alias was created with.</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">Any</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/api.py#L74">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/49777d3b497ebbb2a10d4c1fce18c3f6d870ddbe/docs/../src/typeapi/api.py#L74">[view_source]</a></p>
 <p>Represents <code>typing.Any</code>.</p>
 <p><a id="typeapi.api.ClassVar"></a></p>
 <p><a id="pydoc:typeapi.api.ClassVar"></a></p>
@@ -1031,7 +1031,7 @@ is what the original generic alias was created with.</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">ClassVar</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/api.py#L79">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/49777d3b497ebbb2a10d4c1fce18c3f6d870ddbe/docs/../src/typeapi/api.py#L79">[view_source]</a></p>
 <p>Represents <code>typing.ClassVar</code>.</p>
 <p><a id="typeapi.api.ClassVar.wrapped"></a></p>
 <p><a id="pydoc:typeapi.api.ClassVar.wrapped"></a></p>
@@ -1043,7 +1043,7 @@ is what the original generic alias was created with.</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">Final</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/api.py#L87">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/49777d3b497ebbb2a10d4c1fce18c3f6d870ddbe/docs/../src/typeapi/api.py#L87">[view_source]</a></p>
 <p>Represents <code>typing.Final</code>.</p>
 <p><a id="typeapi.api.Final.wrapped"></a></p>
 <p><a id="pydoc:typeapi.api.Final.wrapped"></a></p>
@@ -1055,7 +1055,7 @@ is what the original generic alias was created with.</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">NoReturn</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/api.py#L95">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/49777d3b497ebbb2a10d4c1fce18c3f6d870ddbe/docs/../src/typeapi/api.py#L95">[view_source]</a></p>
 <p>Represents <code>typing.NoReturn</code>.</p>
 <p><a id="typeapi.api.TypeGuard"></a></p>
 <p><a id="pydoc:typeapi.api.TypeGuard"></a></p>
@@ -1063,7 +1063,7 @@ is what the original generic alias was created with.</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">TypeGuard</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/api.py#L100">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/49777d3b497ebbb2a10d4c1fce18c3f6d870ddbe/docs/../src/typeapi/api.py#L100">[view_source]</a></p>
 <p>Represents <code>typing.TypeGuard</code>.</p>
 <p><a id="typeapi.api.TypeGuard.wrapped"></a></p>
 <p><a id="pydoc:typeapi.api.TypeGuard.wrapped"></a></p>
@@ -1075,7 +1075,7 @@ is what the original generic alias was created with.</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">Literal</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/api.py#L108">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/49777d3b497ebbb2a10d4c1fce18c3f6d870ddbe/docs/../src/typeapi/api.py#L108">[view_source]</a></p>
 <p>Represents <code>typing.Literal</code>.</p>
 <p><a id="typeapi.api.Literal.values"></a></p>
 <p><a id="pydoc:typeapi.api.Literal.values"></a></p>
@@ -1087,7 +1087,7 @@ is what the original generic alias was created with.</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">NewType</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/api.py#L116">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/49777d3b497ebbb2a10d4c1fce18c3f6d870ddbe/docs/../src/typeapi/api.py#L116">[view_source]</a></p>
 <p>Represents <code>typing.NewType</code>.</p>
 <p><a id="typeapi.api.NewType.name"></a></p>
 <p><a id="pydoc:typeapi.api.NewType.name"></a></p>
@@ -1103,7 +1103,7 @@ is what the original generic alias was created with.</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">Unknown</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/api.py#L127">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/49777d3b497ebbb2a10d4c1fce18c3f6d870ddbe/docs/../src/typeapi/api.py#L127">[view_source]</a></p>
 <p>Represents an type hint that is not understood.</p>
 
               
