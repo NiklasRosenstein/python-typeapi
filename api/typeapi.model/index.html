@@ -355,6 +355,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#get_parameter_mapping" class="md-nav__link">
+    get_parameter_mapping
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#of" class="md-nav__link">
     of
   </a>
@@ -753,6 +760,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#get_parameter_mapping" class="md-nav__link">
+    get_parameter_mapping
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#of" class="md-nav__link">
     of
   </a>
@@ -1041,13 +1055,20 @@ parametrized with.</p>
 </code></pre></div>
 <p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L45">[view_source]</a></p>
 <p>Return a copy of the <a href="#pydoc:typeapi.model.Type">Type</a> object, but <a href="#pydoc:typeapi.model.Type.args">args</a> replaced by the <em>args</em> parameter value.</p>
+<p><a id="typeapi.model.Type.get_parameter_mapping"></a></p>
+<p><a id="pydoc:typeapi.model.Type.get_parameter_mapping"></a></p>
+<h4 id="get_parameter_mapping">get_parameter_mapping</h4>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_parameter_mapping</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">TypeVar</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">]</span>
+</code></pre></div>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L50">[view_source]</a></p>
+<p>Computes the values assigned to all type parameters present in <em>type</em> and its bases.</p>
 <p><a id="typeapi.model.Type.of"></a></p>
 <p><a id="pydoc:typeapi.model.Type.of"></a></p>
 <h4 id="of">of</h4>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span> <span class="nf">of</span><span class="p">(</span><span class="n">type_</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Type</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L51">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L62">[view_source]</a></p>
 <p>Deconstruct a type hint that is concrete type or generic alias, i.e. one that is not a "special form" like
 <code>typing.Union</code> or <code>typing.Any</code>. Examples of types being accepted are any actual Python types, <code>typing.Any</code>, special
 generic aliases like <code>typing.List</code> (unspecialized) or generic aliases (like <code>typing.List[int]</code> or a parametrization
@@ -1067,7 +1088,7 @@ of a <code>typing.Generic</code> subclass).</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">Union</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L107">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L123">[view_source]</a></p>
 <p>Represents <code>typing.Union</code> or <code>typing.Optional</code>.</p>
 <p><a id="typeapi.model.Union.types"></a></p>
 <p><a id="pydoc:typeapi.model.Union.types"></a></p>
@@ -1079,7 +1100,7 @@ of a <code>typing.Generic</code> subclass).</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">Annotated</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L115">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L131">[view_source]</a></p>
 <p>Represents a type wrapped in <code>typing.Annotated</code>.</p>
 <p><a id="typeapi.model.Annotated.wrapped"></a></p>
 <p><a id="pydoc:typeapi.model.Annotated.wrapped"></a></p>
@@ -1095,7 +1116,7 @@ of a <code>typing.Generic</code> subclass).</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">ForwardRef</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L129">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L145">[view_source]</a></p>
 <p>Represents a forward reference.</p>
 <p><a id="typeapi.model.ForwardRef.expr"></a></p>
 <p><a id="pydoc:typeapi.model.ForwardRef.expr"></a></p>
@@ -1111,7 +1132,7 @@ of a <code>typing.Generic</code> subclass).</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">Any</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L143">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L159">[view_source]</a></p>
 <p>Represents <code>typing.Any</code>.</p>
 <p><a id="typeapi.model.ClassVar"></a></p>
 <p><a id="pydoc:typeapi.model.ClassVar"></a></p>
@@ -1119,7 +1140,7 @@ of a <code>typing.Generic</code> subclass).</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">ClassVar</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L148">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L164">[view_source]</a></p>
 <p>Represents <code>typing.ClassVar</code>.</p>
 <p><a id="typeapi.model.ClassVar.wrapped"></a></p>
 <p><a id="pydoc:typeapi.model.ClassVar.wrapped"></a></p>
@@ -1131,7 +1152,7 @@ of a <code>typing.Generic</code> subclass).</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">Final</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L156">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L172">[view_source]</a></p>
 <p>Represents <code>typing.Final</code>.</p>
 <p><a id="typeapi.model.Final.wrapped"></a></p>
 <p><a id="pydoc:typeapi.model.Final.wrapped"></a></p>
@@ -1143,7 +1164,7 @@ of a <code>typing.Generic</code> subclass).</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">NoReturn</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L164">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L180">[view_source]</a></p>
 <p>Represents <code>typing.NoReturn</code>.</p>
 <p><a id="typeapi.model.TypeGuard"></a></p>
 <p><a id="pydoc:typeapi.model.TypeGuard"></a></p>
@@ -1151,7 +1172,7 @@ of a <code>typing.Generic</code> subclass).</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">TypeGuard</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L169">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L185">[view_source]</a></p>
 <p>Represents <code>typing.TypeGuard</code>.</p>
 <p><a id="typeapi.model.TypeGuard.wrapped"></a></p>
 <p><a id="pydoc:typeapi.model.TypeGuard.wrapped"></a></p>
@@ -1163,7 +1184,7 @@ of a <code>typing.Generic</code> subclass).</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">Literal</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L177">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L193">[view_source]</a></p>
 <p>Represents <code>typing.Literal</code>.</p>
 <p><a id="typeapi.model.Literal.values"></a></p>
 <p><a id="pydoc:typeapi.model.Literal.values"></a></p>
@@ -1175,7 +1196,7 @@ of a <code>typing.Generic</code> subclass).</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">NewType</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L185">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L201">[view_source]</a></p>
 <p>Represents <code>typing.NewType</code>.</p>
 <p><a id="typeapi.model.NewType.name"></a></p>
 <p><a id="pydoc:typeapi.model.NewType.name"></a></p>
@@ -1191,7 +1212,7 @@ of a <code>typing.Generic</code> subclass).</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">Unknown</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L196">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L212">[view_source]</a></p>
 <p>Represents an type hint that is not understood.</p>
 <p><a id="typeapi.model.Unknown.hint"></a></p>
 <p><a id="pydoc:typeapi.model.Unknown.hint"></a></p>
