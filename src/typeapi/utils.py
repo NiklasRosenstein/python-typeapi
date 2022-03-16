@@ -74,9 +74,14 @@ class NewType(te.Protocol):
 def is_generic(hint: t.Any) -> te.TypeGuard[t.Type[Generic]]:
   """
   Returns:
-    `True` if *hint* is a subclass fo #typing.Generic (and not an alias of it).
+    `True` if *hint* is a subclass of #typing.Generic (and not an alias of it).
+
+  !!! note
+
+      This returns `False` for #typing.Generic because it does not have a `__parameters__` attribute.
   """
-  return isinstance(hint, type) and issubclass(hint, t.Generic)  # type: ignore[arg-type]
+
+  return isinstance(hint, type) and issubclass(hint, t.Generic) and hint is not t.Generic  # type: ignore[arg-type]
 
 
 def is_generic_alias(hint: t.Any) -> te.TypeGuard[GenericAlias]:

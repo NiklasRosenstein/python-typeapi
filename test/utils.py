@@ -16,5 +16,5 @@ def typing_modules_for_member(member_name: str) -> t.Sequence[t.Any]:
 
 def parametrize_typing_module(member_name: str, argname: str = 'm') -> t.Callable[[T], T]:
   def _decorator(func: T) -> T:
-    return pytest.mark.parametrize(argname, typing_modules_for_member(member_name))(func)
+    return pytest.mark.parametrize(argname, typing_modules_for_member(member_name))(func)  # type: ignore
   return _decorator

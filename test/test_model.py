@@ -21,12 +21,14 @@ def test_Annotated_str():
   assert str(Annotated(int, (42, "foobar"))) == "Annotated(int, 42, 'foobar')"
 
 
-
 def test_Type_of_any():
   assert Type.of(t.Any) == Type(object, 0, None, None)
 
 
 def test_Type_of_generic():
+  assert Type.of(t.Generic) == Type(t.Generic, 0, None, None)
+  assert Type.of(t.Generic[T]) == Type(t.Generic, 0, None, (T,))
+
   class MyGeneric(t.Generic[T]): pass
   assert Type.of(MyGeneric) == Type(MyGeneric, 1, (T,), None)
   assert Type.of(MyGeneric[int]) == Type(MyGeneric, 1, (T,), (int,))
@@ -58,3 +60,23 @@ def test_Type_of_annotated_errors(m):
 
 def test_Type_of_concrete_type():
   assert Type.of(int) == Type(int, 0, None, None)
+
+
+def test_Type_get_type_parameter_mapping() -> None:
+  assert Type.of(int).get_parameter_mapping() == {}
+  assert Type.of(t.List).get_parameter_mapping() == {}
+  assert Type.of(t.List[int]).get_parameter_mapping() == {}
+  assert Type.of(t.Dict[str, int]).get_parameter_mapping() == {}
+  assert Type.of(t.Dict[str, int]).get_parameter_mapping() == {}
+
+  class MyGeneric(t.Generic[T]):
+    a: T
+  assert Type.of(MyGeneric).get_parameter_mapping() == {}
+  assert Type.of(MyGeneric[int]).get_parameter_mapping() == {T: int}
+
+  # This is kind of a weird constellation.
+  class WeirdGeneric(MyGeneric[str], t.Generic[T]):
+    b: T
+  assert Type.of(WeirdGeneric).get_parameter_mapping() == {T: str}
+  assert Type.of(WeirdGeneric[int]).get_parameter_mapping() == {T: int}
+  assert Type.of(WeirdGeneric.__orig_bases__[0]).get_parameter_mapping() == {T: str}

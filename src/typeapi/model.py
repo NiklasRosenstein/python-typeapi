@@ -47,6 +47,17 @@ class Type(Hint):
 
     return Type(self.type, self.nparams, self.parameters, args)
 
+  def get_parameter_mapping(self) -> t.Dict[t.TypeVar, t.Any]:
+    """ Computes the values assigned to all type parameters present in *type* and its bases. """
+
+    # TODO (@NiklasRosenstein): This might be a good spot to implement caching.
+
+    type_parameters = dict(zip(self.parameters or (), self.args or ()))
+    if utils.is_generic(self.type):
+      for base in self.type.__orig_bases__:
+        type_parameters = {**Type.of(base).get_parameter_mapping(), **type_parameters}
+    return type_parameters
+
   @staticmethod
   def of(type_: t.Any) -> Type:
     """ Deconstruct a type hint that is concrete type or generic alias, i.e. one that is not a "special form" like
@@ -61,10 +72,15 @@ class Type(Hint):
         passing a #typing.Annotated object or #typing.ClassVar will cause this error to be raised.
     """
 
+    # TODO (@NiklasRosenstein): This might be a good spot to implement caching.
+
     def _raise() -> t.NoReturn: raise ValueError(f'unable to deconstruct {type_!r}')
 
     if type_ is t.Any:
       return Type(object, 0, None, None)
+
+    if type_ is t.Generic:
+      return Type(t.Generic, 0, None, None)  # type: ignore[arg-type]
 
     if utils.is_special_generic_alias(type_):
       if sys.version_info[:2] <= (3, 8):
@@ -82,7 +98,7 @@ class Type(Hint):
         type_info = Type.of(special_alias)
 
       # Otherwise, the alias origin must be a subclass of typing.Generic.
-      elif utils.is_generic(type_.__origin__):
+      elif utils.is_generic(type_.__origin__) or type_.__origin__ == t.Generic:
         type_info = Type.of(type_.__origin__)
 
       else:

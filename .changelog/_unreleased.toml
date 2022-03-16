@@ -9,3 +9,21 @@ id = "8e0d6f68-83f3-43bc-8899-360f2b90e9d5"
 type = "improvement"
 description = "export `get_type_hints()` and `type_repr()` in `typeapi` root module"
 author = "@NiklasRosenstein"
+
+[[entries]]
+id = "a322f92a-39ac-4236-b280-4980974cbb0e"
+type = "improvement"
+description = "`is_generic()` no longer returns true if the type is the actualy `typing.Generic` because only its subclasses of `__parameters__`"
+author = "@NiklasRosenstein"
+
+[[entries]]
+id = "af69ca3f-c50a-4c3a-80f8-4d46197e2587"
+type = "fix"
+description = "`Type.of()` no longer errors on passing `typing.Generic` and handles it as `Type(typing.Generic, 0, None, None)`"
+author = "@NiklasRosenstein"
+
+[[entries]]
+id = "1a555129-9ed4-4b2a-8115-47536b140507"
+type = "feature"
+description = "add `Type.get_parameter_mapping()`"
+author = "@NiklasRosenstein"
