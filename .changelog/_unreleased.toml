@@ -3,3 +3,9 @@ id = "ac6fa5da-cc82-42fd-ae05-df8ef1ae1fed"
 type = "fix"
 description = "fix `from typeapi import *`"
 author = "@NiklasRosenstein"
+
+[[entries]]
+id = "8e0d6f68-83f3-43bc-8899-360f2b90e9d5"
+type = "improvement"
+description = "export `get_type_hints()` and `type_repr()` in `typeapi` root module"
+author = "@NiklasRosenstein"
