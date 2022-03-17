@@ -101,6 +101,29 @@ def test_Type_get_orig_bases():
   assert list(Type.of(MyGeneric3).get_orig_bases()) == [t.Generic[T], MyGeneric2[T]]
   assert list(Type.of(MyGeneric3).get_orig_bases(True)) == [t.Generic[T], MyGeneric2[T], MyGeneric1[int]]
 
+  # Test to ensure that even though the type variable T is re-used, it is actually assigned the type *int*
+  # in the bases of MyGeneric2, which we must maintain when getting all the parametrized bases.
+  assert Type.of(MyGeneric3[str]).get_orig_bases_parametrized(True) == {
+    MyGeneric2[T]: Type.of(MyGeneric2[str]),
+    MyGeneric1[int]: Type.of(MyGeneric1[int]),
+  }
+
+  class MyGeneric4(MyGeneric1[K], t.Generic[K, V]): pass
+
+  # Test to ensure that the type variable mix-up as expected.
+  assert Type.of(MyGeneric4[str, int]).get_orig_bases_parametrized(True) == {
+    MyGeneric1[K]: Type.of(MyGeneric1[str]),
+  }
+
+  # Test to ensure that partial parametrization in the bases works as expected.
+  class MyGeneric5(MyGeneric4[str, V]): pass
+
+  # Test to ensure that the type variable mix-up as expected.
+  assert Type.of(MyGeneric5[int]).get_orig_bases_parametrized(True) == {
+    MyGeneric4[str, V]: Type.of(MyGeneric4[str, int]),
+    MyGeneric1[K]: Type.of(MyGeneric1[str]),
+  }
+
 
 def test_ForwardRef_evaluate():
   ref = ForwardRef(t.ForwardRef('T'))

@@ -112,6 +112,21 @@ class Type(Hint):
           seen.add(base2)
           yield base2
 
+  def get_orig_bases_parametrized(self, all_: bool = False) -> t.Dict[utils.GenericAlias, Hint]:
+    """ Create a dictionary that maps the generic aliases returned by #get_orig_bases() to a type hint infused
+    with the current type's #args. If the #type is not a generic or has no generic bases, this method returns
+    an empty dictionary. Note that this will skip #typing.Generic. """
+
+    type_parameters = self.get_parameter_mapping()
+    result = {}
+    for base in self.get_orig_bases():
+      if base.__origin__ is t.Generic: continue
+      type_ = Type.of(base)
+      result[base] = infuse_type_parameters(type_, type_parameters)
+      if all_:
+        result = {**type_.get_orig_bases_parametrized(True), **result}
+    return result
+
   def visit(self, func: t.Callable[[Hint], Hint]) -> Hint:
     return func(self.with_args(tuple(a.visit(func) for a in self.args) if self.args is not None else None))
 
