@@ -4,7 +4,7 @@ import typing as t
 import typing_extensions as te
 
 import pytest
-from typeapi.utils import get_special_forms, get_special_generic_aliases, is_annotated_alias, is_generic_alias, is_special_form, is_special_generic_alias
+from typeapi.utils import get_annotations, get_special_forms, get_special_generic_aliases, is_annotated_alias, is_generic_alias, is_special_form, is_special_generic_alias
 
 T = t.TypeVar('T')
 
@@ -71,3 +71,9 @@ def test_get_special_generic_aliases():
 
 def test_get_special_forms():
   assert set(get_special_forms().keys()).issuperset(['Any', 'Union', 'NoReturn', 'ClassVar'])
+
+
+def test_get_annotations():
+  class A:
+    a: 'str'
+  assert get_annotations(A) == {'a': str}

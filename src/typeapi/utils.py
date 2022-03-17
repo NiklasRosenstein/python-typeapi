@@ -4,6 +4,7 @@ to all viable members of the #typing module independent of the Python version. "
 
 from __future__ import annotations
 import functools
+import inspect
 import sys
 import types
 import typing as t
@@ -252,11 +253,17 @@ def type_repr(obj):
   return repr(obj)
 
 
-def get_type_hints(type_: t.Any) -> t.Dict[str, t.Any]:
+def get_annotations(type_: t.Any) -> t.Dict[str, t.Any]:
   """ Like #typing.get_type_hints(), but always includes extras. This is important when we want to inspect
-  #typing.Annotated hints (without extras the annotations are removed). """
+  #typing.Annotated hints (without extras the annotations are removed). In Python 3.10 and onwards, this is
+  an alias for #inspect.get_annotations() with `eval_str=True`. """
 
   if sys.version_info[:2] <= (3, 8):
     return t.get_type_hints(type_)
-  else:
+  if sys.version_info[:2] <= (3, 9):
     return t.get_type_hints(type_, include_extras=True)
+  return inspect.get_annotations(type_, eval_str=True)
+
+
+# Backwards compatibility, remove in next minor version (minor because we're below 1.0.0)
+get_type_hints = get_annotations

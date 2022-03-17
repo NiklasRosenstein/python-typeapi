@@ -3,3 +3,9 @@ id = "17d2c8db-4dd2-452d-86ec-4e34ff7493b9"
 type = "fix"
 description = "Fix an error caused when using `Type.get_orig_bases()` if the `Type.type` has non-generic bases"
 author = "@NiklasRosenstein"
+
+[[entries]]
+id = "6e9ebd6e-1e63-4840-805e-6f501ab05b2a"
+type = "deprecation"
+description = "Deprecated `get_type_hints()` in favor of new `get_annotations()`"
+author = "@NiklasRosenstein"
