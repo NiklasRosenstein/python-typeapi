@@ -465,7 +465,7 @@
             <article class="md-content__inner md-typeset">
               
                 
-<a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/content/api/typeapi.parser.md" title="Edit this page" class="md-content__button md-icon">
+<a href="https://github.com/NiklasRosenstein/python-typeapi/blob/None/docs/content/api/typeapi.parser.md" title="Edit this page" class="md-content__button md-icon">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
 </a>
 
@@ -479,7 +479,7 @@
 <div class="highlight"><pre><span></span><code><span class="nd">@t</span><span class="o">.</span><span class="n">overload</span>
 <span class="k">def</span> <span class="nf">parse_type_hint</span><span class="p">(</span><span class="n">hint</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Hint</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/parser.py#L116">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/ab50dd295c70b7caccfc028ede2659e1cf9301d3/docs/../src/typeapi/parser.py#L116">[view_source]</a></p>
 <p>Parse the given type hint to a <a href="/api/typeapi.model#pydoc:typeapi.model.Hint">Hint</a> object. If the type hint is not accepted by any of the
 handlers, an instance of <a href="/api/typeapi.model#pydoc:typeapi.model.Unknown">Unknown</a> is returned instead.</p>
 <p><strong>Arguments</strong>:</p>
@@ -495,7 +495,7 @@ handlers, an instance of <a href="/api/typeapi.model#pydoc:typeapi.model.Unknown
 <span class="k">def</span> <span class="nf">parse_type_hint</span><span class="p">(</span><span class="n">hint</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>
                     <span class="n">debug</span><span class="p">:</span> <span class="n">te</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">True</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="n">Hint</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/parser.py#L128">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/ab50dd295c70b7caccfc028ede2659e1cf9301d3/docs/../src/typeapi/parser.py#L128">[view_source]</a></p>
 <p>Same as <a href="#pydoc:typeapi.parser.parse_type_hint">parse_type_hint()</a>, but returns the name of the handler function that accepted the
 type hint and converted it to a <a href="/api/typeapi.model#pydoc:typeapi.model.Hint">Hint</a> object.</p>
 
