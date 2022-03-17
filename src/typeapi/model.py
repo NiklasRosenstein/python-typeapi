@@ -219,7 +219,7 @@ class ForwardRef(Hint):
     if not module_name:
       raise RuntimeError(f'no module to evaluate {self}')
     globals = vars(sys.modules[module_name])
-    if sys.version_info[:2] <= (3, 9):
+    if sys.version_info[:2] < (3, 9):
       return self.ref._evaluate(globals, None)
     else:
       return self.ref._evaluate(globals, None, set())
