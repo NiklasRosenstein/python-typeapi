@@ -9,3 +9,9 @@ id = "eab7b8bd-7805-4b33-8dae-ba17dd3cdb0b"
 type = "feature"
 description = "Implement `ForwardRef.evaluate()`"
 author = "@NiklasRosenstein"
+
+[[entries]]
+id = "f0d0e72e-ae25-4f32-823c-18d92cd447a6"
+type = "feature"
+description = "add `typeapi.eval_types()`"
+author = "@NiklasRosenstein"

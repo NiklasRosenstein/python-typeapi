@@ -316,3 +316,24 @@ class Unknown(Hint):
 
   #: The type hint that could not be converted into the typeapi.
   hint: t.Any
+
+
+def eval_types(hint: Hint, module: t.Optional[str] = None) -> Hint:
+  """ Evaluate all forward references present in *hint*.
+
+  Arguments:
+    hint: The #typeapi #Hint to evaluate forward references in.
+    module: The name of the module to evaluate the references in if they are not already associated with a module.
+      Note that the module must be present in #sys.modules.
+  Returns:
+    The same hint with all forward references replaced.
+  """
+
+  import typeapi
+
+  def _visitor(hint: Hint) -> Hint:
+    if isinstance(hint, ForwardRef):
+      return typeapi.of(hint.evaluate(module))
+    return hint
+
+  return hint.visit(_visitor)

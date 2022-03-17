@@ -3,7 +3,8 @@ import collections.abc
 import sys
 import typing as t
 import pytest
-from typeapi.model import ForwardRef, Type, Annotated, TypeVar
+import typeapi
+from typeapi.model import ForwardRef, Type, Annotated, TypeVar, eval_types
 from typeapi.utils import is_generic
 from utils import parametrize_typing_module
 
@@ -89,8 +90,13 @@ def test_ForwardRef_evaluate():
   assert ref.evaluate(__name__) is T
   with pytest.raises(RuntimeError):
     ref.evaluate()
+  assert eval_types(ref, __name__) == TypeVar(T)
 
   if sys.version_info[:3] > (3, 9, 6):
     ref = ForwardRef(t.ForwardRef('T', module=__name__))  # type: ignore[call-arg]  # mypy doesn't seem to understand comparing version_info against a three-part version
     assert ref.evaluate() is T
     assert ref.evaluate('foobar32') is T
+
+
+def test_eval_types():
+  assert eval_types(typeapi.of(t.Dict['T', str]), __name__) == Type(dict, 2, None, (TypeVar(T), Type.of(str)))
