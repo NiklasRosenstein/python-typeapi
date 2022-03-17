@@ -90,7 +90,7 @@ def test_ForwardRef_evaluate():
   with pytest.raises(RuntimeError):
     ref.evaluate()
 
-  if sys.version_info[:2] >= (3, 9):
+  if sys.version_info[:3] > (3, 9, 6):
     ref = ForwardRef(t.ForwardRef('T', module=__name__))
     assert ref.evaluate() is T
     assert ref.evaluate('foobar32') is T
