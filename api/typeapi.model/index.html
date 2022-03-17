@@ -651,6 +651,20 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#eval_types" class="md-nav__link">
+    eval_types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#infuse_type_parameters" class="md-nav__link">
+    infuse_type_parameters
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1124,6 +1138,20 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#eval_types" class="md-nav__link">
+    eval_types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#infuse_type_parameters" class="md-nav__link">
+    infuse_type_parameters
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1420,6 +1448,29 @@ in the specified <em>fallback_module</em>.</p>
 <p><a id="pydoc:typeapi.model.Unknown.hint"></a></p>
 <h4 id="hint">hint</h4>
 <p>The type hint that could not be converted into the typeapi.</p>
+<p><a id="typeapi.model.eval_types"></a></p>
+<p><a id="pydoc:typeapi.model.eval_types"></a></p>
+<h4 id="eval_types">eval_types</h4>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">eval_types</span><span class="p">(</span><span class="n">hint</span><span class="p">:</span> <span class="n">Hint</span><span class="p">,</span> <span class="n">module</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Hint</span>
+</code></pre></div>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L321">[view_source]</a></p>
+<p>Evaluate all forward references present in <em>hint</em>.</p>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><code>hint</code> - The <code>typeapi</code> <a href="#pydoc:typeapi.model.Hint">Hint</a> to evaluate forward references in.</li>
+<li><code>module</code> - The name of the module to evaluate the references in if they are not already associated with a module.
+  Note that the module must be present in <code>sys.modules</code>.</li>
+</ul>
+<p><strong>Returns</strong>:</p>
+<p>The same hint with all forward references replaced.</p>
+<p><a id="typeapi.model.infuse_type_parameters"></a></p>
+<p><a id="pydoc:typeapi.model.infuse_type_parameters"></a></p>
+<h4 id="infuse_type_parameters">infuse_type_parameters</h4>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">infuse_type_parameters</span><span class="p">(</span><span class="n">hint</span><span class="p">:</span> <span class="n">Hint</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">TypeVar</span><span class="p">,</span>
+                                                          <span class="n">Hint</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Hint</span>
+</code></pre></div>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L342">[view_source]</a></p>
+<p>Replace type variables in <em>hint</em> with the parameters in the given mapping.</p>
 
               
             </article>
