@@ -4,7 +4,7 @@ import typing as t
 import typing_extensions as te
 
 import pytest
-from typeapi.utils import get_annotations, get_special_forms, get_special_generic_aliases, is_annotated_alias, is_generic_alias, is_special_form, is_special_generic_alias
+from typeapi.utils import get_annotations, get_special_forms, get_special_generic_aliases, is_annotated_alias, is_generic_alias, is_new_type, is_special_form, is_special_generic_alias, is_typed_dict
 
 T = t.TypeVar('T')
 
@@ -63,6 +63,20 @@ def test_is_annotated_alias():
   assert is_annotated_alias(te.Annotated[int, 42])
   assert not is_annotated_alias(int)
   assert not is_annotated_alias(42)
+
+
+def test_is_new_type():
+  assert is_new_type(t.NewType('MyInt', int))
+  assert not is_new_type(int)
+
+
+def test_is_typed_dict():
+  class Movie(te.TypedDict):
+    name: str
+    year: int
+  assert is_typed_dict(Movie)
+  assert is_typed_dict(te.TypedDict('Movie', {'name': str, 'year': int}))  # type: ignore[operator]
+  assert not is_typed_dict(int)
 
 
 def test_get_special_generic_aliases():

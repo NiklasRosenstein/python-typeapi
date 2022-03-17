@@ -15,3 +15,9 @@ id = "e1123609-d7eb-4f2d-87f7-e4c518c92b99"
 type = "fix"
 description = "Fix `get_annotations()` in Python 3.9 and older to have the same behaviour as `inspect.get_annotations()` in that it does not include annotations of a classes' bases"
 author = "@NiklasRosenstein"
+
+[[entries]]
+id = "6d7fa3d0-433c-4240-a49f-9b617d0a2184"
+type = "feature"
+description = "Add `typeapi.utils.is_typed_dict()` and the `typeapi.utils.TypedDict` protocol"
+author = "@NiklasRosenstein"

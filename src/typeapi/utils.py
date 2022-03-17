@@ -1,6 +1,6 @@
 
-""" Provides utilities to introspect #typing type hints. The goal is to assign the same semantics
-to all viable members of the #typing module independent of the Python version. """
+""" This module provides helper functions to introspect raw #typing type hints. It is used mostly internally.
+You should use #typeapi.of() and the datatypes defined in #typeapi.models to introspect type hints. """
 
 from __future__ import annotations
 import functools
@@ -67,6 +67,16 @@ class SpecialForm(te.Protocol):
 class NewType(te.Protocol):
   __name__: str
   __supertype__: t.Type
+
+
+class TypedDict(te.Protocol):
+  """ A protocol that describes #typing.TypedDict values (which are actually instances of the #typing._TypedDictMeta
+  metaclass). Use #is_typed_dict() to check if a hint is matches this protocol. """
+
+  __annotations__: t.Dict[str, t.Any]
+  __required_keys__: t.Set[str]
+  __optional_keys__: t.Set[str]
+  __total__: bool
 
 
 def is_generic(hint: t.Any) -> te.TypeGuard[t.Type[Generic]]:
@@ -176,6 +186,24 @@ def is_new_type(hint: t.Any) -> te.TypeGuard[NewType]:
     return isinstance(hint, types.FunctionType) and hasattr(hint, '__supertype__')
   else:
     return isinstance(hint, t.NewType)  # type: ignore[arg-type]
+
+
+def is_typed_dict(hint: t.Any) -> te.TypeGuard[TypedDict]:
+  """
+  Returns:
+    `True` if *hint* is a #typing.TypedDict.
+
+  !!! note
+
+    Typed dictionaries are actually just type objects. This means #typeapi.of() will represent them as
+    #typeapi.models.Type.
+  """
+
+  if hasattr(t, '_TypedDictMeta'):
+    _TypedDictMeta = t._TypedDictMeta  # type: ignore[attr-defined]
+  else:
+    _TypedDictMeta = te._TypedDictMeta  # type: ignore[attr-defined]
+  return isinstance(hint, _TypedDictMeta)
 
 
 @functools.lru_cache()
