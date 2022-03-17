@@ -157,15 +157,22 @@ class Union(Hint):
   #: The types in this union.
   types: t.Tuple[Hint, ...]
 
+  def __post_init__(self) -> None:
+    assert len(self.types) >= 2, self.types
+
   def has_none_type(self) -> bool:
     """ Returns `True` if one of the #types is a #Type representing #types.NoneType. """
 
     return any(th for th in self.types if isinstance(th, Type) and th.type == type(None))
 
-  def without_none_type(self) -> Union:
-    """ Return a copy but with #types not containing a #types.NoneType. """
+  def without_none_type(self) -> Hint:
+    """ Return a copy but with #types not containing a #types.NoneType. If there is only one member remaining,
+    that member type hint will be returned directly (because #Union must contain at least two members). """
 
-    return Union(tuple(th for th in self.types if not (isinstance(th, Type) and th.type == type(None))))
+    types = tuple(th for th in self.types if not (isinstance(th, Type) and th.type == type(None)))
+    if len(types) == 1:
+      return types[0]
+    return Union(types)
 
   def visit(self, func: t.Callable[[Hint], Hint]) -> Hint:
     return func(Union(tuple(th.visit(func) for th in self.types)))
