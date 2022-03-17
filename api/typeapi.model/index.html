@@ -382,6 +382,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#get_orig_bases_parametrized" class="md-nav__link">
+    get_orig_bases_parametrized
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#of" class="md-nav__link">
     of
   </a>
@@ -876,6 +883,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#get_orig_bases_parametrized" class="md-nav__link">
+    get_orig_bases_parametrized
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#of" class="md-nav__link">
     of
   </a>
@@ -1260,13 +1274,23 @@ returned by this generator.</p>
 <ul>
 <li><code>all_</code> - If set to <code>True</code>, all original bases in the entire class hierarchy will be returned.</li>
 </ul>
+<p><a id="typeapi.model.Type.get_orig_bases_parametrized"></a></p>
+<p><a id="pydoc:typeapi.model.Type.get_orig_bases_parametrized"></a></p>
+<h4 id="get_orig_bases_parametrized">get_orig_bases_parametrized</h4>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_orig_bases_parametrized</span><span class="p">(</span>
+        <span class="n">all_</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="n">utils</span><span class="o">.</span><span class="n">GenericAlias</span><span class="p">,</span> <span class="n">Hint</span><span class="p">]</span>
+</code></pre></div>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L115">[view_source]</a></p>
+<p>Create a dictionary that maps the generic aliases returned by <a href="#pydoc:typeapi.model.Type.get_orig_bases">get_orig_bases()</a> to a type hint infused
+with the current type's <a href="#pydoc:typeapi.model.Type.args">args</a>. If the <a href="#pydoc:typeapi.model.Type.type">type</a> is not a generic or has no generic bases, this method returns
+an empty dictionary. Note that this will skip <code>typing.Generic</code>.</p>
 <p><a id="typeapi.model.Type.of"></a></p>
 <p><a id="pydoc:typeapi.model.Type.of"></a></p>
 <h4 id="of">of</h4>
 <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span> <span class="nf">of</span><span class="p">(</span><span class="n">type_</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Type</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L119">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L134">[view_source]</a></p>
 <p>Deconstruct a type hint that is concrete type or generic alias, i.e. one that is not a "special form" like
 <code>typing.Union</code> or <code>typing.Any</code>. Examples of types being accepted are any actual Python types, <code>typing.Any</code>, special
 generic aliases like <code>typing.List</code> (unspecialized) or generic aliases (like <code>typing.List[int]</code> or a parametrization
@@ -1286,7 +1310,7 @@ of a <code>typing.Generic</code> subclass).</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">Union</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L182">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L197">[view_source]</a></p>
 <p>Represents <code>typing.Union</code> or <code>typing.Optional</code>.</p>
 <p><a id="typeapi.model.Union.types"></a></p>
 <p><a id="pydoc:typeapi.model.Union.types"></a></p>
@@ -1297,14 +1321,14 @@ of a <code>typing.Generic</code> subclass).</p>
 <h4 id="has_none_type">has_none_type</h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">has_none_type</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L191">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L206">[view_source]</a></p>
 <p>Returns <code>True</code> if one of the <a href="#pydoc:typeapi.model.Union.types">types</a> is a <a href="#pydoc:typeapi.model.Type">Type</a> representing <code>types.NoneType</code>.</p>
 <p><a id="typeapi.model.Union.without_none_type"></a></p>
 <p><a id="pydoc:typeapi.model.Union.without_none_type"></a></p>
 <h4 id="without_none_type">without_none_type</h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">without_none_type</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Hint</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L196">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L211">[view_source]</a></p>
 <p>Return a copy but with <a href="#pydoc:typeapi.model.Union.types">types</a> not containing a <code>types.NoneType</code>. If there is only one member remaining,
 that member type hint will be returned directly (because <a href="#pydoc:typeapi.model.Union">Union</a> must contain at least two members).</p>
 <p><a id="typeapi.model.Annotated"></a></p>
@@ -1313,7 +1337,7 @@ that member type hint will be returned directly (because <a href="#pydoc:typeapi
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">Annotated</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L210">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L225">[view_source]</a></p>
 <p>Represents a type wrapped in <code>typing.Annotated</code>.</p>
 <p><a id="typeapi.model.Annotated.wrapped"></a></p>
 <p><a id="pydoc:typeapi.model.Annotated.wrapped"></a></p>
@@ -1329,7 +1353,7 @@ that member type hint will be returned directly (because <a href="#pydoc:typeapi
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">ForwardRef</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L224">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L239">[view_source]</a></p>
 <p>Represents a forward reference.</p>
 <p><a id="typeapi.model.ForwardRef.ref"></a></p>
 <p><a id="pydoc:typeapi.model.ForwardRef.ref"></a></p>
@@ -1341,7 +1365,7 @@ that member type hint will be returned directly (because <a href="#pydoc:typeapi
 <div class="highlight"><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">expr</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L231">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L246">[view_source]</a></p>
 <p>Returns the code from the forward reference.</p>
 <p><a id="typeapi.model.ForwardRef.module"></a></p>
 <p><a id="pydoc:typeapi.model.ForwardRef.module"></a></p>
@@ -1349,14 +1373,14 @@ that member type hint will be returned directly (because <a href="#pydoc:typeapi
 <div class="highlight"><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">module</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L237">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L252">[view_source]</a></p>
 <p>Returns the name of the moduel in which the forward reference is to be evaluated.</p>
 <p><a id="typeapi.model.ForwardRef.evaluate"></a></p>
 <p><a id="pydoc:typeapi.model.ForwardRef.evaluate"></a></p>
 <h4 id="evaluate">evaluate</h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="n">fallback_module</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L242">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L257">[view_source]</a></p>
 <p>Evaluate the forward reference, preferably in the module that is already known by <a href="#pydoc:typeapi.model.ForwardRef.ref">ref</a>, or otherwise
 in the specified <em>fallback_module</em>.</p>
 <p><a id="typeapi.model.Any"></a></p>
@@ -1365,7 +1389,7 @@ in the specified <em>fallback_module</em>.</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">Any</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L257">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L272">[view_source]</a></p>
 <p>Represents <code>typing.Any</code>.</p>
 <p><a id="typeapi.model.ClassVar"></a></p>
 <p><a id="pydoc:typeapi.model.ClassVar"></a></p>
@@ -1373,7 +1397,7 @@ in the specified <em>fallback_module</em>.</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">ClassVar</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L262">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L277">[view_source]</a></p>
 <p>Represents <code>typing.ClassVar</code>.</p>
 <p><a id="typeapi.model.ClassVar.wrapped"></a></p>
 <p><a id="pydoc:typeapi.model.ClassVar.wrapped"></a></p>
@@ -1385,7 +1409,7 @@ in the specified <em>fallback_module</em>.</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">Final</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L273">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L288">[view_source]</a></p>
 <p>Represents <code>typing.Final</code>.</p>
 <p><a id="typeapi.model.Final.wrapped"></a></p>
 <p><a id="pydoc:typeapi.model.Final.wrapped"></a></p>
@@ -1397,7 +1421,7 @@ in the specified <em>fallback_module</em>.</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">NoReturn</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L284">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L299">[view_source]</a></p>
 <p>Represents <code>typing.NoReturn</code>.</p>
 <p><a id="typeapi.model.TypeGuard"></a></p>
 <p><a id="pydoc:typeapi.model.TypeGuard"></a></p>
@@ -1405,7 +1429,7 @@ in the specified <em>fallback_module</em>.</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">TypeGuard</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L289">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L304">[view_source]</a></p>
 <p>Represents <code>typing.TypeGuard</code>.</p>
 <p><a id="typeapi.model.TypeGuard.wrapped"></a></p>
 <p><a id="pydoc:typeapi.model.TypeGuard.wrapped"></a></p>
@@ -1417,7 +1441,7 @@ in the specified <em>fallback_module</em>.</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">Literal</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L300">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L315">[view_source]</a></p>
 <p>Represents <code>typing.Literal</code>.</p>
 <p><a id="typeapi.model.Literal.values"></a></p>
 <p><a id="pydoc:typeapi.model.Literal.values"></a></p>
@@ -1429,7 +1453,7 @@ in the specified <em>fallback_module</em>.</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">TypeVar</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L308">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L323">[view_source]</a></p>
 <p>Represents a <code>typing.TypeVar</code>.</p>
 <p><a id="typeapi.model.TypeVar.var"></a></p>
 <p><a id="pydoc:typeapi.model.TypeVar.var"></a></p>
@@ -1441,7 +1465,7 @@ in the specified <em>fallback_module</em>.</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">NewType</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L322">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L337">[view_source]</a></p>
 <p>Represents <code>typing.NewType</code>.</p>
 <p><a id="typeapi.model.NewType.type"></a></p>
 <p><a id="pydoc:typeapi.model.NewType.type"></a></p>
@@ -1453,7 +1477,7 @@ in the specified <em>fallback_module</em>.</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">name</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L329">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L344">[view_source]</a></p>
 <p>The name of the new type.</p>
 <p><a id="typeapi.model.NewType.supertype"></a></p>
 <p><a id="pydoc:typeapi.model.NewType.supertype"></a></p>
@@ -1461,7 +1485,7 @@ in the specified <em>fallback_module</em>.</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">supertype</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">Type</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L335">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L350">[view_source]</a></p>
 <p>The underlying type of the new type.</p>
 <p><a id="typeapi.model.Unknown"></a></p>
 <p><a id="pydoc:typeapi.model.Unknown"></a></p>
@@ -1469,7 +1493,7 @@ in the specified <em>fallback_module</em>.</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">Unknown</span><span class="p">(</span><span class="n">Hint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L342">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L357">[view_source]</a></p>
 <p>Represents an type hint that is not understood.</p>
 <p><a id="typeapi.model.Unknown.hint"></a></p>
 <p><a id="pydoc:typeapi.model.Unknown.hint"></a></p>
@@ -1480,7 +1504,7 @@ in the specified <em>fallback_module</em>.</p>
 <h4 id="eval_types">eval_types</h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">eval_types</span><span class="p">(</span><span class="n">hint</span><span class="p">:</span> <span class="n">Hint</span><span class="p">,</span> <span class="n">module</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Hint</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L349">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L364">[view_source]</a></p>
 <p>Evaluate all forward references present in <em>hint</em>.</p>
 <p><strong>Arguments</strong>:</p>
 <ul>
@@ -1496,7 +1520,7 @@ in the specified <em>fallback_module</em>.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">infuse_type_parameters</span><span class="p">(</span><span class="n">hint</span><span class="p">:</span> <span class="n">Hint</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">TypeVar</span><span class="p">,</span>
                                                           <span class="n">Hint</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Hint</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L370">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L385">[view_source]</a></p>
 <p>Replace type variables in <em>hint</em> with the parameters in the given mapping.</p>
 
               
