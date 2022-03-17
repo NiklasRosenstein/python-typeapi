@@ -15,3 +15,15 @@ id = "777d1f85-ea76-488a-8056-28ad8eebf01c"
 type = "fix"
 description = "Fix `infuse_type_parameters()` to replace sole `typeapi.TypeVar` instead of only occurrences in `typeapi.Type.args`"
 author = "@NiklasRosenstein"
+
+[[entries]]
+id = "1fb68bc1-7e94-480d-a5c6-a270c6759074"
+type = "fix"
+description = "Fix `infuse_type_parameters()` to replace sole `typeapi.TypeVar` instead of only occurrences in `typeapi.Type.args`"
+author = "@NiklasRosenstein"
+
+[[entries]]
+id = "75a3ceb3-4ad8-488c-8e06-629a8603c5d8"
+type = "fix"
+description = "Fix `Type.get_parameter_mapping()` return annotation"
+author = "@NiklasRosenstein"

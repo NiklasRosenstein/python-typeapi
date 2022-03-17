@@ -73,7 +73,7 @@ class Type(Hint):
 
     return Type(self.type, self.nparams, self.parameters, args)
 
-  def get_parameter_mapping(self) -> t.Dict[t.TypeVar, t.Any]:
+  def get_parameter_mapping(self) -> t.Dict[t.TypeVar, Hint]:
     """ Computes the values assigned to all type parameters present in *type* and its bases. """
 
     # TODO (@NiklasRosenstein): This might be a good spot to implement caching.
