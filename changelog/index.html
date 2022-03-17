@@ -534,6 +534,12 @@
   <tr><td>Fix</td><td>
 
 Fix an error caused when using `Type.get_orig_bases()` if the `Type.type` has non-generic bases</td><td></td><td></td><td>@NiklasRosenstein</td></tr>
+  <tr><td>Deprecation</td><td>
+
+Deprecated `get_type_hints()` in favor of new `get_annotations()`</td><td></td><td></td><td>@NiklasRosenstein</td></tr>
+  <tr><td>Fix</td><td>
+
+Fix `get_annotations()` in Python 3.9 and older to have the same behaviour as `inspect.get_annotations()` in that it does not include annotations of a classes' bases</td><td></td><td></td><td>@NiklasRosenstein</td></tr>
 </table>
 
 <h2 id="010-2022-03-17">0.1.0 (2022-03-17)</h2>
