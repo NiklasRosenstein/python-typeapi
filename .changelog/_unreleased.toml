@@ -27,3 +27,9 @@ id = "75a3ceb3-4ad8-488c-8e06-629a8603c5d8"
 type = "fix"
 description = "Fix `Type.get_parameter_mapping()` return annotation"
 author = "@NiklasRosenstein"
+
+[[entries]]
+id = "5a42370a-4d14-4ac7-9f3b-e93fbc866bb5"
+type = "fix"
+description = "Fix `infuse_type_parameters()` to handle plain `typeapi.TypeVar` and not just the like in `typeapi.Type.args`"
+author = "@NiklasRosenstein"

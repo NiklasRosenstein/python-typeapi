@@ -9,6 +9,7 @@ from typeapi.utils import is_generic
 from utils import parametrize_typing_module
 
 T = t.TypeVar('T')
+U = t.TypeVar('U')
 K = t.TypeVar('K')
 V = t.TypeVar('V')
 
@@ -145,3 +146,12 @@ def test_eval_types():
 def test_infuse_type_parameters():
   assert infuse_type_parameters(Type.of(t.List[T]), {t.cast(t.TypeVar, T): Type.of(int)}) == Type.of(t.List[int])
   assert infuse_type_parameters(Type.of(t.List[T]), {}) == Type.of(t.List[T ])
+
+  class A(t.Generic[T]):
+    a: T
+  class B(A[U], t.Generic[U]):
+    b: str
+  type_parameters = Type.of(B[int]).get_parameter_mapping()
+  assert type_parameters == {T: typeapi.of(U), U: Type.of(int)}
+  assert infuse_type_parameters(Type.of(B), type_parameters) == Type.of(B)
+  assert infuse_type_parameters(Type.of(A[T]), type_parameters) == Type.of(A[int])

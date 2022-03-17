@@ -397,8 +397,9 @@ def infuse_type_parameters(hint: Hint, parameters: t.Dict[t.TypeVar, Hint]) -> H
     return hint
 
   def _visitor(hint: Hint) -> Hint:
-    if isinstance(hint, TypeVar):
-      return parameters.get(hint.var, hint)
+    # Make sure we resolve chains of parameter mappings (e.g. {T: U, U: int}).
+    while isinstance(hint, TypeVar) and hint.var in parameters:
+      hint = parameters[hint.var]
     return hint
 
   new_hint = hint.visit(_visitor)
