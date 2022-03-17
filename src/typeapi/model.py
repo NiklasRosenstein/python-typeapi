@@ -101,7 +101,9 @@ class Type(Hint):
     #   over the bases, we will end up yielding it after the first base.
     seen = set()
     for base in self.type.__orig_bases__:
-      assert utils.is_generic_alias(base)
+      if not utils.is_generic_alias(base):
+        assert isinstance(base, type), base
+        continue
       if base in seen: continue
       seen.add(base)
       yield base

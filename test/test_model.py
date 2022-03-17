@@ -13,6 +13,12 @@ U = t.TypeVar('U')
 K = t.TypeVar('K')
 V = t.TypeVar('V')
 
+class MyGeneric1(t.Generic[T]): pass
+class MyGeneric2(MyGeneric1[int], t.Generic[T]): pass
+class MyGeneric3(t.Generic[T], MyGeneric2[T]): pass
+class MyGenericList(t.List[T]): pass
+class MyConcreteList(t.List[int]): pass
+
 
 def test_Type_str():
   assert str(Type.of(int)) == 'Type(int)'
@@ -32,17 +38,14 @@ def test_Type_of_generic():
   assert Type.of(t.Generic) == Type(t.Generic, 0, None, None)  # type: ignore[arg-type]
   assert Type.of(t.Generic[T]) == Type(t.Generic, 0, None, (TypeVar(T),))  # type: ignore[arg-type]
 
-  class MyGeneric(t.Generic[T]): pass
-  assert Type.of(MyGeneric) == Type(MyGeneric, 1, (T,), None)
-  assert Type.of(MyGeneric[int]) == Type(MyGeneric, 1, (T,), (Type.of(int),))
-  assert Type.of(MyGeneric[T]) == Type(MyGeneric, 1, (T,), (TypeVar(T),))
+  assert Type.of(MyGeneric1) == Type(MyGeneric1, 1, (T,), None)
+  assert Type.of(MyGeneric1[int]) == Type(MyGeneric1, 1, (T,), (Type.of(int),))
+  assert Type.of(MyGeneric1[T]) == Type(MyGeneric1, 1, (T,), (TypeVar(T),))
 
-  class MyList(t.List[T]): pass
-  assert Type.of(MyList) == Type(MyList, 1, (T,), None)
-  assert Type.of(MyList[int]) == Type(MyList, 1, (T,), (Type.of(int),))
-  assert Type.of(MyList[T]) == Type(MyList, 1, (T,), (TypeVar(T),))
+  assert Type.of(MyGenericList) == Type(MyGenericList, 1, (T,), None)
+  assert Type.of(MyGenericList[int]) == Type(MyGenericList, 1, (T,), (Type.of(int),))
+  assert Type.of(MyGenericList[T]) == Type(MyGenericList, 1, (T,), (TypeVar(T),))
 
-  class MyConcreteList(t.List[int]): pass
   assert Type.of(MyConcreteList) == Type(MyConcreteList, 0, (), None)
 
 
@@ -65,43 +68,39 @@ def test_Type_of_concrete_type():
   assert Type.of(int) == Type(int, 0, None, None)
 
 
-def test_Type_get_type_parameter_mapping():
+def test_type_get_parameter_mapping():
   assert Type.of(int).get_parameter_mapping() == {}
   assert Type.of(t.List).get_parameter_mapping() == {}
   assert Type.of(t.List[int]).get_parameter_mapping() == {}
   assert Type.of(t.Dict[str, int]).get_parameter_mapping() == {}
   assert Type.of(t.Dict[str, int]).get_parameter_mapping() == {}
 
-  class MyGeneric(t.Generic[T]):
-    a: T
-  assert Type.of(MyGeneric).get_parameter_mapping() == {}
-  assert Type.of(MyGeneric[int]).get_parameter_mapping() == {T: Type.of(int)}
+  assert Type.of(MyGeneric1).get_parameter_mapping() == {}
+  assert Type.of(MyGeneric1[int]).get_parameter_mapping() == {T: Type.of(int)}
 
-  # This is kind of a weird constellation.
-  class WeirdGeneric(MyGeneric[str], t.Generic[T]):
-    b: T
-  assert Type.of(WeirdGeneric).get_parameter_mapping() == {T: Type.of(str)}
-  assert Type.of(WeirdGeneric[int]).get_parameter_mapping() == {T: Type.of(int)}
-  assert is_generic(WeirdGeneric)
-  assert Type.of(WeirdGeneric.__orig_bases__[0]).get_parameter_mapping() == {T:Type.of(str)}
+  # In MyGeneric2, the type variable T is specialized in one of the base classes, but also re-used
+  # as a type variable in the body.
+  assert Type.of(MyGeneric2).get_parameter_mapping() == {T: Type.of(int)}
+  assert Type.of(MyGeneric2[str]).get_parameter_mapping() == {T: Type.of(str)}
+  assert is_generic(MyGeneric2)
+  assert Type.of(MyGeneric2.__orig_bases__[0]).get_parameter_mapping() == {T:Type.of(int)}
 
 
-def test_Type_get_orig_bases():
+def test_type_get_orig_bases():
   assert list(Type.of(int).get_orig_bases()) == []
   assert list(Type.of(t.List[int]).get_orig_bases()) == []
   assert list(Type.of(t.Generic[T]).get_orig_bases()) == []
 
-  class MyGeneric1(t.Generic[T]): pass
   assert list(Type.of(MyGeneric1).get_orig_bases()) == [t.Generic[T]]
   assert list(Type.of(MyGeneric1[int]).get_orig_bases()) == [t.Generic[T]]
 
-  class MyGeneric2(MyGeneric1[int], t.Generic[T]): pass
   assert list(Type.of(MyGeneric2).get_orig_bases()) == [MyGeneric1[int], t.Generic[T]]
 
-  class MyGeneric3(t.Generic[T], MyGeneric2[T]): pass
   assert list(Type.of(MyGeneric3).get_orig_bases()) == [t.Generic[T], MyGeneric2[T]]
   assert list(Type.of(MyGeneric3).get_orig_bases(True)) == [t.Generic[T], MyGeneric2[T], MyGeneric1[int]]
 
+
+def test_base_type_parameters():
   # Test to ensure that even though the type variable T is re-used, it is actually assigned the type *int*
   # in the bases of MyGeneric2, which we must maintain when getting all the parametrized bases.
   assert Type.of(MyGeneric3[str]).get_orig_bases_parametrized(True) == {
@@ -110,20 +109,62 @@ def test_Type_get_orig_bases():
   }
 
   class MyGeneric4(MyGeneric1[K], t.Generic[K, V]): pass
+  class MyGeneric5(MyGeneric4[str, V]): pass
 
   # Test to ensure that the type variable mix-up as expected.
   assert Type.of(MyGeneric4[str, int]).get_orig_bases_parametrized(True) == {
     MyGeneric1[K]: Type.of(MyGeneric1[str]),
   }
 
-  # Test to ensure that partial parametrization in the bases works as expected.
-  class MyGeneric5(MyGeneric4[str, V]): pass
-
   # Test to ensure that the type variable mix-up as expected.
   assert Type.of(MyGeneric5[int]).get_orig_bases_parametrized(True) == {
     MyGeneric4[str, V]: Type.of(MyGeneric4[str, int]),
     MyGeneric1[K]: Type.of(MyGeneric1[str]),
   }
+
+
+def test_base_type_parameters_invalid_scenario_unbound_type_variable_1():
+  # Test type-wise invalid scenario, but still possible to pull of at runtime.
+  class A:
+    a: T  # type: ignore[valid-type]  # Type variable "T" is unbound
+  class B(A, t.Generic[T]):
+    b: T
+  assert list(Type.of(A).get_orig_bases(True)) == []
+  assert list(Type.of(B).get_orig_bases(True)) == [t.Generic[T]]
+  assert Type.of(B[int]).get_orig_bases_parametrized(True) == {}
+
+
+def test_base_type_parameters_invalid_scenario_unbound_type_variable_2():
+  # Test type-wise invalid scenario, but still possible to pull of at runtime.
+  class A(t.Generic[K]):
+    a: T  # type: ignore[valid-type]  # Type variable "T" is unbound
+  class B(A, t.Generic[T]):
+    b: T
+  assert list(Type.of(A).get_orig_bases(True)) == [t.Generic[K]]
+  assert list(Type.of(B).get_orig_bases(True)) == [t.Generic[T]]
+  assert Type.of(B[int]).get_orig_bases_parametrized(True) == {}
+
+
+def test_base_type_parameters_unparametrized_base_class():
+  # Test what happens if we don't parametrize the base.
+  class A(t.Generic[T]):
+    a: T
+  class B(A, t.Generic[T]):
+    b: T
+  assert list(Type.of(A).get_orig_bases(True)) == [t.Generic[T]]
+  assert list(Type.of(B).get_orig_bases(True)) == [t.Generic[T]]
+  assert Type.of(B[int]).get_orig_bases_parametrized(True) == {}
+
+  # In contrast to
+  class B2(A[str], t.Generic[T]):
+    b: T
+  assert list(Type.of(B2).get_orig_bases(True)) == [A[str], t.Generic[T]]
+  assert Type.of(B2[int]).get_orig_bases_parametrized(True) == {A[str]: Type.of(A[str])}
+  # In contrast to
+  class B3(A[T], t.Generic[T]):
+    b: T
+  assert list(Type.of(B3).get_orig_bases(True)) == [A[T], t.Generic[T]]
+  assert Type.of(B3[int]).get_orig_bases_parametrized(True) == {A[T]: Type.of(A[int])}
 
 
 def test_ForwardRef_evaluate():
