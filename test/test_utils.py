@@ -76,4 +76,8 @@ def test_get_special_forms():
 def test_get_annotations():
   class A:
     a: 'str'
+  class B(A):
+    b: int
   assert get_annotations(A) == {'a': str}
+  assert get_annotations(B) == {'b': int}
+  assert t.get_type_hints(B) == {'a': str, 'b': int}

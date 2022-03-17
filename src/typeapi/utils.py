@@ -258,11 +258,19 @@ def get_annotations(type_: t.Any) -> t.Dict[str, t.Any]:
   #typing.Annotated hints (without extras the annotations are removed). In Python 3.10 and onwards, this is
   an alias for #inspect.get_annotations() with `eval_str=True`. """
 
-  if sys.version_info[:2] <= (3, 8):
-    return t.get_type_hints(type_)
+
   if sys.version_info[:2] <= (3, 9):
-    return t.get_type_hints(type_, include_extras=True)
-  return inspect.get_annotations(type_, eval_str=True)
+    if sys.version_info[:2] <= (3, 8):
+      annotations = t.get_type_hints(type_)
+    else:
+      annotations = t.get_type_hints(type_, include_extras=True)
+    # To replicate the behaviour of #inspect.get_annotations(), which is to _not_ take into account
+    # the annotations of the base class, we discard all entries from the resulting dictionary that
+    # is not included in the types __annotations__.
+    local_annotations = getattr(type_, '__annotations__', {})
+    return {k: v for k, v in annotations.items() if k in local_annotations}
+  else:
+    return inspect.get_annotations(type_, eval_str=True)
 
 
 # Backwards compatibility, remove in next minor version (minor because we're below 1.0.0)
