@@ -56,9 +56,10 @@ def test_parse_type_hint_union():
 
 @pytest.mark.skipif(sys.version_info[:2] < (3, 10), reason='PEP 585 is implemented starting with Python 3.10')
 def test_parse_type_hint_union_pep585():
-  assert parse_type_hint(int | str) == Union((Type.of(int), Type.of(str)))
-  assert parse_type_hint(int | None) == Union((Type.of(int), Type.of(type(None))))
-  assert parse_type_hint(int | None | str) == Union((Type.of(int), Type.of(type(None)), Type.of(str)))
+  if sys.version_info[:2] >= (3, 10):  # So mypy doesn't complain
+    assert parse_type_hint(int | str) == Union((Type.of(int), Type.of(str)))
+    assert parse_type_hint(int | None) == Union((Type.of(int), Type.of(type(None))))
+    assert parse_type_hint(int | None | str) == Union((Type.of(int), Type.of(type(None)), Type.of(str)))
 
 
 @parametrize_typing_module('Literal')
@@ -88,9 +89,10 @@ def test_parse_type_hint_special_generic_alias():
 
 @pytest.mark.skipif(sys.version_info[:2] < (3, 10), reason='PEP 585 is implemented starting with Python 3.10')
 def test_parse_type_hint_special_generic_alias_pep585():
-  assert parse_type_hint(list) == Type.of(list)
-  assert parse_type_hint(list[int]) == Type.of(list[int])
-  assert parse_type_hint(list[T]) == Type.of(list[T])
+  if sys.version_info[:2] >= (3, 10):  # So mypy doesn't complain
+    assert parse_type_hint(list) == Type.of(list)
+    assert parse_type_hint(list[int]) == Type.of(list[int])
+    assert parse_type_hint(list[T]) == Type.of(list[T])
 
 
 def test_parse_type_hint_generic_alias_of_concrete_type():

@@ -1,5 +1,6 @@
 
 import collections.abc
+import sys
 import typing as t
 import pytest
 from typeapi.model import ForwardRef, Type, Annotated, TypeVar
@@ -89,7 +90,7 @@ def test_ForwardRef_evaluate():
   with pytest.raises(RuntimeError):
     ref.evaluate()
 
-  ref = ForwardRef(t.ForwardRef('T', module=__name__))
-  assert ref.evaluate() is T
-  assert ref.evaluate('foobar32') is T
-
+  if sys.version_info[:2] >= (3, 9):
+    ref = ForwardRef(t.ForwardRef('T', module=__name__))
+    assert ref.evaluate() is T
+    assert ref.evaluate('foobar32') is T

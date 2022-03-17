@@ -29,14 +29,15 @@ def test_is_generic_alias():
 
 @pytest.mark.skipif(sys.version_info[:2] < (3, 10), reason='PEP 585 is implemented starting with Python 3.10')
 def test_is_generic_alias_pep585():
-  assert is_generic_alias(list[str])
-  assert is_generic_alias(dict[str, str])
-  assert is_generic_alias(tuple[int, ...])
-  assert is_generic_alias(tuple[str, int])  # type: ignore[misc]  # python/mypy#11098
+  if sys.version_info[:2] >= (3, 10):  # So mypy doesn't complain
+    assert is_generic_alias(list[str])
+    assert is_generic_alias(dict[str, str])
+    assert is_generic_alias(tuple[int, ...])
+    assert is_generic_alias(tuple[str, int])  # type: ignore[misc]  # python/mypy#11098
 
-  assert not is_generic_alias(int | None)
-  assert not is_generic_alias(int | str)
-  assert not is_generic_alias(None | int)  # type: ignore[operator]  # python/mypy#12368
+    assert not is_generic_alias(int | None)
+    assert not is_generic_alias(int | str)
+    assert not is_generic_alias(None | int)  # type: ignore[operator]  # python/mypy#12368
 
 
 def test_is_special_form():

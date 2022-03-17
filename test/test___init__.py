@@ -14,8 +14,9 @@ def test_typeapi_example():
 
 @pytest.mark.skipif(sys.version_info[:2] < (3, 10), reason='PEP 585 is implemented starting with Python 3.10')
 def test_typeapi_example_pep585():
-  hint = typeapi.of(int | str | None)
-  assert hint == typeapi.Union((Type.of(int), Type.of(str), Type.of(type(None))))
+  if sys.version_info[:2] >= (3, 10):  # So mypy doesn't complain
+    hint = typeapi.of(int | str | None)
+    assert hint == typeapi.Union((Type.of(int), Type.of(str), Type.of(type(None))))
 
 
 def test_import_all():
