@@ -17,8 +17,8 @@ def test_Type_str():
 
 
 def test_Annotated_str():
-  assert str(Annotated(int, (42,))) == 'Annotated(int, 42)'
-  assert str(Annotated(int, (42, "foobar"))) == "Annotated(int, 42, 'foobar')"
+  assert str(Annotated(int, (42,))) == 'Annotated(int, (42,))'
+  assert str(Annotated(int, (42, "foobar"))) == "Annotated(int, (42, 'foobar'))"
 
 
 def test_Type_of_any():

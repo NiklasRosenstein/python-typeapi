@@ -1,24 +1,15 @@
 # typeapi
 
-Typeapi provides a stable and documented API to introspect Python `typing` type hints.
+This library provides a stable API to introspect Python's `typing` and `typing_extensions` type hints.
 
 ## Installation
 
     $ pip install typeapi
 
-## Quickstart
+## Example
 
 ```py
-import typing
-import typeapi
-
-print(typeapi.of(typing.Any))                  # Type(object)
-print(typeapi.of(typing.List))                 # Type(list)
-print(typeapi.of(typing.Mapping[str, int]))    # Type(collections.abc.Mapping, (Type(str), Type(int)))
-print(typeapi.of(typing.Union[str, int]))      # Union(int, str)
-print(typeapi.of(str | int))                   # Union(int, str)
-print(typeapi.of(str | int | None))            # Optional(Union[int, str])
-print(typeapi.of(typing.Annotated[int, 42]))   # Annotated(int, 42)
-print(typeapi.of(typing.Annotated[int, 42]))   # Annotated(int, 42)
-print(typeapi.of('str', __name__))             # Type(str)
+import typing, typeapi
+print(typeapi.of(typing.Mapping[typing.Annotated[str, "key"], typing.Literal[True, None, 'false']]))
+# Type(collections.abc.Mapping, nparams=2, args=(Annotated(Type(str, nparams=0), 'key'), Literal(values=(True, None, 'false'))))
 ```

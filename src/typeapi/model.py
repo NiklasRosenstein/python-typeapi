@@ -32,12 +32,12 @@ class Type(Hint):
   #: The type variables from the #origin type's original definition. Note that this may be `None`
   #: even if #nparams is greater than zero. This is usually the case for special generic aliases
   #: like #typing.List for which no explicit type variables are defined in the #typing module.
-  parameters: t.Optional[t.Tuple[t.TypeVar, ...]]
+  parameters: t.Optional[t.Tuple[t.TypeVar, ...]] = None
 
   #: The type arguments that the #origin was parametrized with. This is #None if the type is not
   #: explicitly parametrized. It may still contain #typing.TypeVar#s if that is what the type was
   #: parametrized with.
-  args: t.Optional[t.Tuple[Hint, ...]]
+  args: t.Optional[t.Tuple[Hint, ...]] = None
 
   def __repr__(self) -> str:
     parts = [utils.type_repr(self.type), f'nparams={self.nparams}']
@@ -161,7 +161,7 @@ class Annotated(Hint):
   metadata: t.Tuple[t.Any, ...]
 
   def __repr__(self) -> str:
-    return 'Annotated({}, {})'.format(utils.type_repr(self.wrapped), ', '.join(map(repr, self.metadata)))
+    return 'Annotated({}, {})'.format(utils.type_repr(self.wrapped), self.metadata)
 
   def visit(self, func: t.Callable[[Hint], Hint]) -> Hint:
     return func(Annotated(self.wrapped.visit(func), self.metadata))
