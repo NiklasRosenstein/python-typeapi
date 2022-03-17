@@ -112,7 +112,7 @@ class Type(Hint):
           seen.add(base2)
           yield base2
 
-  def get_orig_bases_parametrized(self, all_: bool = False) -> t.Dict[utils.GenericAlias, Hint]:
+  def get_orig_bases_parametrized(self, all_: bool = False) -> t.Dict[utils.GenericAlias, Type]:
     """ Create a dictionary that maps the generic aliases returned by #get_orig_bases() to a type hint infused
     with the current type's #args. If the #type is not a generic or has no generic bases, this method returns
     an empty dictionary. Note that this will skip #typing.Generic. """
@@ -382,12 +382,26 @@ def eval_types(hint: Hint, module: t.Optional[str] = None) -> Hint:
   return hint.visit(_visitor)
 
 
+@t.overload
+def infuse_type_parameters(hint: Type, parameters: t.Dict[t.TypeVar, Hint]) -> Type:
+  """ If you already have a #Type hint, infusing it returns just another #Type. """
+
+
+@t.overload
 def infuse_type_parameters(hint: Hint, parameters: t.Dict[t.TypeVar, Hint]) -> Hint:
   """ Replace type variables in *hint* with the parameters in the given mapping. """
+
+
+def infuse_type_parameters(hint: Hint, parameters: t.Dict[t.TypeVar, Hint]) -> Hint | Type:
+  if not parameters:
+    return hint
 
   def _visitor(hint: Hint) -> Hint:
     if isinstance(hint, Type) and hint.args is not None:
       return hint.with_args(tuple(parameters.get(a.var, a) if isinstance(a, TypeVar) else a for a in hint.args))
     return hint
 
-  return hint.visit(_visitor)
+  new_hint = hint.visit(_visitor)
+  if isinstance(hint, Type):
+    assert isinstance(new_hint, Type)
+  return new_hint
