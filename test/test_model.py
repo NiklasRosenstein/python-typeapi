@@ -85,6 +85,23 @@ def test_Type_get_type_parameter_mapping():
   assert Type.of(WeirdGeneric.__orig_bases__[0]).get_parameter_mapping() == {T:Type.of(str)}
 
 
+def test_Type_get_orig_bases():
+  assert list(Type.of(int).get_orig_bases()) == []
+  assert list(Type.of(t.List[int]).get_orig_bases()) == []
+  assert list(Type.of(t.Generic[T]).get_orig_bases()) == []
+
+  class MyGeneric1(t.Generic[T]): pass
+  assert list(Type.of(MyGeneric1).get_orig_bases()) == [t.Generic[T]]
+  assert list(Type.of(MyGeneric1[int]).get_orig_bases()) == [t.Generic[T]]
+
+  class MyGeneric2(MyGeneric1[int], t.Generic[T]): pass
+  assert list(Type.of(MyGeneric2).get_orig_bases()) == [MyGeneric1[int], t.Generic[T]]
+
+  class MyGeneric3(t.Generic[T], MyGeneric2[T]): pass
+  assert list(Type.of(MyGeneric3).get_orig_bases()) == [t.Generic[T], MyGeneric2[T]]
+  assert list(Type.of(MyGeneric3).get_orig_bases(True)) == [t.Generic[T], MyGeneric2[T], MyGeneric1[int]]
+
+
 def test_ForwardRef_evaluate():
   ref = ForwardRef(t.ForwardRef('T'))
   assert ref.evaluate(__name__) is T

@@ -1,0 +1,5 @@
+[[entries]]
+id = "87f91954-3ff2-48f1-82cd-a3d551af283c"
+type = "feature"
+description = "Add `Type.get_orig_bases()`"
+author = "@NiklasRosenstein"

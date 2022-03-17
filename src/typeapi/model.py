@@ -84,6 +84,34 @@ class Type(Hint):
         type_parameters = {**Type.of(base).get_parameter_mapping(), **type_parameters}
     return type_parameters
 
+  def get_orig_bases(self, all_: bool = False) -> t.Iterable[utils.GenericAlias]:
+    """ A generator for the generic aliases that comprise the generic base classes of #type. Note that if #args
+    is not `None`, it means this #Type object was created from a generic alias, but that generic alias is not
+    returned by this generator.
+
+    Arguments:
+      all_: If set to `True`, all original bases in the entire class hierarchy will be returned.
+    """
+
+    if not utils.is_generic(self.type):
+      return
+
+    # TODO (@NiklasRosenstein): If two bases have the same common base, the native type.__mro__ actually
+    #   returns that commonly shared base after the bases that share it, but with the below way of iterating
+    #   over the bases, we will end up yielding it after the first base.
+    seen = set()
+    for base in self.type.__orig_bases__:
+      assert utils.is_generic_alias(base)
+      if base in seen: continue
+      seen.add(base)
+      yield base
+
+      if all_:
+        for base2 in Type.of(base).get_orig_bases(True):
+          if base2 in seen: continue
+          seen.add(base2)
+          yield base2
+
   def visit(self, func: t.Callable[[Hint], Hint]) -> Hint:
     return func(self.with_args(tuple(a.visit(func) for a in self.args) if self.args is not None else None))
 
