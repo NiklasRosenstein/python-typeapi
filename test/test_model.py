@@ -90,7 +90,7 @@ def test_ForwardRef_evaluate():
   with pytest.raises(RuntimeError):
     ref.evaluate()
 
-  if sys.version_info[:3] > (3, 9, 6):
-    ref = ForwardRef(t.ForwardRef('T', module=__name__))
+  if sys.version_info > (3, 9, 6):
+    ref = ForwardRef(t.ForwardRef('T', module=__name__))  # type: ignore[call-arg]  # mypy doesn't seem to understand comparing version_info against a three-part version
     assert ref.evaluate() is T
     assert ref.evaluate('foobar32') is T
