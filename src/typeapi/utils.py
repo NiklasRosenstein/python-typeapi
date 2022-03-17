@@ -199,11 +199,10 @@ def is_typed_dict(hint: t.Any) -> te.TypeGuard[TypedDict]:
     #typeapi.models.Type.
   """
 
-  if hasattr(t, '_TypedDictMeta'):
-    _TypedDictMeta = t._TypedDictMeta  # type: ignore[attr-defined]
-  else:
-    _TypedDictMeta = te._TypedDictMeta  # type: ignore[attr-defined]
-  return isinstance(hint, _TypedDictMeta)
+  for m in (t, te):
+    if hasattr(m, '_TypedDictMeta') and isinstance(hint, m._TypedDictMeta):  # type: ignore[attr-defined]
+      return True
+  return False
 
 
 @functools.lru_cache()
