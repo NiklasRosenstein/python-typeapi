@@ -29,5 +29,16 @@ jobs:
     - uses: NiklasRosenstein/slam@github-action/install/v1
     - run: slam install --only-extras docs --no-venv-check
     - run: slam run docs:build
+    - uses: actions/upload-artifact@v2
+      with:
+        name: docs
+        path: docs/_site
+
+  docs-publish:
+    needs: [ test, docs ]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/download-artifact@v2
+      with: { name: docs, path: docs/_site }
     - uses: JamesIves/github-pages-deploy-action@4.1.4
       with: { branch: gh-pages, folder: docs/_site, ssh-key: "${{ secrets.DEPLOY_KEY }}" }
