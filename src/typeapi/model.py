@@ -222,7 +222,7 @@ class ForwardRef(Hint):
     if sys.version_info[:2] < (3, 9):
       return self.ref._evaluate(globals, None)
     else:
-      return self.ref._evaluate(globals, None, set())
+      return self.ref._evaluate(globals, None, set())  # type: ignore[call-arg]  # mypy doesn't know about the third arg
 
 
 @dataclasses.dataclass(repr=False)
