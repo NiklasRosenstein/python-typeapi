@@ -20,21 +20,21 @@ class MyGenericList(t.List[T]): pass
 class MyConcreteList(t.List[int]): pass
 
 
-def test_Type_str():
-  assert str(Type.of(int)) == 'Type(int)'
-  assert str(Type.of(t.Dict[T, int])) == 'Type(dict, nparams=2, args=(TypeVar(~T), Type(int)))'
-
-
-def test_Annotated_str():
+def test_annotated_str():
   assert str(Annotated(Type.of(int), (42,))) == 'Annotated(Type(int), (42,))'
   assert str(Annotated(Type.of(int), (42, "foobar"))) == "Annotated(Type(int), (42, 'foobar'))"
 
 
-def test_Type_of_any():
+def test_type_string_format():
+  assert str(Type.of(int)) == 'Type(int)'
+  assert str(Type.of(t.Dict[T, int])) == 'Type(dict, nparams=2, args=(TypeVar(~T), Type(int)))'
+
+
+def test_type_of_any():
   assert Type.of(t.Any) == Type(object, 0, None, None)
 
 
-def test_Type_of_generic():
+def test_type_of_generic():
   assert Type.of(t.Generic) == Type(t.Generic, 0, None, None)  # type: ignore[arg-type]
   assert Type.of(t.Generic[T]) == Type(t.Generic, 0, None, (TypeVar(T),))  # type: ignore[arg-type]
 
@@ -49,7 +49,7 @@ def test_Type_of_generic():
   assert Type.of(MyConcreteList) == Type(MyConcreteList, 0, (), None)
 
 
-def test_Type_of_special_generic():
+def test_type_of_special_generic():
   assert Type.of(t.List) == Type(list, 1, None, None)
   assert Type.of(t.List[int]) == Type(list, 1, None, (Type.of(int),))
   assert Type.of(t.List[T]) == Type(list, 1, None, (TypeVar(T),))
@@ -58,13 +58,13 @@ def test_Type_of_special_generic():
 
 
 @parametrize_typing_module('Annotated')
-def test_Type_of_annotated_errors(m):
+def test_type_of_annotated_errors(m):
   with pytest.raises(ValueError) as excinfo:
     assert Type.of(m.Annotated[int, 42])
   assert str(excinfo.value) == 'unable to deconstruct {}'.format(m.Annotated[int, 42])
 
 
-def test_Type_of_concrete_type():
+def test_type_of_concrete_type():
   assert Type.of(int) == Type(int, 0, None, None)
 
 
