@@ -211,14 +211,18 @@ class ForwardRef(Hint):
 
     return getattr(self.ref, '__forward_module__', None)
 
-  def evaluate(self, fallback_module: t.Optional[str]) -> t.Any:
+  def evaluate(self, fallback_module: t.Optional[str] = None) -> t.Any:
     """ Evaluate the forward reference, preferably in the module that is already known by #ref, or otherwise
     in the specified *fallback_module*. """
 
-    module = self.module or fallback_module
-    if not module:
+    module_name = self.module or fallback_module
+    if not module_name:
       raise RuntimeError(f'no module to evaluate {self}')
-
+    globals = vars(sys.modules[module_name])
+    if sys.version_info[:2] <= (3, 9):
+      return self.ref._evaluate(globals, None)
+    else:
+      return self.ref._evaluate(globals, None, set())
 
 
 @dataclasses.dataclass(repr=False)

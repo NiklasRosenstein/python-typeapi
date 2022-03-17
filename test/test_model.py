@@ -2,7 +2,7 @@
 import collections.abc
 import typing as t
 import pytest
-from typeapi.model import Type, Annotated, TypeVar
+from typeapi.model import ForwardRef, Type, Annotated, TypeVar
 from typeapi.utils import is_generic
 from utils import parametrize_typing_module
 
@@ -62,7 +62,7 @@ def test_Type_of_concrete_type():
   assert Type.of(int) == Type(int, 0, None, None)
 
 
-def test_Type_get_type_parameter_mapping() -> None:
+def test_Type_get_type_parameter_mapping():
   assert Type.of(int).get_parameter_mapping() == {}
   assert Type.of(t.List).get_parameter_mapping() == {}
   assert Type.of(t.List[int]).get_parameter_mapping() == {}
@@ -81,3 +81,15 @@ def test_Type_get_type_parameter_mapping() -> None:
   assert Type.of(WeirdGeneric[int]).get_parameter_mapping() == {T: Type.of(int)}
   assert is_generic(WeirdGeneric)
   assert Type.of(WeirdGeneric.__orig_bases__[0]).get_parameter_mapping() == {T:Type.of(str)}
+
+
+def test_ForwardRef_evaluate():
+  ref = ForwardRef(t.ForwardRef('T'))
+  assert ref.evaluate(__name__) is T
+  with pytest.raises(RuntimeError):
+    ref.evaluate()
+
+  ref = ForwardRef(t.ForwardRef('T', module=__name__))
+  assert ref.evaluate() is T
+  assert ref.evaluate('foobar32') is T
+
