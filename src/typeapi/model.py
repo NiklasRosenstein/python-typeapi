@@ -9,9 +9,14 @@ from . import utils
 class Hint:
   """ Base for classes that represent type hints. """
 
-  def __init__(self) -> None:
+  def __init__(self, *args, **kwargs) -> None:
     if type(self) is Hint:
       raise TypeError('Hint cannot be constructed')
+
+  def visit(self, func: t.Callable[[Hint], Hint]) -> Hint:
+    """ Visit the hint and its subhints, if any, and call *func* on it. Returns the result of *func* on self. """
+
+    return func(self)
 
 
 @dataclasses.dataclass
@@ -32,7 +37,7 @@ class Type(Hint):
   #: The type arguments that the #origin was parametrized with. This is #None if the type is not
   #: explicitly parametrized. It may still contain #typing.TypeVar#s if that is what the type was
   #: parametrized with.
-  args: t.Optional[t.Tuple[utils.TypeArg, ...]]
+  args: t.Optional[t.Tuple[Hint, ...]]
 
   def __repr__(self) -> str:
     parts = [utils.type_repr(self.type), f'nparams={self.nparams}']
@@ -42,7 +47,7 @@ class Type(Hint):
       parts.append(f'args=({", ".join(map(utils.type_repr, self.args))})')
     return f'Type({", ".join(parts)})'
 
-  def with_args(self, args: t.Tuple[utils.TypeArg, ...]) -> Type:
+  def with_args(self, args: t.Optional[t.Tuple[Hint, ...]]) -> Type:
     """ Return a copy of the #Type object, but #args replaced by the *args* parameter value. """
 
     return Type(self.type, self.nparams, self.parameters, args)
@@ -57,6 +62,9 @@ class Type(Hint):
       for base in self.type.__orig_bases__:
         type_parameters = {**Type.of(base).get_parameter_mapping(), **type_parameters}
     return type_parameters
+
+  def visit(self, func: t.Callable[[Hint], Hint]) -> Hint:
+    return func(self.with_args(tuple(a.visit(func) for a in self.args) if self.args is not None else None))
 
   @staticmethod
   def of(type_: t.Any) -> Type:
@@ -73,6 +81,8 @@ class Type(Hint):
     """
 
     # TODO (@NiklasRosenstein): This might be a good spot to implement caching.
+
+    import typeapi
 
     def _raise() -> t.NoReturn: raise ValueError(f'unable to deconstruct {type_!r}')
 
@@ -104,7 +114,7 @@ class Type(Hint):
       else:
         _raise()
 
-      return type_info.with_args(type_.__args__)
+      return type_info.with_args(tuple(typeapi.of(th) for th in type_.__args__))
 
     if utils.is_generic(type_):
       return Type(type_, len(type_.__parameters__), type_.__parameters__, None)
@@ -124,7 +134,20 @@ class Union(Hint):
   """ Represents #typing.Union or #typing.Optional. """
 
   #: The types in this union.
-  types: t.Tuple[utils.TypeArg, ...]
+  types: t.Tuple[Hint, ...]
+
+  def has_none_type(self) -> bool:
+    """ Returns `True` if one of the #types is a #Type representing #types.NoneType. """
+
+    return any(th for th in self.types if isinstance(th, Type) and th.type == type(None))
+
+  def without_none_type(self) -> Union:
+    """ Return a copy but with #types not containing a #types.NoneType. """
+
+    return Union(tuple(th for th in self.types if not (isinstance(th, Type) and th.type == type(None))))
+
+  def visit(self, func: t.Callable[[Hint], Hint]) -> Hint:
+    return func(Union(tuple(th.visit(func) for th in self.types)))
 
 
 @dataclasses.dataclass
@@ -132,13 +155,16 @@ class Annotated(Hint):
   """ Represents a type wrapped in #typing.Annotated. """
 
   #: The type that is annotated.
-  wrapped: utils.TypeArg
+  wrapped: Hint
 
   #: The metadata in the annotation.
   metadata: t.Tuple[t.Any, ...]
 
   def __repr__(self) -> str:
     return 'Annotated({}, {})'.format(utils.type_repr(self.wrapped), ', '.join(map(repr, self.metadata)))
+
+  def visit(self, func: t.Callable[[Hint], Hint]) -> Hint:
+    return func(Annotated(self.wrapped.visit(func), self.metadata))
 
 
 @dataclasses.dataclass
@@ -165,7 +191,10 @@ class ClassVar(Hint):
   """ Represents #typing.ClassVar. """
 
   #: The inner type.
-  wrapped: utils.TypeArg
+  wrapped: Hint
+
+  def visit(self, func: t.Callable[[Hint], Hint]) -> Hint:
+    return func(ClassVar(self.wrapped.visit(func)))
 
 
 @dataclasses.dataclass
@@ -173,7 +202,10 @@ class Final(Hint):
   """ Represents #typing.Final. """
 
   #: The inner type.
-  wrapped: utils.TypeArg
+  wrapped: Hint
+
+  def visit(self, func: t.Callable[[Hint], Hint]) -> Hint:
+    return func(Final(self.wrapped.visit(func)))
 
 
 @dataclasses.dataclass
@@ -186,7 +218,10 @@ class TypeGuard(Hint):
   """ Represents #typing.TypeGuard. """
 
   #: The wrapped type.
-  wrapped: utils.TypeArg
+  wrapped: Hint
+
+  def visit(self, func: t.Callable[[Hint], Hint]) -> Hint:
+    return func(TypeGuard(self.wrapped.visit(func)))
 
 
 @dataclasses.dataclass
@@ -195,6 +230,14 @@ class Literal(Hint):
 
   #: The possible values represented by the literal.
   values: t.Tuple[t.Any, ...]
+
+
+@dataclasses.dataclass
+class TypeVar(Hint):
+  """ Represents a #typing.TypeVar. """
+
+  #: The type variable.
+  var: t.TypeVar
 
 
 @dataclasses.dataclass

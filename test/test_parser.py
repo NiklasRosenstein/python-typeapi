@@ -4,7 +4,7 @@ import sys
 import typing as t
 
 import pytest
-from typeapi.model import Annotated, Any, ClassVar, Final, ForwardRef, Literal, NewType, NoReturn, Type, TypeGuard, Union, Unknown
+from typeapi.model import Annotated, Any, ClassVar, Final, ForwardRef, Literal, NewType, NoReturn, Type, TypeGuard, TypeVar, Union, Unknown
 from typeapi.parser import parse_type_hint
 from utils import parametrize_typing_module
 
@@ -17,7 +17,7 @@ def test_parser_type_hint_any():
 
 @parametrize_typing_module('Annotated')
 def test_parse_type_hint_annotated(m):
-  assert parse_type_hint(m.Annotated[int, 42]) == Annotated(int, (42,))
+  assert parse_type_hint(m.Annotated[int, 42]) == Annotated(Type.of(int), (42,))
 
 
 def test_parse_type_hint_forward_ref():
@@ -27,13 +27,13 @@ def test_parse_type_hint_forward_ref():
 
 def test_parse_type_hint_class_var():
   assert parse_type_hint(t.ClassVar) == Unknown(t.ClassVar)
-  assert parse_type_hint(t.ClassVar[int]) == ClassVar(int)
+  assert parse_type_hint(t.ClassVar[int]) == ClassVar(Type.of(int))
 
 
 @parametrize_typing_module('Final')
 def test_parse_type_hint_final(m):
   assert parse_type_hint(m.Final) == Unknown(m.Final)
-  assert parse_type_hint(m.Final[int]) == Final(int)
+  assert parse_type_hint(m.Final[int]) == Final(Type.of(int))
 
 
 def test_parse_type_hint_no_return():
@@ -43,21 +43,21 @@ def test_parse_type_hint_no_return():
 @parametrize_typing_module('TypeGuard')
 def test_parse_type_hint_type_guard(m):
   assert parse_type_hint(m.TypeGuard) == Unknown(m.TypeGuard)
-  assert parse_type_hint(m.TypeGuard[str]) == TypeGuard(str)
+  assert parse_type_hint(m.TypeGuard[str]) == TypeGuard(Type.of(str))
 
 
 def test_parse_type_hint_union():
   assert parse_type_hint(t.Union) == Unknown(t.Union)
-  assert parse_type_hint(t.Union[int, str]) == Union((int, str))
-  assert parse_type_hint(t.Optional[int]) == Union((int, type(None)))
-  assert parse_type_hint(t.Union[int, None, str]) == Union((int, type(None), str))
+  assert parse_type_hint(t.Union[int, str]) == Union((Type.of(int), Type.of(str)))
+  assert parse_type_hint(t.Optional[int]) == Union((Type.of(int), Type.of(type(None))))
+  assert parse_type_hint(t.Union[int, None, str]) == Union((Type.of(int), Type.of(type(None)), Type.of(str)))
 
 
 @pytest.mark.skipif(sys.version_info[:2] < (3, 10), reason='PEP 585 is implemented starting with Python 3.10')
 def test_parse_type_hint_union_pep585():
-  assert parse_type_hint(int | str) == Union((int, str))
-  assert parse_type_hint(int | None) == Union((int, type(None)))
-  assert parse_type_hint(int | None | str) == Union((int, type(None), str))
+  assert parse_type_hint(int | str) == Union((Type.of(int), Type.of(str)))
+  assert parse_type_hint(int | None) == Union((Type.of(int), Type.of(type(None))))
+  assert parse_type_hint(int | None | str) == Union((Type.of(int), Type.of(type(None)), Type.of(str)))
 
 
 @parametrize_typing_module('Literal')
@@ -104,6 +104,10 @@ def test_parse_type_hint_generic_alias_of_concrete_type():
 
   class MyConcreteList(t.List[int]): pass
   assert parse_type_hint(MyConcreteList) == Type.of(MyConcreteList)
+
+
+def test_parse_type_hint_type_var():
+  assert parse_type_hint(T) == TypeVar(T)
 
 
 def test_parse_type_hint_unknown():

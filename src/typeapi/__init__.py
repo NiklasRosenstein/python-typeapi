@@ -8,10 +8,10 @@ Example:
 import typeapi, typing
 
 hint = typeapi.of(typing.List[int])
-assert hint == typeapi.Type(list, nparams=1, parameters=None, args=(int,))
+assert hint == Type(list, nparams=1, parameters=None, args=(Type.of(int),))
 
 hint = typeapi.of(int | str | None)
-assert hint == typeapi.Union((int, str, type(None)))
+assert hint == typeapi.Union((Type.of(int), Type.of(str), Type.of(type(None))))
 ```
 
 The #typeapi.of() function introspects the type hint passed as an argument and converts it to a stable description

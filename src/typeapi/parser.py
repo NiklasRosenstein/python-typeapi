@@ -4,7 +4,7 @@ import types
 import typing as t
 import typing_extensions as te
 
-from .model import Annotated, Any, ClassVar, Final, ForwardRef, Hint, Literal, NewType, NoReturn, Type, TypeGuard, Union, Unknown
+from .model import Annotated, Any, ClassVar, Final, ForwardRef, Hint, Literal, NewType, NoReturn, Type, TypeGuard, TypeVar, Union, Unknown
 from .utils import is_annotated_alias, is_generic, is_generic_alias, is_new_type, is_special_form, is_special_generic_alias, is_union_type
 
 _TypeHintHandler = t.Callable[[t.Any], t.Optional[Hint]]
@@ -28,7 +28,7 @@ def _handle_any(hint: t.Any) -> t.Optional[Hint]:
 @_handler
 def _handle_annotated(hint: t.Any) -> t.Optional[Hint]:
   if is_annotated_alias(hint):
-    return Annotated(hint.__origin__, hint.__metadata__)
+    return Annotated(parse_type_hint(hint.__origin__), hint.__metadata__)
   return None
 
 
@@ -45,7 +45,7 @@ def _handle_forward_ref(hint: t.Any) -> t.Optional[Hint]:
 def _handle_class_var(hint: t.Any) -> t.Optional[Hint]:
   if is_generic_alias(hint) and hint.__origin__ == t.ClassVar:
     assert len(hint.__args__) == 1, hint
-    return ClassVar(hint.__args__[0])
+    return ClassVar(parse_type_hint(hint.__args__[0]))
   return None
 
 
@@ -53,7 +53,7 @@ def _handle_class_var(hint: t.Any) -> t.Optional[Hint]:
 def _handle_final(hint: t.Any) -> t.Optional[Hint]:
   if is_generic_alias(hint) and hint.__origin__ == te.Final:
     assert len(hint.__args__) == 1, hint
-    return Final(hint.__args__[0])
+    return Final(parse_type_hint(hint.__args__[0]))
   return None
 
 
@@ -68,7 +68,7 @@ def _handle_no_return(hint: t.Any) -> t.Optional[Hint]:
 def _handle_type_guard(hint: t.Any) -> t.Optional[Hint]:
   if is_generic_alias(hint) and hint.__origin__ == te.TypeGuard:
     assert len(hint.__args__) == 1, hint
-    return TypeGuard(hint.__args__[0])
+    return TypeGuard(parse_type_hint(hint.__args__[0]))
   return None
 
 
@@ -76,7 +76,7 @@ def _handle_type_guard(hint: t.Any) -> t.Optional[Hint]:
 def _handle_union(hint: t.Any) -> t.Optional[Hint]:
   if is_union_type(hint):
     assert len(hint.__args__) >= 2, hint
-    return Union(hint.__args__)
+    return Union(tuple(parse_type_hint(a) for a in hint.__args__))
   return None
 
 
@@ -103,6 +103,13 @@ def _handle_type_or_generic_alias(hint: t.Any) -> t.Optional[Hint]:
     return Type.of(hint)
   except ValueError:
     return None
+
+
+@_handler
+def _handle_type_var(hint: t.Any) -> t.Optional[Hint]:
+  if isinstance(hint, t.TypeVar):
+    return TypeVar(hint)
+  return None
 
 
 @t.overload

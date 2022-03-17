@@ -27,3 +27,15 @@ id = "1a555129-9ed4-4b2a-8115-47536b140507"
 type = "feature"
 description = "add `Type.get_parameter_mapping()`"
 author = "@NiklasRosenstein"
+
+[[entries]]
+id = "ce02d673-8dd8-4301-95f6-234a5134bb4c"
+type = "feature"
+description = "Add `Type.get_parameter_mapping()`"
+author = "@NiklasRosenstein"
+
+[[entries]]
+id = "bb1c3753-1fd0-4b27-a713-eb746a4c7e93"
+type = "breaking change"
+description = "Type hints are now converted recursively, all recursive API models now store `Hint` objects directly instead of the raw typing argument."
+author = "@NiklasRosenstein"
