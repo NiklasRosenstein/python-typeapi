@@ -397,8 +397,8 @@ def infuse_type_parameters(hint: Hint, parameters: t.Dict[t.TypeVar, Hint]) -> H
     return hint
 
   def _visitor(hint: Hint) -> Hint:
-    if isinstance(hint, Type) and hint.args is not None:
-      return hint.with_args(tuple(parameters.get(a.var, a) if isinstance(a, TypeVar) else a for a in hint.args))
+    if isinstance(hint, TypeVar):
+      return parameters.get(hint.var, hint)
     return hint
 
   new_hint = hint.visit(_visitor)

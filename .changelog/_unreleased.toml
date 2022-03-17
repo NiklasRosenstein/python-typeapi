@@ -9,3 +9,9 @@ id = "749c7398-3bbe-45e2-aeeb-bd70092695ed"
 type = "feature"
 description = "Add `Type.get_orig_bases_parametrized()`"
 author = "@NiklasRosenstein"
+
+[[entries]]
+id = "777d1f85-ea76-488a-8056-28ad8eebf01c"
+type = "fix"
+description = "Fix `infuse_type_parameters()` to replace sole `typeapi.TypeVar` instead of only occurrences in `typeapi.Type.args`"
+author = "@NiklasRosenstein"
