@@ -337,3 +337,14 @@ def eval_types(hint: Hint, module: t.Optional[str] = None) -> Hint:
     return hint
 
   return hint.visit(_visitor)
+
+
+def infuse_type_parameters(hint: Hint, parameters: t.Dict[t.TypeVar, Hint]) -> Hint:
+  """ Replace type variables in *hint* with the parameters in the given mapping. """
+
+  def _visitor(hint: Hint) -> Hint:
+    if isinstance(hint, Type) and hint.args is not None:
+      return hint.with_args(tuple(parameters.get(a.var, a) if isinstance(a, TypeVar) else a for a in hint.args))
+    return hint
+
+  return hint.visit(_visitor)

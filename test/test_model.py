@@ -4,7 +4,7 @@ import sys
 import typing as t
 import pytest
 import typeapi
-from typeapi.model import ForwardRef, Type, Annotated, TypeVar, eval_types
+from typeapi.model import ForwardRef, Type, Annotated, TypeVar, eval_types, infuse_type_parameters
 from typeapi.utils import is_generic
 from utils import parametrize_typing_module
 
@@ -100,3 +100,8 @@ def test_ForwardRef_evaluate():
 
 def test_eval_types():
   assert eval_types(typeapi.of(t.Dict['T', str]), __name__) == Type(dict, 2, None, (TypeVar(T), Type.of(str)))
+
+
+def test_infuse_type_parameters():
+  assert infuse_type_parameters(Type.of(t.List[T]), {t.cast(t.TypeVar, T): Type.of(int)}) == Type.of(t.List[int])
+  assert infuse_type_parameters(Type.of(t.List[T]), {}) == Type.of(t.List[T ])

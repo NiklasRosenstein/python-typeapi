@@ -15,3 +15,9 @@ id = "f0d0e72e-ae25-4f32-823c-18d92cd447a6"
 type = "feature"
 description = "add `typeapi.eval_types()`"
 author = "@NiklasRosenstein"
+
+[[entries]]
+id = "5330906d-bac4-4cef-a572-052244283334"
+type = "feature"
+description = "add `typeapi.infuse_type_parameters()`"
+author = "@NiklasRosenstein"

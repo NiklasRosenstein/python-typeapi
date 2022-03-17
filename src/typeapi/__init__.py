@@ -21,13 +21,13 @@ using the dataclasses defined in #typeapi.model.
 __version__ = '0.1.0a4'
 
 from .model import Hint, Type, Union, Annotated, ForwardRef, Any, ClassVar, Final, NoReturn, TypeGuard, Literal, \
-    NewType, Unknown, eval_types
+    NewType, Unknown, eval_types, infuse_type_parameters
 from .parser import parse_type_hint as of
 from .utils import get_type_hints, type_repr
 
 __all__ = [
   'Hint', 'Type', 'Union', 'Annotated', 'ForwardRef', 'Any', 'ClassVar', 'Final', 'NoReturn', 'TypeGuard', 'Literal',
-  'NewType', 'Unknown', 'eval_types',
+  'NewType', 'Unknown', 'eval_types', 'infuse_type_parameters',
   'of',
   'get_type_hints', 'type_repr',
 ]
