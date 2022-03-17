@@ -6,6 +6,7 @@ import typing as t
 import pytest
 from typeapi.model import Annotated, Any, ClassVar, Final, ForwardRef, Literal, NewType, NoReturn, Type, TypeGuard, TypeVar, Union, Unknown
 from typeapi.parser import parse_type_hint
+from typeapi.utils import is_new_type
 from utils import parametrize_typing_module
 
 T = t.TypeVar('T')
@@ -21,8 +22,8 @@ def test_parse_type_hint_annotated(m):
 
 
 def test_parse_type_hint_forward_ref():
-  assert parse_type_hint('str') == ForwardRef('str', None)
-  assert parse_type_hint(t.ForwardRef('str')) == ForwardRef('str', None)
+  assert parse_type_hint('str') == ForwardRef(t.ForwardRef('str'))
+  assert parse_type_hint(t.ForwardRef('str')) == ForwardRef(t.ForwardRef('str'))
 
 
 def test_parse_type_hint_class_var():
@@ -69,7 +70,8 @@ def test_parse_type_hint_literal(m):
 def test_parse_type_hint_new_type():
   assert parse_type_hint(t.NewType) == Unknown(t.NewType)
   MyInt = t.NewType('MyInt', int)
-  assert parse_type_hint(MyInt) == NewType('MyInt', int)
+  assert is_new_type(MyInt)
+  assert parse_type_hint(MyInt) == NewType(MyInt)
 
 
 def test_parse_type_hint_concrete_type():

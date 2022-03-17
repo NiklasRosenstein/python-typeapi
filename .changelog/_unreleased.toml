@@ -1,0 +1,5 @@
+[[entries]]
+id = "0922059c-e19b-4743-8e29-3240ecfaa82b"
+type = "breaking change"
+description = "Change `ForwardRef` and `NewType` to hold the origin `typing` object"
+author = "@NiklasRosenstein"

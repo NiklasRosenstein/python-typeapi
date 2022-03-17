@@ -35,9 +35,9 @@ def _handle_annotated(hint: t.Any) -> t.Optional[Hint]:
 @_handler
 def _handle_forward_ref(hint: t.Any) -> t.Optional[Hint]:
   if isinstance(hint, t.ForwardRef):
-    return ForwardRef(hint.__forward_arg__, getattr(hint, '__forward_module__', None))
+    return ForwardRef(hint)
   elif isinstance(hint, str):
-    return ForwardRef(hint, None)
+    return ForwardRef(t.ForwardRef(hint))
   return None
 
 
@@ -91,7 +91,7 @@ def _handle_literal(hint: t.Any) -> t.Optional[Hint]:
 @_handler
 def _handle_new_type(hint: t.Any) -> t.Optional[Hint]:
   if is_new_type(hint):
-    return NewType(hint.__name__, hint.__supertype__)
+    return NewType(hint)
   return None
 
 

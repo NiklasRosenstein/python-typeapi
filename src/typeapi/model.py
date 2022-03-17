@@ -150,7 +150,7 @@ class Type(Hint):
     _raise()
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(repr=False)
 class Union(Hint):
   """ Represents #typing.Union or #typing.Optional. """
 
@@ -192,26 +192,41 @@ class Annotated(Hint):
     return func(Annotated(self.wrapped.visit(func), self.metadata))
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(repr=False)
 class ForwardRef(Hint):
   """ Represents a forward reference. """
 
-  #: The expression of the forward reference.
-  expr: str
+  #: The forward reference.
+  ref: t.ForwardRef
 
-  #: The module that is associated with the forward reference.
-  module: t.Optional[str]
+  @property
+  def expr(self) -> str:
+    """ Returns the code from the forward reference. """
+
+    return self.ref.__forward_arg__
+
+  @property
+  def module(self) -> t.Optional[str]:
+    """ Returns the name of the moduel in which the forward reference is to be evaluated. """
+
+    return getattr(self.ref, '__forward_module__', None)
 
   def evaluate(self, fallback_module: t.Optional[str]) -> t.Any:
-    raise NotImplementedError
+    """ Evaluate the forward reference, preferably in the module that is already known by #ref, or otherwise
+    in the specified *fallback_module*. """
+
+    module = self.module or fallback_module
+    if not module:
+      raise RuntimeError(f'no module to evaluate {self}')
 
 
-@dataclasses.dataclass
+
+@dataclasses.dataclass(repr=False)
 class Any(Hint):  # type: ignore[misc]
   """ Represents #typing.Any. """
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(repr=False)
 class ClassVar(Hint):
   """ Represents #typing.ClassVar. """
 
@@ -222,7 +237,7 @@ class ClassVar(Hint):
     return func(ClassVar(self.wrapped.visit(func)))
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(repr=False)
 class Final(Hint):
   """ Represents #typing.Final. """
 
@@ -233,12 +248,12 @@ class Final(Hint):
     return func(Final(self.wrapped.visit(func)))
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(repr=False)
 class NoReturn(Hint):
   """ Represents #typing.NoReturn. """
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(repr=False)
 class TypeGuard(Hint):
   """ Represents #typing.TypeGuard. """
 
@@ -249,7 +264,7 @@ class TypeGuard(Hint):
     return func(TypeGuard(self.wrapped.visit(func)))
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(repr=False)
 class Literal(Hint):
   """ Represents #typing.Literal. """
 
@@ -257,7 +272,7 @@ class Literal(Hint):
   values: t.Tuple[t.Any, ...]
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(repr=False)
 class TypeVar(Hint):
   """ Represents a #typing.TypeVar. """
 
@@ -271,18 +286,27 @@ class TypeVar(Hint):
     self.var = var
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(repr=False)
 class NewType(Hint):
   """ Represents #typing.NewType. """
 
-  #: The name of the new type.
-  name: str
+  #: The typing new type instance.
+  type: utils.NewType
 
-  #: The underlying type for the new type.
-  supertype: t.Type
+  @property
+  def name(self) -> str:
+    """ The name of the new type. """
+
+    return self.type.__name__
+
+  @property
+  def supertype(self) -> t.Type:
+    """ The underlying type of the new type. """
+
+    return self.type.__supertype__
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(repr=False)
 class Unknown(Hint):
   """ Represents an type hint that is not understood. """
 

@@ -13,7 +13,7 @@ V = t.TypeVar('V')
 
 def test_Type_str():
   assert str(Type.of(int)) == 'Type(int)'
-  assert str(Type.of(t.Dict[T, int])) == 'Type(dict, nparams=2, args=(TypeVar(var=~T), Type(int)))'
+  assert str(Type.of(t.Dict[T, int])) == 'Type(dict, nparams=2, args=(TypeVar(~T), Type(int)))'
 
 
 def test_Annotated_str():
