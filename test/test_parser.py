@@ -68,8 +68,8 @@ def test_parse_type_hint_literal(m):
 
 def test_parse_type_hint_new_type():
   assert parse_type_hint(t.NewType) == Unknown(t.NewType)
-  new_type = t.NewType('MyInt', int)
-  assert parse_type_hint(new_type) == NewType('MyInt', int)
+  MyInt = t.NewType('MyInt', int)
+  assert parse_type_hint(MyInt) == NewType('MyInt', int)
 
 
 def test_parse_type_hint_concrete_type():

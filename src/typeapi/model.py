@@ -13,6 +13,9 @@ class Hint:
     if type(self) is Hint:
       raise TypeError('Hint cannot be constructed')
 
+  def __repr__(self) -> str:
+    return f'{type(self).__name__}({", ".join(repr(getattr(self, f.name)) for f in dataclasses.fields(self))})'
+
   def visit(self, func: t.Callable[[Hint], Hint]) -> Hint:
     """ Visit the hint and its subhints, if any, and call *func* on it. Returns the result of *func* on self. """
 
@@ -32,15 +35,33 @@ class Type(Hint):
   #: The type variables from the #origin type's original definition. Note that this may be `None`
   #: even if #nparams is greater than zero. This is usually the case for special generic aliases
   #: like #typing.List for which no explicit type variables are defined in the #typing module.
-  parameters: t.Optional[t.Tuple[t.TypeVar, ...]] = None
+  parameters: t.Optional[t.Tuple[t.TypeVar, ...]]
 
   #: The type arguments that the #origin was parametrized with. This is #None if the type is not
   #: explicitly parametrized. It may still contain #typing.TypeVar#s if that is what the type was
   #: parametrized with.
-  args: t.Optional[t.Tuple[Hint, ...]] = None
+  args: t.Optional[t.Tuple[Hint, ...]]
+
+  def __init__(
+    self,
+    type_: t.Type,
+    nparams: int = 0,
+    parameters: t.Optional[t.Tuple[t.Union[t.Any, t.TypeVar], ...]] = None,
+    args: t.Optional[t.Tuple[Hint, ...]] = None,
+  ) -> None:
+    # NOTE (@NiklasRosenstein): Mypy thinks type vars are "objects", not t.TypeVar. To simplify code that
+    # constructs an instance of this class, we accept Any but ensure it is a t.TypeVar at runtime.
+    assert parameters is None or all(isinstance(v, t.TypeVar) for v in parameters)
+    assert isinstance(type_, type), type_
+    self.type = type_
+    self.nparams = nparams
+    self.parameters = parameters
+    self.args = args
 
   def __repr__(self) -> str:
-    parts = [utils.type_repr(self.type), f'nparams={self.nparams}']
+    parts = [utils.type_repr(self.type)]
+    if self.nparams != 0:
+      parts.append(f'nparams={self.nparams}')
     if self.parameters is not None:
       parts.append(f'parameters={self.parameters!r}')
     if self.args is not None:
@@ -150,7 +171,7 @@ class Union(Hint):
     return func(Union(tuple(th.visit(func) for th in self.types)))
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(repr=False)
 class Annotated(Hint):
   """ Represents a type wrapped in #typing.Annotated. """
 
@@ -159,9 +180,6 @@ class Annotated(Hint):
 
   #: The metadata in the annotation.
   metadata: t.Tuple[t.Any, ...]
-
-  def __repr__(self) -> str:
-    return 'Annotated({}, {})'.format(utils.type_repr(self.wrapped), self.metadata)
 
   def visit(self, func: t.Callable[[Hint], Hint]) -> Hint:
     return func(Annotated(self.wrapped.visit(func), self.metadata))
@@ -238,6 +256,12 @@ class TypeVar(Hint):
 
   #: The type variable.
   var: t.TypeVar
+
+  def __init__(self, var: t.Union[t.Any, t.TypeVar]) -> None:
+    # NOTE (@NiklasRosenstein): Mypy thinks type vars are "objects", not t.TypeVar. To simplify code that
+    # constructs an instance of this class, we accept Any but ensure it is a t.TypeVar at runtime.
+    assert isinstance(var, t.TypeVar), var
+    self.var = var
 
 
 @dataclasses.dataclass

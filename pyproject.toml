@@ -35,7 +35,7 @@ typed = true
 
 [tool.slam.test]
 check = "slam check"
-mypy = "mypy src/"
+mypy = "mypy src/ test/"
 pytest = "pytest test/ -vv"
 
 [tool.slam.run]
@@ -51,3 +51,4 @@ warn_no_return = true
 warn_unreachable = true
 show_error_context = true
 show_error_codes = true
+check_untyped_defs = true
