@@ -679,6 +679,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#infuse_type_parameters_1" class="md-nav__link">
+    infuse_type_parameters
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1180,6 +1187,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#infuse_type_parameters_1" class="md-nav__link">
+    infuse_type_parameters
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1278,7 +1292,7 @@ returned by this generator.</p>
 <p><a id="pydoc:typeapi.model.Type.get_orig_bases_parametrized"></a></p>
 <h4 id="get_orig_bases_parametrized">get_orig_bases_parametrized</h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_orig_bases_parametrized</span><span class="p">(</span>
-        <span class="n">all_</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="n">utils</span><span class="o">.</span><span class="n">GenericAlias</span><span class="p">,</span> <span class="n">Hint</span><span class="p">]</span>
+        <span class="n">all_</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="n">utils</span><span class="o">.</span><span class="n">GenericAlias</span><span class="p">,</span> <span class="n">Type</span><span class="p">]</span>
 </code></pre></div>
 <p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L115">[view_source]</a></p>
 <p>Create a dictionary that maps the generic aliases returned by <a href="#pydoc:typeapi.model.Type.get_orig_bases">get_orig_bases()</a> to a type hint infused
@@ -1517,10 +1531,20 @@ in the specified <em>fallback_module</em>.</p>
 <p><a id="typeapi.model.infuse_type_parameters"></a></p>
 <p><a id="pydoc:typeapi.model.infuse_type_parameters"></a></p>
 <h4 id="infuse_type_parameters">infuse_type_parameters</h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">infuse_type_parameters</span><span class="p">(</span><span class="n">hint</span><span class="p">:</span> <span class="n">Hint</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">TypeVar</span><span class="p">,</span>
+<div class="highlight"><pre><span></span><code><span class="nd">@t</span><span class="o">.</span><span class="n">overload</span>
+<span class="k">def</span> <span class="nf">infuse_type_parameters</span><span class="p">(</span><span class="n">hint</span><span class="p">:</span> <span class="n">Type</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">TypeVar</span><span class="p">,</span>
+                                                          <span class="n">Hint</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Type</span>
+</code></pre></div>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L386">[view_source]</a></p>
+<p>If you already have a <a href="#pydoc:typeapi.model.Type">Type</a> hint, infusing it returns just another <a href="#pydoc:typeapi.model.Type">Type</a>.</p>
+<p><a id="typeapi.model.infuse_type_parameters"></a></p>
+<p><a id="pydoc:typeapi.model.infuse_type_parameters"></a></p>
+<h4 id="infuse_type_parameters_1">infuse_type_parameters</h4>
+<div class="highlight"><pre><span></span><code><span class="nd">@t</span><span class="o">.</span><span class="n">overload</span>
+<span class="k">def</span> <span class="nf">infuse_type_parameters</span><span class="p">(</span><span class="n">hint</span><span class="p">:</span> <span class="n">Hint</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">TypeVar</span><span class="p">,</span>
                                                           <span class="n">Hint</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Hint</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L385">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/model.py#L391">[view_source]</a></p>
 <p>Replace type variables in <em>hint</em> with the parameters in the given mapping.</p>
 
               
