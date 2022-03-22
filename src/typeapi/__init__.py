@@ -18,7 +18,7 @@ The #typeapi.of() function introspects the type hint passed as an argument and c
 using the dataclasses defined in #typeapi.model.
 """
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 from .model import Hint, Type, Union, Annotated, ForwardRef, Any, ClassVar, Final, NoReturn, TypeGuard, Literal, \
     NewType, Unknown, eval_types, infuse_type_parameters
