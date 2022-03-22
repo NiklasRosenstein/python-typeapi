@@ -3,3 +3,9 @@ id = "bb404b10-2837-4c4f-ae49-77e2e18093fe"
 type = "feature"
 description = "add `globalns` and `localns` parameters to `get_annotations()` and `ForwardRef.evaluate()`"
 author = "@NiklasRosenstein"
+
+[[entries]]
+id = "3c628ce0-0a5f-4198-82ae-c4e574ffccfc"
+type = "feature"
+description = "add `typeapi.utils.scoped()` decorator"
+author = "@NiklasRosenstein"

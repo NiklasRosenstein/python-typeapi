@@ -1,10 +1,11 @@
 
 import sys
+from sysconfig import get_path_names
 import typing as t
 import typing_extensions as te
 
 import pytest
-from typeapi.utils import get_annotations, get_special_forms, get_special_generic_aliases, is_annotated_alias, is_generic_alias, is_new_type, is_special_form, is_special_generic_alias, is_typed_dict
+from typeapi.utils import get_annotations, get_special_forms, get_special_generic_aliases, is_annotated_alias, is_generic_alias, is_new_type, is_special_form, is_special_generic_alias, is_typed_dict, scoped
 
 T = t.TypeVar('T')
 
@@ -96,3 +97,24 @@ def test_get_annotations():
   assert get_annotations(B) == {'b': int}
   assert get_annotations(B, include_bases=True) == {'b': int, 'a': str}
   assert t.get_type_hints(B) == {'a': str, 'b': int}
+
+
+def test_scoped():
+  class A:
+    a: int
+
+  # Normal case
+  class B1:
+    a: A
+  get_annotations(B1) == {'a': A}
+
+  # Forward reference cannot be resolved
+  class B2:
+    a: 'A'
+  with pytest.raises(NameError):
+    get_annotations(B2)
+
+  @scoped
+  class B3:
+    a: 'A'
+  get_annotations(B3) == {'a': A}

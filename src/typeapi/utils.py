@@ -13,6 +13,7 @@ import typing_extensions as te
 if t.TYPE_CHECKING:
   import builtins
 
+T = t.TypeVar('T')
 TypeArg = t.Union[
   te.ParamSpec,
   t.TypeVar,
@@ -281,7 +282,7 @@ def type_repr(obj):
 
 
 def get_annotations(
-  type_: t.Any,
+  obj: t.Any,
   include_bases: bool = False,
   globalns: t.Optional[t.Dict[str, t.Any]] = None,
   localns: t.Optional[t.Dict[str, t.Any]] = None,
@@ -290,31 +291,68 @@ def get_annotations(
   #typing.Annotated hints (without extras the annotations are removed). In Python 3.10 and onwards, this is
   an alias for #inspect.get_annotations() with `eval_str=True`.
 
-  If *include_bases* is set to `True`, annotations from base classes are taken into account as well. """
+  If *include_bases* is set to `True`, annotations from base classes are taken into account as well.
+
+  This function will take into account the locals and globals accessible through the frame associated with
+  a function or type by the #scoped() decorator. """
+
+  if hasattr(obj, '__typeapi_frame__'):
+    frame: types.FrameType = obj.__typeapi_frame__
+    globalns = frame.f_globals
+    localns = frame.f_locals
+    del frame
 
   if sys.version_info[:2] <= (3, 9):
     if sys.version_info[:2] <= (3, 8):
-      annotations = t.get_type_hints(type_, globalns=globalns, localns=localns)
+      annotations = t.get_type_hints(obj, globalns=globalns, localns=localns)
     else:
-      annotations = t.get_type_hints(type_, globalns=globalns, localns=localns, include_extras=True)
+      annotations = t.get_type_hints(obj, globalns=globalns, localns=localns, include_extras=True)
     if not include_bases:
       # To replicate the behaviour of #inspect.get_annotations(), which is to _not_ take into account
       # the annotations of the base class, we discard all entries from the resulting dictionary that
       # is not included in the types __annotations__.
-      local_annotations = getattr(type_, '__annotations__', {})
+      local_annotations = getattr(obj, '__annotations__', {})
       return {k: v for k, v in annotations.items() if k in local_annotations}
     return annotations
-  elif isinstance(type_, type) and include_bases:
+  elif isinstance(obj, type) and include_bases:
     annotations = {}
-    for cls in type_.__mro__:
+    for cls in obj.__mro__:
       annotations.update({
         k: v for k, v in inspect.get_annotations(cls, globals=globalns, locals=localns, eval_str=True).items()
         if k not in annotations
       })
     return annotations
   else:
-    return inspect.get_annotations(type_, globals=globalns, locals=localns, eval_str=True)
+    return inspect.get_annotations(obj, globals=globalns, locals=localns, eval_str=True)
 
 
 # Backwards compatibility, remove in next minor version (minor because we're below 1.0.0)
 get_type_hints = get_annotations
+
+
+def scoped(obj: T) -> T:
+  """ A decorator that associates the caller's frame with the object such that #get_annotations() can use it as
+  the scope to resolve forward references in.
+
+  Example:
+
+  ```py
+  import typeapi
+
+  def get_ab():
+    class A:
+      v: int
+
+    @typeapi.scoped
+    class B:
+      a: 'A'
+
+    return B
+
+  A, B = get_ab()
+  assert typeapi.get_annotations(B) == {'a': A}
+  ```
+  """
+
+  obj.__typeapi_frame__ = sys._getframe(1)  # type: ignore
+  return obj
