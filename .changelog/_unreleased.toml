@@ -1,0 +1,5 @@
+[[entries]]
+id = "bb404b10-2837-4c4f-ae49-77e2e18093fe"
+type = "feature"
+description = "add `globalns` and `localns` parameters to `get_annotations()` and `ForwardRef.evaluate()`"
+author = "@NiklasRosenstein"

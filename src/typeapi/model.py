@@ -259,18 +259,26 @@ class ForwardRef(Hint):
 
     return getattr(self.ref, '__forward_module__', None)
 
-  def evaluate(self, fallback_module: t.Optional[str] = None) -> t.Any:
+  def evaluate(
+    self,
+    fallback_module: t.Optional[str] = None,
+    globalns: t.Optional[t.Dict[str, t.Any]] = None,
+    localns: t.Optional[t.Dict[str, t.Any]] = None,
+  ) -> t.Any:
     """ Evaluate the forward reference, preferably in the module that is already known by #ref, or otherwise
-    in the specified *fallback_module*. """
+    in the specified *fallback_module* or the specified *globalns* and *localns* namespaces.. """
 
     module_name = self.module or fallback_module
-    if not module_name:
-      raise RuntimeError(f'no module to evaluate {self}')
-    globals = vars(sys.modules[module_name])
-    if sys.version_info[:2] < (3, 9):
-      return self.ref._evaluate(globals, None)
+    if module_name:
+      globalns = vars(sys.modules[module_name])
+      localns = None
     else:
-      return self.ref._evaluate(globals, None, set())  # type: ignore[call-arg]  # mypy doesn't know about the third arg
+      if globalns is None and localns is None:
+        raise RuntimeError(f'no module or namespace to evaluate {self}')
+    if sys.version_info[:2] < (3, 9):
+      return self.ref._evaluate(globalns, localns)
+    else:
+      return self.ref._evaluate(globalns, localns, set())  # type: ignore[call-arg]  # mypy doesn't know about the third arg
 
 
 @dataclasses.dataclass(repr=False)
@@ -366,13 +374,21 @@ class Unknown(Hint):
   hint: t.Any
 
 
-def eval_types(hint: Hint, module: t.Optional[str] = None) -> Hint:
+def eval_types(
+  hint: Hint,
+  module: t.Optional[str] = None,
+  globalns: t.Optional[t.Dict[str, t.Any]] = None,
+  localns: t.Optional[t.Dict[str, t.Any]] = None,
+) -> Hint:
   """ Evaluate all forward references present in *hint*.
 
   Arguments:
     hint: The #typeapi #Hint to evaluate forward references in.
     module: The name of the module to evaluate the references in if they are not already associated with a module.
       Note that the module must be present in #sys.modules.
+    globalns: A mapping to serve as a namespace to evaluate forward references in if *module* is not set and the
+      forward reference has no module reference.
+    localns: Same as *globalns* but for the local namespace.
   Returns:
     The same hint with all forward references replaced.
   """
@@ -381,7 +397,7 @@ def eval_types(hint: Hint, module: t.Optional[str] = None) -> Hint:
 
   def _visitor(hint: Hint) -> Hint:
     if isinstance(hint, ForwardRef):
-      return typeapi.of(hint.evaluate(module))
+      return typeapi.of(hint.evaluate(module, globalns, localns))
     return hint
 
   return hint.visit(_visitor)
