@@ -244,6 +244,9 @@ class ForwardRef(Hint):
   #: The forward reference.
   ref: t.ForwardRef
 
+  def __repr__(self) -> str:
+    return str(self.ref)
+
   @property
   def expr(self) -> str:
     """ Returns the code from the forward reference. """
