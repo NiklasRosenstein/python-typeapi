@@ -645,7 +645,7 @@
             <article class="md-content__inner md-typeset">
               
                 
-<a href="https://github.com/NiklasRosenstein/python-typeapi/blob/None/docs/content/api/typeapi.utils.md" title="Edit this page" class="md-content__button md-icon">
+<a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/content/api/typeapi.utils.md" title="Edit this page" class="md-content__button md-icon">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
 </a>
 
@@ -660,7 +660,7 @@ You should use <code>typeapi.of()</code> and the datatypes defined in <code>type
 <h2 id="class-typeddict">Class TypedDict</h2>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">TypedDict</span><span class="p">(</span><span class="n">te</span><span class="o">.</span><span class="n">Protocol</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/0225e55f15859137f7b7e7b9c799aafda2f90768/docs/../src/typeapi/utils.py#L72">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/utils.py#L72">[view_source]</a></p>
 <p>A protocol that describes <code>typing.TypedDict</code> values (which are actually instances of the <code>typing._TypedDictMeta</code>
 metaclass). Use <a href="#pydoc:typeapi.utils.is_typed_dict">is_typed_dict()</a> to check if a hint is matches this protocol.</p>
 <p><a id="typeapi.utils.is_generic"></a></p>
@@ -668,7 +668,7 @@ metaclass). Use <a href="#pydoc:typeapi.utils.is_typed_dict">is_typed_dict()</a>
 <h4 id="is_generic">is_generic</h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">is_generic</span><span class="p">(</span><span class="n">hint</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">te</span><span class="o">.</span><span class="n">TypeGuard</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">Type</span><span class="p">[</span><span class="n">Generic</span><span class="p">]]</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/0225e55f15859137f7b7e7b9c799aafda2f90768/docs/../src/typeapi/utils.py#L82">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/utils.py#L82">[view_source]</a></p>
 <p><strong>Returns</strong>:</p>
 <p><code>True</code> if <em>hint</em> is a subclass of <code>typing.Generic</code> (and not an alias of it).</p>
 <p>!!! note</p>
@@ -678,7 +678,7 @@ metaclass). Use <a href="#pydoc:typeapi.utils.is_typed_dict">is_typed_dict()</a>
 <h4 id="is_generic_alias">is_generic_alias</h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">is_generic_alias</span><span class="p">(</span><span class="n">hint</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">te</span><span class="o">.</span><span class="n">TypeGuard</span><span class="p">[</span><span class="n">GenericAlias</span><span class="p">]</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/0225e55f15859137f7b7e7b9c799aafda2f90768/docs/../src/typeapi/utils.py#L95">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/utils.py#L95">[view_source]</a></p>
 <p><strong>Returns</strong>:</p>
 <p><code>True</code> if <em>hint</em> is a <code>typing._GenericAlias</code> or <code>types.GenericAlias</code> (<a href="https://peps.python.org/pep-0585/">PEP 585</a> since Python 3.10+).</p>
 <p>!!! note</p>
@@ -691,7 +691,7 @@ metaclass). Use <a href="#pydoc:typeapi.utils.is_typed_dict">is_typed_dict()</a>
 <h4 id="is_union_type">is_union_type</h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">is_union_type</span><span class="p">(</span><span class="n">hint</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">te</span><span class="o">.</span><span class="n">TypeGuard</span><span class="p">[</span><span class="n">UnionType</span><span class="p">]</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/0225e55f15859137f7b7e7b9c799aafda2f90768/docs/../src/typeapi/utils.py#L124">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/utils.py#L124">[view_source]</a></p>
 <p><strong>Returns</strong>:</p>
 <p><code>True</code> if <em>hint</em> is a <code>typing.Union</code> or <code>types.UnionType</code>.</p>
 <p><a id="typeapi.utils.is_special_generic_alias"></a></p>
@@ -699,7 +699,7 @@ metaclass). Use <a href="#pydoc:typeapi.utils.is_typed_dict">is_typed_dict()</a>
 <h4 id="is_special_generic_alias">is_special_generic_alias</h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">is_special_generic_alias</span><span class="p">(</span><span class="n">hint</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">te</span><span class="o">.</span><span class="n">TypeGuard</span><span class="p">[</span><span class="n">SpecialGenericAlias</span><span class="p">]</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/0225e55f15859137f7b7e7b9c799aafda2f90768/docs/../src/typeapi/utils.py#L139">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/utils.py#L139">[view_source]</a></p>
 <p><strong>Returns</strong>:</p>
 <p><code>True</code> if <em>hint</em> is a <code>typing._SpecialGenericAlias</code> (like <code>typing.List</code> or <code>typing.Mapping</code>).</p>
 <p>!!! note</p>
@@ -711,7 +711,7 @@ metaclass). Use <a href="#pydoc:typeapi.utils.is_typed_dict">is_typed_dict()</a>
 <h4 id="is_special_form">is_special_form</h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">is_special_form</span><span class="p">(</span><span class="n">hint</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">te</span><span class="o">.</span><span class="n">TypeGuard</span><span class="p">[</span><span class="n">SpecialGenericAlias</span><span class="p">]</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/0225e55f15859137f7b7e7b9c799aafda2f90768/docs/../src/typeapi/utils.py#L161">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/utils.py#L161">[view_source]</a></p>
 <p><strong>Returns</strong>:</p>
 <p><code>True</code> if <em>hint</em> is a <code>typing._SpecialForm</code> (like <code>typing.Final</code> or <code>typing.Union</code>).</p>
 <p><a id="typeapi.utils.is_annotated_alias"></a></p>
@@ -719,7 +719,7 @@ metaclass). Use <a href="#pydoc:typeapi.utils.is_typed_dict">is_typed_dict()</a>
 <h4 id="is_annotated_alias">is_annotated_alias</h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">is_annotated_alias</span><span class="p">(</span><span class="n">hint</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">te</span><span class="o">.</span><span class="n">TypeGuard</span><span class="p">[</span><span class="n">AnnotatedAlias</span><span class="p">]</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/0225e55f15859137f7b7e7b9c799aafda2f90768/docs/../src/typeapi/utils.py#L170">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/utils.py#L170">[view_source]</a></p>
 <p><strong>Returns</strong>:</p>
 <p><code>True</code> if <em>hint</em> is a <code>typing._AnnotatedAlias</code> (e.g. <code>typing.Annotated[int, 42]</code>).</p>
 <p><a id="typeapi.utils.is_new_type"></a></p>
@@ -727,7 +727,7 @@ metaclass). Use <a href="#pydoc:typeapi.utils.is_typed_dict">is_typed_dict()</a>
 <h4 id="is_new_type">is_new_type</h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">is_new_type</span><span class="p">(</span><span class="n">hint</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">te</span><span class="o">.</span><span class="n">TypeGuard</span><span class="p">[</span><span class="n">NewType</span><span class="p">]</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/0225e55f15859137f7b7e7b9c799aafda2f90768/docs/../src/typeapi/utils.py#L179">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/utils.py#L179">[view_source]</a></p>
 <p><strong>Returns</strong>:</p>
 <p><code>True</code> if <em>hint</em> is a <code>typing.NewType</code> object.</p>
 <p><a id="typeapi.utils.is_typed_dict"></a></p>
@@ -735,7 +735,7 @@ metaclass). Use <a href="#pydoc:typeapi.utils.is_typed_dict">is_typed_dict()</a>
 <h4 id="is_typed_dict">is_typed_dict</h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">is_typed_dict</span><span class="p">(</span><span class="n">hint</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">te</span><span class="o">.</span><span class="n">TypeGuard</span><span class="p">[</span><span class="n">TypedDict</span><span class="p">]</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/0225e55f15859137f7b7e7b9c799aafda2f90768/docs/../src/typeapi/utils.py#L191">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/utils.py#L191">[view_source]</a></p>
 <p><strong>Returns</strong>:</p>
 <p><code>True</code> if <em>hint</em> is a <code>typing.TypedDict</code>.</p>
 <p>!!! note</p>
@@ -747,7 +747,7 @@ metaclass). Use <a href="#pydoc:typeapi.utils.is_typed_dict">is_typed_dict()</a>
 <div class="highlight"><pre><span></span><code><span class="nd">@functools</span><span class="o">.</span><span class="n">lru_cache</span><span class="p">()</span>
 <span class="k">def</span> <span class="nf">get_special_generic_aliases</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">SpecialGenericAlias</span><span class="p">]</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/0225e55f15859137f7b7e7b9c799aafda2f90768/docs/../src/typeapi/utils.py#L209">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/utils.py#L209">[view_source]</a></p>
 <p>Returns a dictionary that contains all special generic aliases (like <code>typing.List</code> and <code>typing.Mapping</code>)
 defined in the <code>typing</code> module.</p>
 <p><strong>Example</strong>:</p>
@@ -763,7 +763,7 @@ defined in the <code>typing</code> module.</p>
 <span class="k">def</span> <span class="nf">get_origins_to_special_generic_aliases</span><span class="p">(</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">type</span><span class="p">,</span> <span class="n">SpecialGenericAlias</span><span class="p">]</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/0225e55f15859137f7b7e7b9c799aafda2f90768/docs/../src/typeapi/utils.py#L230">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/utils.py#L230">[view_source]</a></p>
 <p>Returns a dictionary that maps a native Python type to the <code>typing</code> special generic alias.</p>
 <p><strong>Example</strong>:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">typing</span>
@@ -777,7 +777,7 @@ defined in the <code>typing</code> module.</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@functools</span><span class="o">.</span><span class="n">lru_cache</span><span class="p">()</span>
 <span class="k">def</span> <span class="nf">get_special_forms</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">SpecialGenericAlias</span><span class="p">]</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/0225e55f15859137f7b7e7b9c799aafda2f90768/docs/../src/typeapi/utils.py#L247">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/utils.py#L247">[view_source]</a></p>
 <p>Returns a dictionary that contains all special forms (like <code>typing.Final</code> and <code>typing.Union</code>)
 defined in the <code>typing</code> module.</p>
 <p><strong>Example</strong>:</p>
@@ -792,15 +792,18 @@ defined in the <code>typing</code> module.</p>
 <h4 id="type_repr">type_repr</h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">type_repr</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/0225e55f15859137f7b7e7b9c799aafda2f90768/docs/../src/typeapi/utils.py#L269">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/utils.py#L269">[view_source]</a></p>
 <p><code>typing._type_repr()</code> stolen from Python 3.8.</p>
 <p><a id="typeapi.utils.get_annotations"></a></p>
 <p><a id="pydoc:typeapi.utils.get_annotations"></a></p>
 <h4 id="get_annotations">get_annotations</h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_annotations</span><span class="p">(</span><span class="n">type_</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span>
-                    <span class="n">include_bases</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">]</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_annotations</span><span class="p">(</span>
+        <span class="n">type_</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span>
+        <span class="n">include_bases</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">globalns</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">localns</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">]</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/0225e55f15859137f7b7e7b9c799aafda2f90768/docs/../src/typeapi/utils.py#L283">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/utils.py#L283">[view_source]</a></p>
 <p>Like <code>typing.get_type_hints()</code>, but always includes extras. This is important when we want to inspect
 <code>typing.Annotated</code> hints (without extras the annotations are removed). In Python 3.10 and onwards, this is
 an alias for <code>inspect.get_annotations()</code> with <code>eval_str=True</code>.</p>
