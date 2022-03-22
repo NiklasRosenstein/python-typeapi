@@ -94,4 +94,5 @@ def test_get_annotations():
     b: int
   assert get_annotations(A) == {'a': str}
   assert get_annotations(B) == {'b': int}
+  assert get_annotations(B, include_bases=True) == {'b': int, 'a': str}
   assert t.get_type_hints(B) == {'a': str, 'b': int}

@@ -1,0 +1,5 @@
+[[entries]]
+id = "7a8be2d2-f835-4373-ae29-eb522e41fddf"
+type = "improvement"
+description = "add `get_annotations(include_bases)` parameter"
+author = "@NiklasRosenstein"

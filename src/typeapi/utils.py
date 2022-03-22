@@ -280,10 +280,12 @@ def type_repr(obj):
   return repr(obj)
 
 
-def get_annotations(type_: t.Any) -> t.Dict[str, t.Any]:
+def get_annotations(type_: t.Any, include_bases: bool = False) -> t.Dict[str, t.Any]:
   """ Like #typing.get_type_hints(), but always includes extras. This is important when we want to inspect
   #typing.Annotated hints (without extras the annotations are removed). In Python 3.10 and onwards, this is
-  an alias for #inspect.get_annotations() with `eval_str=True`. """
+  an alias for #inspect.get_annotations() with `eval_str=True`.
+
+  If *include_bases* is set to `True`, annotations from base classes are taken into account as well. """
 
 
   if sys.version_info[:2] <= (3, 9):
@@ -291,11 +293,20 @@ def get_annotations(type_: t.Any) -> t.Dict[str, t.Any]:
       annotations = t.get_type_hints(type_)
     else:
       annotations = t.get_type_hints(type_, include_extras=True)
-    # To replicate the behaviour of #inspect.get_annotations(), which is to _not_ take into account
-    # the annotations of the base class, we discard all entries from the resulting dictionary that
-    # is not included in the types __annotations__.
-    local_annotations = getattr(type_, '__annotations__', {})
-    return {k: v for k, v in annotations.items() if k in local_annotations}
+    if not include_bases:
+      # To replicate the behaviour of #inspect.get_annotations(), which is to _not_ take into account
+      # the annotations of the base class, we discard all entries from the resulting dictionary that
+      # is not included in the types __annotations__.
+      local_annotations = getattr(type_, '__annotations__', {})
+      return {k: v for k, v in annotations.items() if k in local_annotations}
+  elif isinstance(type_, type) and include_bases:
+    annotations = {}
+    for cls in type_.__mro__:
+      annotations.update({
+        k: v for k, v in inspect.get_annotations(cls, eval_str=True).items()
+        if k not in annotations
+      })
+    return annotations
   else:
     return inspect.get_annotations(type_, eval_str=True)
 
