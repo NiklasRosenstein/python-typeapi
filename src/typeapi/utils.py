@@ -299,6 +299,7 @@ def get_annotations(type_: t.Any, include_bases: bool = False) -> t.Dict[str, t.
       # is not included in the types __annotations__.
       local_annotations = getattr(type_, '__annotations__', {})
       return {k: v for k, v in annotations.items() if k in local_annotations}
+    return annotations
   elif isinstance(type_, type) and include_bases:
     annotations = {}
     for cls in type_.__mro__:
