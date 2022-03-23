@@ -356,3 +356,12 @@ def scoped(obj: T) -> T:
 
   obj.__typeapi_frame__ = sys._getframe(1)  # type: ignore
   return obj
+
+
+def scope(obj: t.Union[t.Type, types.FunctionType]) -> t.Optional[t.Dict[str, t.Any]]:
+  """ Retrieve the scope that was assigned to *obj* via the #scoped() decorator. """
+
+  frame = getattr(obj, '__typeapi_frame__', None)
+  if frame is not None:
+    return frame.f_locals
+  return None
