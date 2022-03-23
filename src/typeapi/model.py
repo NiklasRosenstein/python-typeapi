@@ -427,3 +427,12 @@ def infuse_type_parameters(hint: Hint, parameters: t.Dict[t.TypeVar, Hint]) -> H
   if isinstance(hint, Type):
     assert isinstance(new_hint, Type)
   return new_hint
+
+
+def unwrap(hint: Hint) -> t.Tuple[Hint, t.Tuple[t.Any, ...]]:
+  """ If given a #typing.Annotated hint, returns the wrapped hint and the annotation metadata. Otherwise, the
+  *hint* is returned as-is and an empty tuple for metadata. """
+
+  if isinstance(hint, Annotated):
+    return hint.wrapped, hint.metadata
+  return hint, ()
