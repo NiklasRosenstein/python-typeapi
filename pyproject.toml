@@ -30,15 +30,15 @@ pytest = "*"
 [tool.poetry.extras]
 docs = ["novella==0.1.12", "pydoc-markdown==4.6.3", "mkdocs", "mkdocs-material"]
 
-[tool.slam]
+[tool.slap]
 typed = true
 
-[tool.slam.test]
-check = "slam check"
+[tool.slap.test]
+check = "slap check"
 mypy = "mypy src/ test/"
 pytest = "pytest test/ -vv"
 
-[tool.slam.run]
+[tool.slap.run]
 "docs:build" = "cd docs && novella"
 "docs:dev" = "cd docs && novella --serve"
 

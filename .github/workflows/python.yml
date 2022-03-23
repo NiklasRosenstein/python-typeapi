@@ -25,19 +25,19 @@ jobs:
           ]
     steps:
     - uses: actions/checkout@v2
-    - uses: NiklasRosenstein/slam@github-action/install/v1
+    - uses: NiklasRosenstein/slap@gha/install/v1
     - uses: actions/setup-python@v2
       with: { python-version: "${{ matrix.python-version }}" }
-    - run: slam install --no-venv-check
-    - run: slam test
+    - run: slap install --no-venv-check
+    - run: slap test
 
   docs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: NiklasRosenstein/slam@github-action/install/v1
-    - run: slam install --only-extras docs --no-venv-check
-    - run: slam run docs:build
+    - uses: NiklasRosenstein/slap@gha/install/v1
+    - run: slap install --only-extras docs --no-venv-check
+    - run: slap run docs:build
     - uses: actions/upload-artifact@v2
       with:
         name: docs

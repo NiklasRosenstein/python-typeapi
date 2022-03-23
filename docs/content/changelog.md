@@ -1,1 +1,1 @@
-@shell cd .. && slam changelog format --markdown --all
+@shell cd .. && slap changelog format --markdown --all
