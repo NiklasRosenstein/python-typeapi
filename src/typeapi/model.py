@@ -264,6 +264,7 @@ class ForwardRef(Hint):
     fallback_module: t.Optional[str] = None,
     globalns: t.Optional[t.Dict[str, t.Any]] = None,
     localns: t.Optional[t.Dict[str, t.Any]] = None,
+    recursive: bool = True,
   ) -> t.Any:
     """ Evaluate the forward reference, preferably in the module that is already known by #ref, or otherwise
     in the specified *fallback_module* or the specified *globalns* and *localns* namespaces.. """
@@ -275,10 +276,13 @@ class ForwardRef(Hint):
     else:
       if globalns is None and localns is None:
         raise RuntimeError(f'no module or namespace to evaluate {self}')
-    if sys.version_info[:2] < (3, 9):
-      return self.ref._evaluate(globalns, localns)
+    if recursive:
+      if sys.version_info[:2] < (3, 9):
+        return self.ref._evaluate(globalns, localns)
+      else:
+        return self.ref._evaluate(globalns, localns, set())  # type: ignore[call-arg]  # mypy doesn't know about the third arg
     else:
-      return self.ref._evaluate(globalns, localns, set())  # type: ignore[call-arg]  # mypy doesn't know about the third arg
+      return eval(self.ref.__forward_code__, globalns, localns)
 
 
 @dataclasses.dataclass(repr=False)
