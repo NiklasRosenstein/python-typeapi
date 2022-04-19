@@ -383,6 +383,7 @@ def eval_types(
   module: t.Optional[str] = None,
   globalns: t.Optional[t.Dict[str, t.Any]] = None,
   localns: t.Optional[t.Dict[str, t.Any]] = None,
+  ignore_name_errors: bool = False,
 ) -> Hint:
   """ Evaluate all forward references present in *hint*.
 
@@ -393,6 +394,11 @@ def eval_types(
     globalns: A mapping to serve as a namespace to evaluate forward references in if *module* is not set and the
       forward reference has no module reference.
     localns: Same as *globalns* but for the local namespace.
+    ignore_name_errors: Ignore #NameError exceptions during evaluation and keep the type hint around as
+      a #ForwardRef. This is useful if you want to evaluate as much as possible of a type annotation, but
+      don't care so much about resolving everything (e.g. if only the root type hint is of interest). Note
+      the string annotation must in turn contain a string in order for the forward ref to be partiially
+      resolvable (e.g. `'Property["Content"]'`).
   Returns:
     The same hint with all forward references replaced.
   """
@@ -401,7 +407,11 @@ def eval_types(
 
   def _visitor(hint: Hint) -> Hint:
     if isinstance(hint, ForwardRef):
-      return typeapi.of(hint.evaluate(module, globalns, localns))
+      try:
+        return typeapi.of(hint.evaluate(module, globalns, localns, recursive=not ignore_name_errors))
+      except NameError:
+        if not ignore_name_errors:
+          raise
     return hint
 
   return hint.visit(_visitor)

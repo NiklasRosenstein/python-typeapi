@@ -3,3 +3,9 @@ id = "609a4d51-bc9c-4192-a505-10d133faac99"
 type = "feature"
 description = "Add `recursive` argument to `ForwardRef.evaluate()`"
 author = "@NiklasRosenstein"
+
+[[entries]]
+id = "68ecdff5-2679-476b-a649-b4d15c1b6da9"
+type = "feature"
+description = "Add `ignore_name_errors` to `eval_types()`"
+author = "@NiklasRosenstein"
