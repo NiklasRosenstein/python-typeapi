@@ -5,3 +5,5 @@
 *.egg-info/
 __pycache__/
 poetry.lock
+.dmypy.json
+.python-version

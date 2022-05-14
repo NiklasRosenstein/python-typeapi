@@ -26,6 +26,10 @@ typing-extensions = ">=3.0.0"
 [tool.poetry.dev-dependencies]
 mypy = "*"
 pytest = "*"
+types-dataclasses = "^0.6.5"
+isort = "^5.10.1"
+flake8 = "^4.0.1"
+black = "^22.3.0"
 
 [tool.poetry.extras]
 docs = ["novella==0.1.12", "pydoc-markdown==4.6.3", "mkdocs", "mkdocs-material"]
@@ -35,20 +39,35 @@ typed = true
 
 [tool.slap.test]
 check = "slap check"
-mypy = "mypy src/ test/"
-pytest = "pytest test/ -vv"
+mypy = "dmypy run src/"
+pytest = "pytest tests/ -vv"
+black = "black --check src/ tests/"
+isort = "isort --check-only src/ tests/"
+flake8 = "flake8 src/ tests/"
 
 [tool.slap.run]
-"docs:build" = "cd docs && novella"
+"docs:build" = "cd docs && novella --base-url python-typeapi/"
 "docs:dev" = "cd docs && novella --serve"
+fmt = "black src/ tests/ && isort src/ tests/"
 
 [tool.mypy]
-pretty = true
+python_version = "3.7"
+explicit_package_bases = true
+mypy_path = ["src"]
 namespace_packages = true
-warn_redundant_casts = true
-# warn_unused_ignores = true
-warn_no_return = true
-warn_unreachable = true
-show_error_context = true
+pretty = true
 show_error_codes = true
-check_untyped_defs = true
+show_error_context = true
+# strict = true
+warn_no_return = true
+warn_redundant_casts = true
+warn_unreachable = true
+# warn_unused_ignores = true
+
+[tool.isort]
+profile = "black"
+line_length = 120
+combine_as_imports = true
+
+[tool.black]
+line-length = 120
