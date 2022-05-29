@@ -1,0 +1,5 @@
+[[entries]]
+id = "3a156880-c439-4a5c-a1c9-483b96ab197e"
+type = "improvement"
+description = "Limit types accepted for `typeapi.get_annotations() to modules, types and callables as is also the case in `inspect.get_annotations()` starting with 3.10"
+author = "@NiklasRosenstein"

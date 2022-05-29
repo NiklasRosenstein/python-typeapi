@@ -286,7 +286,7 @@ def type_repr(obj):
 
 
 def get_annotations(
-    obj: t.Any,
+    obj: t.Union[t.Callable[..., t.Any], types.ModuleType, type],
     include_bases: bool = False,
     globalns: t.Optional[t.Dict[str, t.Any]] = None,
     localns: t.Optional[t.Dict[str, t.Any]] = None,
@@ -301,7 +301,7 @@ def get_annotations(
     a function or type by the #scoped() decorator."""
 
     if hasattr(obj, "__typeapi_frame__"):
-        frame: types.FrameType = obj.__typeapi_frame__
+        frame: types.FrameType = obj.__typeapi_frame__  # type: ignore[union-attr]
         globalns = frame.f_globals
         localns = frame.f_locals
         del frame
