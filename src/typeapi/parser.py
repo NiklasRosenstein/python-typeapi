@@ -56,7 +56,7 @@ def _handle_forward_ref(hint: t.Any) -> t.Optional[Hint]:
 
 @_handler
 def _handle_class_var(hint: t.Any) -> t.Optional[Hint]:
-    if is_generic_alias(hint) and hint.__origin__ == t.ClassVar:
+    if is_generic_alias(hint) and hint.__origin__ == t.ClassVar:  # type: ignore[comparison-overlap]
         assert len(hint.__args__) == 1, hint
         return ClassVar(parse_type_hint(hint.__args__[0]))
     return None
@@ -64,7 +64,7 @@ def _handle_class_var(hint: t.Any) -> t.Optional[Hint]:
 
 @_handler
 def _handle_final(hint: t.Any) -> t.Optional[Hint]:
-    if is_generic_alias(hint) and hint.__origin__ == te.Final:
+    if is_generic_alias(hint) and hint.__origin__ == te.Final:  # type: ignore[comparison-overlap]
         assert len(hint.__args__) == 1, hint
         return Final(parse_type_hint(hint.__args__[0]))
     return None
@@ -79,7 +79,7 @@ def _handle_no_return(hint: t.Any) -> t.Optional[Hint]:
 
 @_handler
 def _handle_type_guard(hint: t.Any) -> t.Optional[Hint]:
-    if is_generic_alias(hint) and hint.__origin__ == te.TypeGuard:
+    if is_generic_alias(hint) and hint.__origin__ == te.TypeGuard:  # type: ignore[comparison-overlap]
         assert len(hint.__args__) == 1, hint
         return TypeGuard(parse_type_hint(hint.__args__[0]))
     return None
@@ -95,7 +95,7 @@ def _handle_union(hint: t.Any) -> t.Optional[Hint]:
 
 @_handler
 def _handle_literal(hint: t.Any) -> t.Optional[Hint]:
-    if is_generic_alias(hint) and hint.__origin__ == te.Literal:
+    if is_generic_alias(hint) and hint.__origin__ == te.Literal:  # type: ignore[comparison-overlap]
         assert len(hint.__args__) >= 1, hint
         return Literal(hint.__args__)
     return None

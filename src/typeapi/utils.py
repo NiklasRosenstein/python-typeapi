@@ -20,7 +20,7 @@ TypeArg = t.Union[
     t.TypeVar,
     t.Tuple[()],
     "builtins.ellipsis",
-    t.Type,
+    type,
 ]
 
 
@@ -32,7 +32,7 @@ class _BaseGenericAlias(te.Protocol):
 
 
 class Generic(te.Protocol):
-    __orig_bases__: t.ClassVar[t.Tuple[t.Type, ...]]
+    __orig_bases__: t.ClassVar[t.Tuple[type, ...]]
     __parameters__: t.ClassVar[t.Tuple[t.TypeVar, ...]]
 
 
@@ -71,7 +71,7 @@ class SpecialForm(te.Protocol):
 
 class NewType(te.Protocol):
     __name__: str
-    __supertype__: t.Type
+    __supertype__: type
 
 
 class TypedDict(te.Protocol):
@@ -94,7 +94,7 @@ def is_generic(hint: t.Any) -> te.TypeGuard[t.Type[Generic]]:
         This returns `False` for #typing.Generic because it does not have a `__parameters__` attribute.
     """
 
-    return isinstance(hint, type) and issubclass(hint, t.Generic) and hint is not t.Generic  # type: ignore[arg-type]
+    return isinstance(hint, type) and issubclass(hint, t.Generic) and hint is not t.Generic  # type: ignore[arg-type,comparison-overlap]  # noqa: E501
 
 
 def is_generic_alias(hint: t.Any) -> te.TypeGuard[GenericAlias]:
@@ -157,7 +157,7 @@ def is_special_generic_alias(hint: t.Any) -> te.TypeGuard[SpecialGenericAlias]:
         # We use isinstance() here instead of checking the exact type because typing.Tuple or
         # typing.Callable in 3.8 or earlier are instances of typing._VariadicGenericAliases.
         if isinstance(hint, t._GenericAlias):  # type: ignore[attr-defined]
-            return hint._special
+            return t.cast(bool, hint._special)
         return False
     else:
         return isinstance(hint, t._SpecialGenericAlias)  # type: ignore[attr-defined]
@@ -271,7 +271,7 @@ def get_special_forms() -> t.Dict[str, SpecialGenericAlias]:
     return result
 
 
-def type_repr(obj):
+def type_repr(obj: t.Any) -> str:
     """#typing._type_repr() stolen from Python 3.8."""
 
     if isinstance(obj, type):
@@ -365,10 +365,10 @@ def scoped(obj: T) -> T:
     return obj
 
 
-def scope(obj: t.Union[t.Type, types.FunctionType]) -> t.Optional[t.Dict[str, t.Any]]:
+def scope(obj: t.Union[type, types.FunctionType]) -> t.Optional[t.Dict[str, t.Any]]:
     """Retrieve the scope that was assigned to *obj* via the #scoped() decorator."""
 
     frame = getattr(obj, "__typeapi_frame__", None)
     if frame is not None:
-        return frame.f_locals
+        return t.cast(types.FrameType, frame).f_locals
     return None

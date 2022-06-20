@@ -1,0 +1,5 @@
+[[entries]]
+id = "d05e4385-6275-48e1-8169-ff2ccf493603"
+type = "improvement"
+description = "Enable strict type checking in Mypy"
+author = "@NiklasRosenstein"

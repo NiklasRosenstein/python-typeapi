@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import builtins
 import dataclasses
 import sys
 import typing as t
@@ -10,7 +11,7 @@ from . import utils
 class Hint:
     """Base for classes that represent type hints."""
 
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: t.Any, **kwargs: t.Any) -> None:
         if type(self) is Hint:
             raise TypeError("Hint cannot be constructed")
 
@@ -28,7 +29,7 @@ class Type(Hint):
     """Represents a concrete type, including type arguments if applicable."""
 
     #: The original Python type underlying the type hint.
-    type: t.Type
+    type: type
 
     #: The number of type parameters that the #origin type accepts.
     nparams: int
@@ -45,7 +46,7 @@ class Type(Hint):
 
     def __init__(
         self,
-        type_: t.Type,
+        type_: builtins.type,
         nparams: int = 0,
         parameters: t.Optional[t.Tuple[t.Union[t.Any, t.TypeVar], ...]] = None,
         args: t.Optional[t.Tuple[Hint, ...]] = None,
@@ -125,7 +126,7 @@ class Type(Hint):
         type_parameters = self.get_parameter_mapping()
         result = {}
         for base in self.get_orig_bases():
-            if base.__origin__ is t.Generic:
+            if base.__origin__ is t.Generic:  # type: ignore[comparison-overlap]
                 continue
             type_ = Type.of(base)
             result[base] = infuse_type_parameters(type_, type_parameters)
@@ -179,7 +180,7 @@ class Type(Hint):
                 type_info = Type.of(special_alias)
 
             # Otherwise, the alias origin must be a subclass of typing.Generic.
-            elif utils.is_generic(type_.__origin__) or type_.__origin__ == t.Generic:
+            elif utils.is_generic(type_.__origin__) or type_.__origin__ == t.Generic:  # type: ignore[comparison-overlap]  # noqa: E501
                 type_info = Type.of(type_.__origin__)
 
             else:
@@ -371,7 +372,7 @@ class NewType(Hint):
         return self.type.__name__
 
     @property
-    def supertype(self) -> t.Type:
+    def supertype(self) -> builtins.type:
         """The underlying type of the new type."""
 
         return self.type.__supertype__
