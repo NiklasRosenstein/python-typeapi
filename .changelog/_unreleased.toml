@@ -1,0 +1,8 @@
+[[entries]]
+id = "00c8286a-0132-4750-b2df-34d7eb2cd136"
+type = "fix"
+description = "fix issue with `typeapi.get_annotations(include_bases=False)` if class has no explicit annotations"
+author = "@NiklasRosenstein"
+issues = [
+    "https://github.com/NiklasRosenstein/python-typeapi/issues/3",
+]

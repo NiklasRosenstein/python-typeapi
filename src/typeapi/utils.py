@@ -307,6 +307,9 @@ def get_annotations(
         del frame
 
     if sys.version_info[:2] <= (3, 9):
+        if not include_bases and '__annotations__' not in vars(obj):
+            # Handle case when class has no explicit annotations, see python-typeapi#3
+            return {}
         if sys.version_info[:2] <= (3, 8):
             annotations = t.get_type_hints(obj, globalns=globalns, localns=localns)
         else:
