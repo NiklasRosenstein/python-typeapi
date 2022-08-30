@@ -17,7 +17,7 @@ The #typeapi.of() function introspects the type hint passed as an argument and c
 using the dataclasses defined in #typeapi.model.
 """
 
-__version__ = "0.2.1"
+__version__ = "0.2.2"
 
 from .model import (
     Annotated,
