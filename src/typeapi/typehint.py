@@ -97,7 +97,12 @@ class TypeHint(metaclass=_TypeHintMeta):
 
 
 class ClassTypeHint(TypeHint):
-    pass
+    def __init__(self, hint: object) -> None:
+        super().__init__(hint)
+        assert isinstance(self.hint, type) or isinstance(self.origin, type), (
+            "ClassTypeHint must be initialized from a real type or a generic that points to a real type. "
+            f'Got "{self.hint!r}" with origin "{self.origin}"'
+        )
 
 
 class UnionTypeHint(TypeHint):

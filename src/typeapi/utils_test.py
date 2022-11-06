@@ -319,7 +319,7 @@ def test__typing_Any__introspection():
     # Origin:
 
     assert not hasattr(Any, "__origin__")
-    assert get_type_hint_origin_or_none(Any) is None
+    assert get_type_hint_origin_or_none(Any) is object
 
     # Args and parameters:
 

@@ -45,15 +45,20 @@ def get_type_hint_origin_or_none(hint: object) -> Optional[Any]:
             if hasattr(collections.abc, type_name):
                 hint_origin = getattr(collections.abc, type_name)
 
+        return hint_origin
+
     elif IS_PYTHON_AT_LAST_3_6 and type(hint).__name__ == "_Literal" and hint.__values__ is not None:  # type: ignore
         from typing_extensions import Literal
 
-        hint_origin = Literal
+        return Literal
 
     elif not IS_PYTHON_AT_LAST_3_6 and type(hint).__name__ == "_AnnotatedAlias":  # type: ignore
         from typing_extensions import Annotated
 
         return Annotated
+
+    if hint_origin is None and hint == Any:
+        return object
 
     return hint_origin
 

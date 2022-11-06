@@ -8,9 +8,9 @@ T = TypeVar("T")
 
 
 def test__TypeHint__any() -> None:
-    assert TypeHint(Any) == ClassTypeHint(Any)
+    assert isinstance(TypeHint(Any), ClassTypeHint)
     assert TypeHint(Any).hint == Any
-    assert TypeHint(Any).origin is None
+    assert TypeHint(Any).origin is object
     assert TypeHint(Any).args == ()
     assert TypeHint(Any).parameters == ()
 
