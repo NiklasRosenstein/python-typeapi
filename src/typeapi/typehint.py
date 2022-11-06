@@ -1,7 +1,7 @@
 import abc
 from typing import Any, Dict, List, Tuple, TypeVar, Union, overload
 
-from .utils import get_type_hint_args, get_type_hint_origin_or_none, get_type_hint_parameters
+from .utils import ForwardRef, get_type_hint_args, get_type_hint_origin_or_none, get_type_hint_parameters
 
 NoneType = type(None)
 
@@ -45,6 +45,9 @@ class _TypeHintMeta(abc.ABCMeta):
 
         if hint is None:
             hint = NoneType
+
+        if isinstance(hint, (ForwardRef, str)):
+            return ForwardRefTypeHint(hint)
 
         origin = get_type_hint_origin_or_none(hint)
         if origin == Union:
@@ -187,3 +190,28 @@ class TypeVarTypeHint(TypeHint):
     @property
     def bound(self) -> Any:
         return self.hint.__bound__
+
+
+class ForwardRefTypeHint(TypeHint):
+    def __init__(self, hint: object) -> None:
+        super().__init__(hint)
+        if isinstance(self._hint, str):
+            self._forward_ref = ForwardRef(self._hint)
+        elif isinstance(self._hint, ForwardRef):
+            self._forward_ref = self._hint
+        else:
+            raise TypeError(
+                f"ForwardRefTypeHint must be initialized from a typing.ForwardRef or str. Got: {type(self._hint)!r}"
+            )
+
+    @property
+    def hint(self) -> "ForwardRef | str":
+        return self._hint  # type: ignore
+
+    @property
+    def ref(self) -> ForwardRef:
+        return self._forward_ref
+
+    @property
+    def expr(self) -> str:
+        return self._forward_ref.__forward_arg__

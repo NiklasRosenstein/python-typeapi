@@ -15,6 +15,7 @@ namely through the following representations:
 | `LiteralTypeHint` | Represents a `Literal` type hint and gives access to the literal values. |
 | `AnnotatedTypeHint` | Represents an `Annotated` type hint and gives access to the annotated type as well as the metadata. |
 | `TypeVarTypeHint` | Represents a `TypeVar` type hint and gives an interface to access the variable's metadata (such as constarints, variance, ...). |
+| `ForwardRefTypeHint` | Represents a forward reference. |
 
 All type hints representations are constructed by calling the `TypeHint()` constructor and passing the low-level type hint.
 

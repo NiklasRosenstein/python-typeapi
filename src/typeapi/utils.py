@@ -13,6 +13,23 @@ IS_PYTHON_AT_LEAST_3_7 = sys.version_info[:2] >= (3, 7)
 IS_PYTHON_AT_LEAST_3_9 = sys.version_info[:2] >= (3, 9)
 TYPING_MODULE_NAMES = frozenset(["typing", "typing_extensions"])
 
+if sys.version_info[:2] <= (3, 6):
+    from typing import _ForwardRef as ForwardRef
+else:
+    from typing import ForwardRef
+
+__all__ = [
+    "ForwardRef",
+    "get_type_hint_origin_or_none",
+    "get_type_hint_args",
+    "get_type_hint_parameters",
+    "get_type_var_from_string_repr",
+    "type_repr",
+    "get_annotations",
+    "TypedDictProtocol",
+    "is_typed_dict",
+]
+
 
 def get_type_hint_origin_or_none(hint: object) -> "Any | None":
     """

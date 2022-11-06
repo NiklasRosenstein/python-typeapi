@@ -2,7 +2,16 @@ from typing import Any, Generic, List, TypeVar, Union
 
 from typing_extensions import Annotated, Literal
 
-from typeapi.typehint import AnnotatedTypeHint, ClassTypeHint, LiteralTypeHint, TypeHint, TypeVarTypeHint, UnionTypeHint
+from typeapi.typehint import (
+    AnnotatedTypeHint,
+    ClassTypeHint,
+    ForwardRefTypeHint,
+    LiteralTypeHint,
+    TypeHint,
+    TypeVarTypeHint,
+    UnionTypeHint,
+)
+from typeapi.utils import ForwardRef
 
 T = TypeVar("T")
 U = TypeVar("U")
@@ -160,3 +169,23 @@ def test__TypeHint__from_TypeVar() -> None:
     assert not hint.contravariant
     assert hint.bound is None
     assert hint.constraints == ()
+
+
+def test__TypeHint__from_ForwardRef_string() -> None:
+    hint = TypeHint("int")
+    assert isinstance(hint, ForwardRefTypeHint)
+    assert hint.hint == "int"
+    assert hint.origin is None
+    assert hint.args == ()
+    assert hint.parameters == ()
+    assert hint.ref == ForwardRef("int")
+
+
+def test__TypeHint__from_ForwardRef_instance() -> None:
+    hint = TypeHint(ForwardRef("int"))
+    assert isinstance(hint, ForwardRefTypeHint)
+    assert hint.hint == ForwardRef("int")
+    assert hint.origin is None
+    assert hint.args == ()
+    assert hint.parameters == ()
+    assert hint.ref == ForwardRef("int")

@@ -8,7 +8,7 @@ from typing import Any, Dict, Generic, List, Mapping, MutableMapping, TypeVar, U
 import pytest
 import typing_extensions
 
-from typeapi.utils import get_type_hint_args, get_type_hint_origin_or_none, get_type_hint_parameters
+from typeapi.utils import ForwardRef, get_type_hint_args, get_type_hint_origin_or_none, get_type_hint_parameters
 
 T = TypeVar("T")
 U = TypeVar("U")
@@ -348,3 +348,21 @@ def test__int__introspection():
     assert get_type_hint_origin_or_none(int) is None
     assert get_type_hint_args(int) == ()
     assert get_type_hint_parameters(int) == ()
+
+
+def test__ForwardRef__introspection_in_other_type():
+    assert List["int"].__args__ == (ForwardRef("int"),)
+    assert List["int"].__parameters__ == ()
+    get_type_hint_args(List["int"]) == (ForwardRef("int"),)
+    get_type_hint_parameters(List["int"]) == ()
+
+
+def test__ForwardRef__introspection():
+    assert ForwardRef("int").__forward_arg__ == "int"
+    get_type_hint_origin_or_none(ForwardRef("int")) is None
+    get_type_hint_args(ForwardRef("int")) == ()
+    get_type_hint_parameters(ForwardRef("int")) == ()
+
+    get_type_hint_origin_or_none("int") is None
+    get_type_hint_args("int") == ()
+    get_type_hint_parameters("int") == ()
