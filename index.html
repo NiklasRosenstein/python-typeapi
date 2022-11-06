@@ -243,15 +243,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
-    Installation
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
-    Example
+  <a href="#planned-work" class="md-nav__link">
+    Planned work
   </a>
   
 </li>
@@ -447,15 +440,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
-    Installation
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
-    Example
+  <a href="#planned-work" class="md-nav__link">
+    Planned work
   </a>
   
 </li>
@@ -481,15 +467,67 @@
 
 
 <h1 id="typeapi">typeapi</h1>
-<p>This library provides a stable API to introspect Python's <code>typing</code> and <code>typing_extensions</code> type hints.</p>
-<h2 id="installation">Installation</h2>
-<div class="highlight"><pre><span></span><code>$ pip install typeapi
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/actions/workflows/python.yml"><img alt="Python" src="https://github.com/NiklasRosenstein/python-typeapi/actions/workflows/python.yml/badge.svg" /></a></p>
+<p><strong>Compatibility</strong>: Python 3.6+</p>
+<p>The <code>typeapi</code> package provides an object-oriented interface for introspecting type hints from the <code>typing</code> and
+<code>typing_extensions</code> module at runtime. Currently, only a subset of the different kinds of type hints are supported,
+namely through the following representations:</p>
+<table>
+<thead>
+<tr>
+<th>Concrete type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ClassTypeHint</code></td>
+<td>For any normal or generic type as well as <code>typing.Any</code>. Provides access to the underlying type, the type arguments and parameters, if any.</td>
+</tr>
+<tr>
+<td><code>UnionTypeHint</code></td>
+<td>Represents <code>Union</code> type hint and gives access to the union members.</td>
+</tr>
+<tr>
+<td><code>LiteralTypeHint</code></td>
+<td>Represents a <code>Literal</code> type hint and gives access to the literal values.</td>
+</tr>
+<tr>
+<td><code>AnnotatedTypeHint</code></td>
+<td>Represents an <code>Annotated</code> type hint and gives access to the annotated type as well as the metadata.</td>
+</tr>
+<tr>
+<td><code>TypeVarTypeHint</code></td>
+<td>Represents a <code>TypeVar</code> type hint and gives an interface to access the variable's metadata (such as constarints, variance, ...).</td>
+</tr>
+<tr>
+<td><code>ForwardRefTypeHint</code></td>
+<td>Represents a forward reference.</td>
+</tr>
+</tbody>
+</table>
+<p>All type hints representations are constructed by calling the <code>TypeHint()</code> constructor and passing the low-level type hint.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">typeapi</span> <span class="kn">import</span> <span class="n">TypeHint</span><span class="p">,</span> <span class="n">ClassTypeHint</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
+<span class="n">hint</span> <span class="o">=</span> <span class="n">TypeHint</span><span class="p">(</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span>
+<span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hint</span><span class="p">,</span> <span class="n">ClassTypeHint</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">hint</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="nb">list</span>
+
+<span class="n">item_hint</span> <span class="o">=</span> <span class="n">hint</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item_hint</span><span class="p">,</span> <span class="n">ClassType</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">item_hint</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="nb">int</span>
 </code></pre></div>
-<h2 id="example">Example</h2>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">typing</span><span class="o">,</span> <span class="nn">typeapi</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">typeapi</span><span class="o">.</span><span class="n">of</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;key&quot;</span><span class="p">],</span> <span class="n">typing</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;false&#39;</span><span class="p">]]))</span>
-<span class="c1"># Type(collections.abc.Mapping, nparams=2, args=(Annotated(Type(str, nparams=0), &#39;key&#39;), Literal(values=(True, None, &#39;false&#39;))))</span>
-</code></pre></div>
+<h2 id="planned-work">Planned work</h2>
+<ul>
+<li>Support more features of the typing system (e.g. <code>ClassVar</code>, <code>ParamSpec</code>, ...)</li>
+<li>Support evaluating forward references that utilize newer Python language features (such as built-in type subscripts
+  and type union syntax).<ul>
+<li>Subscript support could be achieved by mocking the built-in types during the evaluation of the expression.</li>
+<li>Type unions could be achieved by rewriting the expression AST before evaluating and mocking every value in the expression.</li>
+</ul>
+</li>
+</ul>
 
 
 
