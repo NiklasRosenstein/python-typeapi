@@ -251,6 +251,20 @@ def test__ClassTypeHint__parametrize() -> None:
     assert hint.get_parameter_map() == {T: U, U: int}
 
 
+def test__ClassTypeHint__generic_class_hierarchy() -> None:
+    class A(Generic[T]):
+        pass
+
+    class B(A[T], Generic[T, U]):
+        pass
+
+    hint = TypeHint(B[int, str])
+    assert isinstance(hint, ClassTypeHint)
+    assert hint.hint == B[int, str]
+    assert hint.origin is B
+    assert hint.bases == (A[T], Generic[T, U])
+
+
 def test__TypeHint__evaluate() -> None:
     MyVector = List["MyType"]  # noqa: F821
 

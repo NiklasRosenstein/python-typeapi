@@ -212,6 +212,22 @@ def test__typing_Generic__introspection():
     assert get_type_hint_parameters(MyGeneric[int, T]) == (T,)
 
 
+def test__typing_Generic__class_hierarchy():
+    class MyGeneric(Generic[T]):
+        pass
+
+    class AnotherGeneric(Generic[T]):
+        pass
+
+    class SubGeneric(MyGeneric[T], AnotherGeneric[int], int):
+        pass
+
+    assert get_type_hint_origin_or_none(SubGeneric) is None
+    assert get_type_hint_origin_or_none(SubGeneric[int]) is SubGeneric
+    assert get_type_hint_original_bases(SubGeneric) == (MyGeneric[T], AnotherGeneric[int], int)
+    assert get_type_hint_original_bases(SubGeneric[int]) is None
+
+
 @pytest.mark.parametrize(
     argnames=["Annotated"],
     argvalues=[(typing_extensions.Annotated,)] + ([(t.Annotated,)] if hasattr(t, "Annotated") else []),

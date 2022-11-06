@@ -42,7 +42,11 @@ def get_type_hint_origin_or_none(hint: object) -> "Any | None":
 
     # In Python 3.6, List[int].__origin__ points to List; but we can look for
     # the Python native type in its __bases__.
-    if IS_PYTHON_AT_LAST_3_6 and hasattr(hint, "__orig_bases__"):
+    if (
+        IS_PYTHON_AT_LAST_3_6
+        and hasattr(hint, "__orig_bases__")
+        and getattr(hint, "__module__", None) in TYPING_MODULE_NAMES
+    ):
 
         if hint.__name__ == "Annotated" and hint.__args__:  # type: ignore
             from typing_extensions import Annotated
@@ -51,7 +55,11 @@ def get_type_hint_origin_or_none(hint: object) -> "Any | None":
 
         # Find a non-typing base class, which represents the actual Python type
         # for this type hint.
-        bases = tuple(x for x in (hint_origin or hint).__orig_bases__ if x.__module__ != "typing")  # type: ignore
+        bases = tuple(
+            x
+            for x in (hint_origin or hint).__orig_bases__  # type: ignore
+            if x.__module__ != "typing" and not hasattr(x, "__orig_bases__")
+        )
         if len(bases) == 1:
             hint_origin = bases[0]
         elif len(bases) > 1:
