@@ -196,6 +196,13 @@ class UnionTypeHint(TypeHint):
     def has_none_type(self) -> bool:
         return NoneType in self._args
 
+    def without_none_type(self) -> TypeHint:
+        args = tuple(x for x in self._args if x is not NoneType)
+        if len(args) == 1:
+            return TypeHint(args[0])
+        else:
+            return self._copy_with_args(args)
+
 
 class LiteralTypeHint(TypeHint):
     @property

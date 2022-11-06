@@ -98,6 +98,22 @@ def test__TypeHint__union() -> None:
     assert hint_1.type == str
 
 
+def test__UnionTypeHint__none_type() -> None:
+    hint = TypeHint(Union[int, None])
+    assert isinstance(hint, UnionTypeHint)
+    assert hint.has_none_type()
+    new_hint = hint.without_none_type()
+    assert isinstance(new_hint, ClassTypeHint)
+    assert new_hint.type is int
+
+    hint = TypeHint(Union[int, str, None])
+    assert isinstance(hint, UnionTypeHint)
+    assert hint.has_none_type()
+    new_hint = hint.without_none_type()
+    assert isinstance(new_hint, UnionTypeHint)
+    assert new_hint.args == (int, str)
+
+
 def test__TypeHint__literal() -> None:
     hint = TypeHint(Literal[42, "foo"])
     assert isinstance(hint, LiteralTypeHint)
