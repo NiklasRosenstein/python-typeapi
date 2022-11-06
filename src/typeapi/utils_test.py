@@ -81,6 +81,11 @@ def test__typing_List__introspection():
     assert get_type_hint_parameters(List[int]) == ()
 
 
+def test__typing_Collection__origin():
+    assert get_type_hint_origin_or_none(t.Collection) is collections.abc.Collection
+    assert get_type_hint_origin_or_none(t.Collection[int]) is collections.abc.Collection
+
+
 @pytest.mark.parametrize(
     argnames=["hint", "origin_type", "mutable"],
     argvalues=[

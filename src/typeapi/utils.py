@@ -11,7 +11,7 @@ IS_PYTHON_AT_LAST_3_6 = sys.version_info[:2] <= (3, 6)
 IS_PYTHON_AT_LAST_3_8 = sys.version_info[:2] <= (3, 8)
 IS_PYTHON_AT_LEAST_3_7 = sys.version_info[:2] >= (3, 7)
 IS_PYTHON_AT_LEAST_3_9 = sys.version_info[:2] >= (3, 9)
-TYPING_MODULE_NAMES = frozenset(["typing", "typing_extensions"])
+TYPING_MODULE_NAMES = frozenset(["typing", "typing_extensions", "collections.abc"])
 T_contra = TypeVar("T_contra", contravariant=True)
 U_co = TypeVar("U_co", covariant=True)
 
@@ -58,7 +58,7 @@ def get_type_hint_origin_or_none(hint: object) -> "Any | None":
         bases = tuple(
             x
             for x in (hint_origin or hint).__orig_bases__  # type: ignore
-            if x.__module__ != "typing" and not hasattr(x, "__orig_bases__")
+            if x.__module__ not in TYPING_MODULE_NAMES and not hasattr(x, "__orig_bases__")
         )
         if len(bases) == 1:
             hint_origin = bases[0]
