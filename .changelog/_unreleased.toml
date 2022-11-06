@@ -1,0 +1,5 @@
+[[entries]]
+id = "dd854257-06b8-44a2-a2ab-ee838dd49757"
+type = "breaking change"
+description = "Full rewrite of `typeapi` with limited support for more exotic type hints but strong support for common runtime type hint needs."
+author = "@NiklasRosenstein"
