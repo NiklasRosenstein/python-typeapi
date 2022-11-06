@@ -1,9 +1,18 @@
 import abc
-from typing import Any, Dict, List, Mapping, Tuple, TypeVar, Union, overload
+from typing import Any, Dict, List, Mapping, Tuple, TypeVar, Union, cast, overload
 
 from typing_extensions import Annotated
 
-from .utils import ForwardRef, get_type_hint_args, get_type_hint_origin_or_none, get_type_hint_parameters
+from .utils import (
+    IS_PYTHON_AT_LAST_3_6,
+    IS_PYTHON_AT_LAST_3_8,
+    ForwardRef,
+    HasGetitem,
+    get_type_hint_args,
+    get_type_hint_origin_or_none,
+    get_type_hint_parameters,
+    type_repr,
+)
 
 NoneType = type(None)
 
@@ -75,6 +84,9 @@ class TypeHint(metaclass=_TypeHintMeta):
         self._args = get_type_hint_args(hint)
         self._parameters = get_type_hint_parameters(hint)
 
+    def __repr__(self) -> str:
+        return f"TypeHint({type_repr(self._hint)})"
+
     @property
     def hint(self) -> object:
         return self._hint
@@ -115,22 +127,37 @@ class TypeHint(metaclass=_TypeHintMeta):
 
     def __getitem__(self, index: "int | slice") -> "TypeHint | List[TypeHint]":
         if isinstance(index, int):
-            return TypeHint(self.args[index])
+            try:
+                return TypeHint(self.args[index])
+            except IndexError:
+                raise IndexError(f"TypeHint index {index} out of range [0..{len(self.args)}[")
         else:
             return [TypeHint(x) for x in self.args[index]]
 
+    def _copy_with_args(self, args: "Tuple[Any, ...]") -> "TypeHint":
+        """
+        Internal. Create a copy of this type hint with updated type arguments.
+        """
+
+        # TODO(NiklasRosenstein): We need to find a way to map builtin back to special generic.
+        #   In addition to builtins, we also need to map collections.abc back to typing because
+        #   subscripting classes in collections.abc is only available since Python 3.9.
+        origin_map = {self.origin: self.origin, list: List, dict: Dict}
+        return TypeHint(origin_map[self.origin][args])  # type: ignore[index]
+
     def parameterize(self, parameter_map: Mapping["TypeVar", Any]) -> "TypeHint":
-        if self.origin is None:
-            return self
-        if self.args:
-            # TODO(NiklasRosenstein): We need to find a way to map builtin back to special generic.
-            #   In addition to builtins, we also need to map collections.abc back to typing because
-            #   subscripting classes in collections.abc is only available since Python 3.9.
-            origin_map = {self.origin: self.origin, list: List, dict: Dict}
-            new_hint = origin_map[self.origin][tuple(TypeHint(x).parameterize(parameter_map).hint for x in self.args)]  # type: ignore[index]  # noqa: E501
+        if self.origin is not None and self.args:
+            args = tuple(TypeHint(x).parameterize(parameter_map).hint for x in self.args)
+            return self._copy_with_args(args)
         else:
-            new_hint = self.origin
-        return TypeHint(new_hint)
+            return self
+
+    def evaluate(self, context: HasGetitem[str, Any]) -> "TypeHint":
+        if self.origin is not None and self.args:
+            args = tuple(TypeHint(x).evaluate(context).hint for x in self.args)
+            return self._copy_with_args(args)
+        else:
+            return self
 
 
 class ClassTypeHint(TypeHint):
@@ -180,9 +207,10 @@ class AnnotatedTypeHint(TypeHint):
     def args(self) -> Tuple[Any, ...]:
         return (self._args[0],)
 
-    def parameterize(self, parameter_map: Mapping["TypeVar", Any]) -> "TypeHint":
-        args = (TypeHint(self.type).parameterize(parameter_map),) + self._args[1:]
-        return TypeHint(Annotated[args])
+    def _copy_with_args(self, args: "Tuple[Any, ...]") -> "TypeHint":
+        assert len(args) == 1
+        new_hint = Annotated[args + (self._args[1:])]  # type: ignore[misc]
+        return AnnotatedTypeHint(new_hint)
 
     def __len__(self) -> int:
         return 1
@@ -204,6 +232,9 @@ class TypeVarTypeHint(TypeHint):
 
     def parameterize(self, parameter_map: Mapping["TypeVar", Any]) -> "TypeHint":
         return TypeHint(parameter_map.get(self.hint, self.hint))
+
+    def evaluate(self, context: HasGetitem[str, Any]) -> TypeHint:
+        return self
 
     @property
     def name(self) -> str:
@@ -238,11 +269,24 @@ class ForwardRefTypeHint(TypeHint):
                 f"ForwardRefTypeHint must be initialized from a typing.ForwardRef or str. Got: {type(self._hint)!r}"
             )
 
-    def parameterize(self, parameter_map: Mapping["TypeVar", Any]) -> "TypeHint":
+    def parameterize(self, parameter_map: Mapping["TypeVar", Any]) -> TypeHint:
         raise RuntimeError(
             "ForwardRef cannot be parameterized. Ensure that your type hint is fully "
             "evaluated before parameterization."
         )
+
+    def evaluate(self, context: HasGetitem[str, Any]) -> TypeHint:
+        retyped_context = cast(Mapping[str, Any], context)
+
+        if IS_PYTHON_AT_LAST_3_6:
+            # TODO(NiklasRosenstein): Recursive eval?
+            hint = eval(self.expr, {}, retyped_context)
+        elif IS_PYTHON_AT_LAST_3_8:
+            # Mypy doesn't know about the third arg
+            hint = self.ref._evaluate({}, retyped_context)  # type: ignore[arg-type]
+        else:
+            hint = self.ref._evaluate({}, retyped_context, set())  # type: ignore[arg-type,call-arg]
+        return TypeHint(hint).evaluate(context)
 
     @property
     def hint(self) -> "ForwardRef | str":

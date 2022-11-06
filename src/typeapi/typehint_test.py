@@ -241,3 +241,43 @@ def test__ClassTypeHint__parametrize() -> None:
     hint = TypeHint(MyClass[U, int])
     assert isinstance(hint, ClassTypeHint)
     assert hint.get_parameter_map() == {T: U, U: int}
+
+
+def test__TypeHint__evaluate() -> None:
+    MyVector = List["MyType"]  # noqa: F821
+
+    class MyType:
+        pass
+
+    hint = TypeHint(MyVector)
+    assert isinstance(hint, ClassTypeHint)
+    assert hint.type is list
+
+    item_hint = hint[0]
+    assert isinstance(item_hint, ForwardRefTypeHint)
+    assert item_hint.expr == "MyType"
+
+    hint = hint.evaluate(locals())
+    item_hint = hint[0]
+    assert isinstance(item_hint, ClassTypeHint)
+    assert item_hint.type is MyType
+
+
+def test__TypeHint__evaluate_recursive() -> None:
+    hint = TypeHint("List['int']")
+    assert isinstance(hint, ForwardRefTypeHint)
+
+    hint = hint.evaluate(globals())
+    assert isinstance(hint, ClassTypeHint), hint
+    assert isinstance(hint[0], ClassTypeHint), hint[0]
+
+
+def test__TypeHint__evaluate_with_custom_mapping() -> None:
+    class Mapping:
+        def __getitem__(self, _k: str) -> Any:
+            return int
+
+    hint = TypeHint(List["str"]).evaluate(Mapping())
+    item_hint = hint[0]
+    assert isinstance(item_hint, ClassTypeHint)
+    assert item_hint.type is int

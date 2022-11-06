@@ -78,7 +78,31 @@ assert isinstance(member_hint, ClassTypeHint)
 assert member_hint.type is int
 ```
 
+Evaluate forward references:
 
+```py
+# cat <<EOF | python -
+from typeapi import ClassTypeHint, ForwardRefTypeHint, TypeHint
+from typing import List
+
+MyVector = List["MyType"]
+
+class MyType:
+  pass
+
+hint = TypeHint(MyVector)
+assert isinstance(hint, ClassTypeHint)
+assert hint.type is list
+
+item_hint = hint[0]
+assert isinstance(item_hint, ForwardRefTypeHint)
+assert item_hint.expr == "MyType"
+
+hint = hint.evaluate(globals())
+item_hint = hint[1]
+assert isinstance(item_hint, ClassTypeHint)
+assert item_hint.type is MyType
+```
 
 ## Planned work
 

@@ -3,7 +3,7 @@ import inspect
 import sys
 import warnings
 from types import FrameType, FunctionType, ModuleType
-from typing import Any, Callable, Dict, Optional, Set, Tuple, TypeVar, Union, get_type_hints as _get_type_hints
+from typing import Any, Callable, Dict, Generic, Optional, Set, Tuple, TypeVar, Union, get_type_hints as _get_type_hints
 
 from typing_extensions import Protocol, TypeGuard
 
@@ -12,6 +12,8 @@ IS_PYTHON_AT_LAST_3_8 = sys.version_info[:2] <= (3, 8)
 IS_PYTHON_AT_LEAST_3_7 = sys.version_info[:2] >= (3, 7)
 IS_PYTHON_AT_LEAST_3_9 = sys.version_info[:2] >= (3, 9)
 TYPING_MODULE_NAMES = frozenset(["typing", "typing_extensions"])
+T_contra = TypeVar("T_contra", contravariant=True)
+U_co = TypeVar("U_co", covariant=True)
 
 if sys.version_info[:2] <= (3, 6):
     from typing import _ForwardRef as ForwardRef
@@ -218,6 +220,11 @@ _TYPEVARS_CACHE = {
 def type_repr(obj: Any) -> str:
     """#typing._type_repr() stolen from Python 3.8."""
 
+    if getattr(obj, "__module__", None) == "typing" or getattr(type(obj), "__module__", None) == "typing":
+        # NOTE(NiklasRosenstein): In Python 3.6, List[int] is actually a "type" subclass so we can't
+        #       rely on the fall through on the below.
+        return repr(obj)
+
     if isinstance(obj, type):
         if obj.__module__ == "builtins":
             return obj.__qualname__
@@ -309,3 +316,8 @@ def is_typed_dict(hint: Any) -> TypeGuard[TypedDictProtocol]:
         if hasattr(m, "_TypedDictMeta") and isinstance(hint, m._TypedDictMeta):  # type: ignore[attr-defined]
             return True
     return False
+
+
+class HasGetitem(Protocol, Generic[T_contra, U_co]):
+    def __getitem__(self, __key: T_contra) -> U_co:
+        ...
