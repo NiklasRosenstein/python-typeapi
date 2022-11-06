@@ -1,5 +1,7 @@
 import abc
-from typing import Any, Dict, List, Tuple, TypeVar, Union, overload
+from typing import Any, Dict, List, Mapping, Tuple, TypeVar, Union, overload
+
+from typing_extensions import Annotated
 
 from .utils import ForwardRef, get_type_hint_args, get_type_hint_origin_or_none, get_type_hint_parameters
 
@@ -117,6 +119,19 @@ class TypeHint(metaclass=_TypeHintMeta):
         else:
             return [TypeHint(x) for x in self.args[index]]
 
+    def parameterize(self, parameter_map: Mapping["TypeVar", Any]) -> "TypeHint":
+        if self.origin is None:
+            return self
+        if self.args:
+            # TODO(NiklasRosenstein): We need to find a way to map builtin back to special generic.
+            #   In addition to builtins, we also need to map collections.abc back to typing because
+            #   subscripting classes in collections.abc is only available since Python 3.9.
+            origin_map = {self.origin: self.origin, list: List, dict: Dict}
+            new_hint = origin_map[self.origin][tuple(TypeHint(x).parameterize(parameter_map).hint for x in self.args)]
+        else:
+            new_hint = self.origin
+        return TypeHint(new_hint)
+
 
 class ClassTypeHint(TypeHint):
     def __init__(self, hint: object) -> None:
@@ -134,6 +149,11 @@ class ClassTypeHint(TypeHint):
             return self.hint
         assert False, "ClassTypeHint not initialized from a real type or a generic that points to a real type."
 
+    def get_parameter_map(self) -> Dict[Any, Any]:
+        if not self.args:
+            return {}
+        return dict(zip(TypeHint(self.type).parameters, self.args))
+
 
 class UnionTypeHint(TypeHint):
     pass
@@ -143,6 +163,9 @@ class LiteralTypeHint(TypeHint):
     @property
     def args(self) -> Tuple[Any, ...]:
         return ()
+
+    def parameterize(self, parameter_map: Mapping["TypeVar", Any]) -> "TypeHint":
+        return self
 
     def __len__(self) -> int:
         return 0
@@ -157,8 +180,16 @@ class AnnotatedTypeHint(TypeHint):
     def args(self) -> Tuple[Any, ...]:
         return (self._args[0],)
 
+    def parameterize(self, parameter_map: Mapping["TypeVar", Any]) -> "TypeHint":
+        args = (TypeHint(self.type).parameterize(parameter_map),) + self._args[1:]
+        return Annotated[args]
+
     def __len__(self) -> int:
         return 1
+
+    @property
+    def type(self) -> Any:
+        return self._args[0]
 
     @property
     def metadata(self) -> Tuple[Any, ...]:
@@ -170,6 +201,9 @@ class TypeVarTypeHint(TypeHint):
     def hint(self) -> TypeVar:
         assert isinstance(self._hint, TypeVar)
         return self._hint
+
+    def parameterize(self, parameter_map: Mapping["TypeVar", Any]) -> "TypeHint":
+        return TypeHint(parameter_map.get(self.hint, self.hint))
 
     @property
     def name(self) -> str:
@@ -203,6 +237,12 @@ class ForwardRefTypeHint(TypeHint):
             raise TypeError(
                 f"ForwardRefTypeHint must be initialized from a typing.ForwardRef or str. Got: {type(self._hint)!r}"
             )
+
+    def parameterize(self, parameter_map: Mapping["TypeVar", Any]) -> "TypeHint":
+        raise RuntimeError(
+            "ForwardRef cannot be parameterized. Ensure that your type hint is fully "
+            "evaluated before parameterization."
+        )
 
     @property
     def hint(self) -> "ForwardRef | str":

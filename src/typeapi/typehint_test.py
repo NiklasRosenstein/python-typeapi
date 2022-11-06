@@ -1,4 +1,4 @@
-from typing import Any, Generic, List, TypeVar, Union
+from typing import Any, Dict, Generic, List, TypeVar, Union
 
 from typing_extensions import Annotated, Literal
 
@@ -189,3 +189,55 @@ def test__TypeHint__from_ForwardRef_instance() -> None:
     assert hint.args == ()
     assert hint.parameters == ()
     assert hint.ref == ForwardRef("int")
+
+
+def test__ClassTypeHint__parametrize() -> None:
+    """This method tests the infusion of type parameters into other types.
+
+    This is relevant when you want to carry over a type parameter into the
+    fields of a type, such as in dataclasses."""
+
+    from dataclasses import dataclass, fields
+
+    @dataclass
+    class MyClass(Generic[T, U]):
+        member1: T
+        member2: Dict[T, U]
+
+    hint = TypeHint(MyClass[int, str])
+    assert isinstance(hint, ClassTypeHint)
+    assert hint.args == (int, str)
+    assert hint.parameters == ()
+    assert hint.origin is MyClass
+    assert hint.type is MyClass
+
+    # How do we find out what type MyClass[int, str].member1 and .member2 actually is?
+    # -> We can inspect the original type to look for its type parameters and
+    #    map those to the arguments of the original hint.
+
+    parameters_to_args = hint.get_parameter_map()
+    assert parameters_to_args == {T: int, U: str}
+
+    field_types = {}
+    for field in fields(MyClass):
+        field_types[field.name] = TypeHint(field.type).parameterize(parameters_to_args)
+
+    member1_hint = field_types["member1"]
+    assert isinstance(member1_hint, ClassTypeHint)
+    assert member1_hint.hint == int
+    assert member1_hint.type is int
+
+    member2_hint = field_types["member2"]
+    assert isinstance(member2_hint, ClassTypeHint)
+    assert member2_hint.hint == Dict[int, str]
+    assert member2_hint.args == (int, str)
+    assert member2_hint.type is dict
+
+    # What happens if we call get_parameter_map() on a generic or partial generic?
+    hint = TypeHint(MyClass)
+    assert isinstance(hint, ClassTypeHint)
+    assert hint.get_parameter_map() == {}
+
+    hint = TypeHint(MyClass[U, int])
+    assert isinstance(hint, ClassTypeHint)
+    assert hint.get_parameter_map() == {T: U, U: int}
