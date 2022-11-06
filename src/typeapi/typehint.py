@@ -1,8 +1,7 @@
-
 import abc
 from typing import Dict, Union
 
-from .utils import get_type_hint_origin_or_none, get_type_hint_args, get_type_hint_parameters
+from .utils import get_type_hint_args, get_type_hint_origin_or_none, get_type_hint_parameters
 
 NoneType = type(None)
 
@@ -16,11 +15,11 @@ class _TypeHintMeta(abc.ABCMeta):
 
     _cache: Dict[str, "TypeHint"] = {}
 
-    def __call__(cls, hint: object) -> "TypeHint":
+    def __call__(cls, hint: object) -> "TypeHint":  # type: ignore[override]
         # If the current class is not the base "TypeHint" class, we should let
         # object construction continue as usual.
         if cls is not TypeHint:
-            return super().__call__(hint)
+            return super().__call__(hint)  # type: ignore[no-any-return]
 
         # Otherwise, we are in this "TypeHint" class.
 
@@ -85,10 +84,16 @@ class TypeHint(metaclass=_TypeHintMeta):
     def parameters(self) -> object:
         return self._parameters
 
-    def __eq__(self, other: object) -> None:
+    def __eq__(self, other: object) -> bool:
         if type(self) != type(other):
             return False
-        return (self.hint, self.origin, self.args, self.parameters) == (other.hint, other.origin, other.args, other.parameters)
+        assert isinstance(other, TypeHint)
+        return (self.hint, self.origin, self.args, self.parameters) == (
+            other.hint,
+            other.origin,
+            other.args,
+            other.parameters,
+        )
 
 
 class ClassTypeHint(TypeHint):

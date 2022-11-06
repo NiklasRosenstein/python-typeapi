@@ -40,15 +40,15 @@ typed = true
 [tool.slap.test]
 check = "slap check"
 mypy = "dmypy run src/"
-pytest = "pytest tests/ -vv"
-black = "black --check src/ tests/"
-isort = "isort --check-only src/ tests/"
-flake8 = "flake8 src/ tests/"
+pytest = "pytest src/ -vv"
+black = "black --check src/"
+isort = "isort --check-only src/"
+flake8 = "flake8 src/"
 
 [tool.slap.run]
 "docs:build" = "cd docs && novella --base-url python-typeapi/"
 "docs:dev" = "cd docs && novella --serve"
-fmt = "black src/ tests/ && isort src/ tests/"
+fmt = "black src/ && isort src/"
 
 [tool.mypy]
 python_version = "3.7"

@@ -1,15 +1,17 @@
+# type: ignore
 
 import collections.abc
 import sys
-import pytest
-from typing import Any, Dict, List, TypeVar, MutableMapping, Mapping, Generic, Union
 import typing as t
+from typing import Any, Dict, Generic, List, Mapping, MutableMapping, TypeVar, Union
+
+import pytest
 import typing_extensions
+
+from typeapi.utils import get_type_hint_args, get_type_hint_origin_or_none, get_type_hint_parameters
 
 T = TypeVar("T")
 U = TypeVar("U")
-
-from typeapi.utils import get_type_hint_args, get_type_hint_parameters,get_type_hint_origin_or_none
 
 
 def test__typing_List__introspection():
@@ -37,8 +39,8 @@ def test__typing_List__introspection():
         assert str(List.__parameters__) == "(~T,)"
 
     else:
-        assert not hasattr(List, '__args__')
-        assert not hasattr(List, '__parameters__')
+        assert not hasattr(List, "__args__")
+        assert not hasattr(List, "__parameters__")
         assert List._nparams == 1
 
     assert get_type_hint_args(List) == ()
@@ -65,7 +67,7 @@ def test__typing_List__introspection():
         (Dict, dict, True),
         (MutableMapping, collections.abc.MutableMapping, True),
         (Mapping, collections.abc.Mapping, False),
-    ]
+    ],
 )
 def test__mapping_types__introspection(hint: object, origin_type: type, mutable: bool):
 
@@ -94,8 +96,8 @@ def test__mapping_types__introspection(hint: object, origin_type: type, mutable:
         assert str(hint.__parameters__) == "(~KT, %s)" % value_type
 
     else:
-        assert not hasattr(hint, '__args__')
-        assert not hasattr(hint, '__parameters__')
+        assert not hasattr(hint, "__args__")
+        assert not hasattr(hint, "__parameters__")
         assert hint._nparams == 2
 
     assert get_type_hint_args(hint) == ()
@@ -127,7 +129,6 @@ def test__mapping_types__introspection(hint: object, origin_type: type, mutable:
 
 
 def test__typing_Generic__introspection():
-
     class MyGeneric(Generic[T, U]):
         pass
 
@@ -154,8 +155,8 @@ def test__typing_Generic__introspection():
         assert str(MyGeneric.__parameters__) == "(~T, ~U)"
 
     else:
-        assert not hasattr(MyGeneric, '__args__')
-        assert hasattr(MyGeneric, '__parameters__')
+        assert not hasattr(MyGeneric, "__args__")
+        assert hasattr(MyGeneric, "__parameters__")
         assert not hasattr(MyGeneric, "_nparams")
 
     assert get_type_hint_args(MyGeneric) == ()
@@ -188,7 +189,7 @@ def test__typing_Generic__introspection():
 
 @pytest.mark.parametrize(
     argnames=["Annotated"],
-    argvalues=[(typing_extensions.Annotated,)] + ([(t.Annotated,)] if hasattr(t, "Annotated") else [])
+    argvalues=[(typing_extensions.Annotated,)] + ([(t.Annotated,)] if hasattr(t, "Annotated") else []),
 )
 def test__typing_Annotated__introspection(Annotated):
 
@@ -212,7 +213,10 @@ def test__typing_Annotated__introspection(Annotated):
 
         with pytest.raises(TypeError) as exc:
             assert Annotated.__metadata__ == ()
-        assert str(exc.value) == "Annotated[...] should be instantiated with at least two arguments (a type and an annotation)."  # noqa: E501
+        assert (
+            str(exc.value)
+            == "Annotated[...] should be instantiated with at least two arguments (a type and an annotation)."
+        )  # noqa: E501
     else:
         assert not hasattr(Annotated, "__args__")
         assert not hasattr(Annotated, "__parameters__")
@@ -271,8 +275,7 @@ def test__typing_Union__introspection():
 
 
 @pytest.mark.parametrize(
-    argnames=["Literal"],
-    argvalues=[(typing_extensions.Literal,)] + ([(t.Literal,)] if hasattr(t, "Literal") else [])
+    argnames=["Literal"], argvalues=[(typing_extensions.Literal,)] + ([(t.Literal,)] if hasattr(t, "Literal") else [])
 )
 def test__typing_Literal__introspection(Literal):
 

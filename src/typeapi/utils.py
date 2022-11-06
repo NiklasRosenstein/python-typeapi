@@ -1,9 +1,9 @@
-
 import collections
-from typing import Any, Optional, TypeVar
-
-import warnings
+import inspect
 import sys
+import warnings
+from types import FrameType, FunctionType, ModuleType
+from typing import Any, Callable, Dict, Optional, Tuple, TypeVar, Union, get_type_hints as _get_type_hints
 
 IS_PYTHON_AT_LAST_3_6 = sys.version_info[:2] <= (3, 6)
 IS_PYTHON_AT_LAST_3_8 = sys.version_info[:2] <= (3, 8)
@@ -17,19 +17,20 @@ def get_type_hint_origin_or_none(hint: object) -> Optional[Any]:
     Returns the origin type of a low-level type hint, or None.
     """
 
-    hint_origin = getattr(hint, '__origin__', None)
+    hint_origin = getattr(hint, "__origin__", None)
 
     # In Python 3.6, List[int].__origin__ points to List; but we can look for
     # the Python native type in its __bases__.
     if IS_PYTHON_AT_LAST_3_6 and hasattr(hint, "__orig_bases__"):
 
-        if hint.__name__ == "Annotated" and hint.__args__:
+        if hint.__name__ == "Annotated" and hint.__args__:  # type: ignore
             from typing_extensions import Annotated
+
             return Annotated
 
         # Find a non-typing base class, which represents the actual Python type
         # for this type hint.
-        bases = tuple(x for x in (hint_origin or hint).__orig_bases__ if x.__module__ != 'typing')
+        bases = tuple(x for x in (hint_origin or hint).__orig_bases__ if x.__module__ != "typing")  # type: ignore
         if len(bases) == 1:
             hint_origin = bases[0]
         elif len(bases) > 1:
@@ -38,16 +39,16 @@ def get_type_hint_origin_or_none(hint: object) -> Optional[Any]:
             )
         else:
             # If we have a same-named type in collections.abc; use that.
-            type_name = hint.__name__
+            type_name = hint.__name__  # type: ignore
             if hasattr(collections.abc, type_name):
                 hint_origin = getattr(collections.abc, type_name)
 
-    elif IS_PYTHON_AT_LAST_3_6 and type(hint).__name__ == "_Literal" and hint.__values__ is not None:
+    elif IS_PYTHON_AT_LAST_3_6 and type(hint).__name__ == "_Literal" and hint.__values__ is not None:  # type: ignore
         from typing_extensions import Literal
 
         hint_origin = Literal
 
-    elif not IS_PYTHON_AT_LAST_3_6 and type(hint).__name__ == "_AnnotatedAlias":
+    elif not IS_PYTHON_AT_LAST_3_6 and type(hint).__name__ == "_AnnotatedAlias":  # type: ignore
         from typing_extensions import Annotated
 
         return Annotated
@@ -55,7 +56,7 @@ def get_type_hint_origin_or_none(hint: object) -> Optional[Any]:
     return hint_origin
 
 
-def get_type_hint_args(hint: object) -> tuple:
+def get_type_hint_args(hint: object) -> Tuple[Any, ...]:
     """
     Returns the arguments of a low-level type hint. An empty tuple is returned
     if the hint is unparameterized.
@@ -72,8 +73,10 @@ def get_type_hint_args(hint: object) -> tuple:
 
     # If we have an "Annotated" hint, we need to do some restructuring of the args.
     if (
-        IS_PYTHON_AT_LAST_3_6 and getattr(hint, "__name__", None) == "Annotated" and
-        getattr(hint, "__module__", None) in TYPING_MODULE_NAMES and hint_args
+        IS_PYTHON_AT_LAST_3_6
+        and getattr(hint, "__name__", None) == "Annotated"
+        and getattr(hint, "__module__", None) in TYPING_MODULE_NAMES
+        and hint_args
     ):
         # In Python 3.6, Annotated is only available through
         # typing_extensions, where the second tuple element contains the
@@ -81,7 +84,7 @@ def get_type_hint_args(hint: object) -> tuple:
         assert len(hint_args) == 2 and isinstance(hint_args[1], tuple), hint_args
         hint_args = (hint_args[0],) + hint_args[1]
     elif not IS_PYTHON_AT_LAST_3_6 and type(hint).__name__ == "_AnnotatedAlias":
-        hint_args += hint.__metadata__
+        hint_args += hint.__metadata__  # type: ignore
 
     if not hint_args and IS_PYTHON_AT_LAST_3_6:
         hint_args = getattr(hint, "__values__", None) or ()
@@ -89,7 +92,7 @@ def get_type_hint_args(hint: object) -> tuple:
     return hint_args
 
 
-def get_type_hint_parameters(hint: object) -> tuple:
+def get_type_hint_parameters(hint: object) -> Tuple[Any, ...]:
     """
     Returns the parameters of a type hint, i.e. the tuple of type variables.
     """
@@ -99,7 +102,7 @@ def get_type_hint_parameters(hint: object) -> tuple:
     # In Python 3.9+, special generic aliases like List and Tuple don't store
     # their type variables as parameters anymore; we try to restore those.
     if IS_PYTHON_AT_LEAST_3_9 and getattr(hint, "_nparams", 0) > 0:
-        type_hint_name = getattr(hint, "_name", None) or hint.__name__
+        type_hint_name = getattr(hint, "_name", None) or hint.__name__  # type: ignore
         if type_hint_name in _SPECIAL_ALIAS_TYPEVARS:
             return tuple(get_type_var_from_string_repr(x) for x in _SPECIAL_ALIAS_TYPEVARS[type_hint_name])
 
@@ -132,7 +135,7 @@ def get_type_var_from_string_repr(type_var_repr: str) -> object:
     else:
         raise ValueError(f"invalid TypeVar string: {type_var_repr!r}")
 
-    type_var_name = type_var_repr[1:]
+    type_var_name = type_var_repr[1:]  # noqa: F841
     type_var = TypeVar(type_var_name, covariant=covariant, contravariant=contravariant)  # type: ignore
     _TYPEVARS_CACHE[type_var_repr] = type_var
     return type_var
@@ -142,47 +145,112 @@ def get_type_var_from_string_repr(type_var_repr: str) -> object:
 # We use this map to create TypeVars in get_type_hint_parameters() on the fly
 # for Python 3.9+ since they no longer come with this information embedded.
 _SPECIAL_ALIAS_TYPEVARS = {
-  'Awaitable': ['+T_co'],
-  'Coroutine': ['+T_co', '-T_contra', '+V_co'],
-  'AsyncIterable': ['+T_co'],
-  'AsyncIterator': ['+T_co'],
-  'Iterable': ['+T_co'],
-  'Iterator': ['+T_co'],
-  'Reversible': ['+T_co'],
-  'Container': ['+T_co'],
-  'Collection': ['+T_co'],
-  'AbstractSet': ['+T_co'],
-  'MutableSet': ['~T'],
-  'Mapping': ['~KT', '+VT_co'],
-  'MutableMapping': ['~KT', '~VT'],
-  'Sequence': ['+T_co'],
-  'MutableSequence': ['~T'],
-  'List': ['~T'],
-  'Deque': ['~T'],
-  'Set': ['~T'],
-  'FrozenSet': ['+T_co'],
-  'MappingView': ['+T_co'],
-  'KeysView': ['~KT'],
-  'ItemsView': ['~KT', '+VT_co'],
-  'ValuesView': ['+VT_co'],
-  'ContextManager': ['+T_co'],
-  'AsyncContextManager': ['+T_co'],
-  'Dict': ['~KT', '~VT'],
-  'DefaultDict': ['~KT', '~VT'],
-  'OrderedDict': ['~KT', '~VT'],
-  'Counter': ['~T'],
-  'ChainMap': ['~KT', '~VT'],
-  'Generator': ['+T_co', '-T_contra', '+V_co'],
-  'AsyncGenerator': ['+T_co', '-T_contra'],
-  'Type': ['+CT_co'],
-  'SupportsAbs': ['+T_co'],
-  'SupportsRound': ['+T_co'],
-  'IO': ['~AnyStr'],
-  'Pattern': ['~AnyStr'],
-  'Match': ['~AnyStr'],
+    "Awaitable": ["+T_co"],
+    "Coroutine": ["+T_co", "-T_contra", "+V_co"],
+    "AsyncIterable": ["+T_co"],
+    "AsyncIterator": ["+T_co"],
+    "Iterable": ["+T_co"],
+    "Iterator": ["+T_co"],
+    "Reversible": ["+T_co"],
+    "Container": ["+T_co"],
+    "Collection": ["+T_co"],
+    "AbstractSet": ["+T_co"],
+    "MutableSet": ["~T"],
+    "Mapping": ["~KT", "+VT_co"],
+    "MutableMapping": ["~KT", "~VT"],
+    "Sequence": ["+T_co"],
+    "MutableSequence": ["~T"],
+    "List": ["~T"],
+    "Deque": ["~T"],
+    "Set": ["~T"],
+    "FrozenSet": ["+T_co"],
+    "MappingView": ["+T_co"],
+    "KeysView": ["~KT"],
+    "ItemsView": ["~KT", "+VT_co"],
+    "ValuesView": ["+VT_co"],
+    "ContextManager": ["+T_co"],
+    "AsyncContextManager": ["+T_co"],
+    "Dict": ["~KT", "~VT"],
+    "DefaultDict": ["~KT", "~VT"],
+    "OrderedDict": ["~KT", "~VT"],
+    "Counter": ["~T"],
+    "ChainMap": ["~KT", "~VT"],
+    "Generator": ["+T_co", "-T_contra", "+V_co"],
+    "AsyncGenerator": ["+T_co", "-T_contra"],
+    "Type": ["+CT_co"],
+    "SupportsAbs": ["+T_co"],
+    "SupportsRound": ["+T_co"],
+    "IO": ["~AnyStr"],
+    "Pattern": ["~AnyStr"],
+    "Match": ["~AnyStr"],
 }
 
 _TYPEVARS_CACHE = {
     "~AnyStr": TypeVar("AnyStr", bytes, str),
     "~CT_co": TypeVar("CT_co", covariant=True, bound=type),
 }
+
+
+def type_repr(obj: Any) -> str:
+    """#typing._type_repr() stolen from Python 3.8."""
+
+    if isinstance(obj, type):
+        if obj.__module__ == "builtins":
+            return obj.__qualname__
+        return f"{obj.__module__}.{obj.__qualname__}"
+    if obj is ...:
+        return "..."
+    if isinstance(obj, FunctionType):
+        return obj.__name__
+    return repr(obj)
+
+
+def get_annotations(
+    obj: Union[Callable[..., Any], ModuleType, type],
+    include_bases: bool = False,
+    globalns: Optional[Dict[str, Any]] = None,
+    localns: Optional[Dict[str, Any]] = None,
+) -> Dict[str, Any]:
+    """Like #typing.get_type_hints(), but always includes extras. This is important when we want to inspect
+    #typing.Annotated hints (without extras the annotations are removed). In Python 3.10 and onwards, this is
+    an alias for #inspect.get_annotations() with `eval_str=True`.
+
+    If *include_bases* is set to `True`, annotations from base classes are taken into account as well.
+
+    This function will take into account the locals and globals accessible through the frame associated with
+    a function or type by the #scoped() decorator."""
+
+    if hasattr(obj, "__typeapi_frame__"):
+        frame: FrameType = obj.__typeapi_frame__  # type: ignore[union-attr]
+        globalns = frame.f_globals
+        localns = frame.f_locals
+        del frame
+
+    if sys.version_info[:2] <= (3, 9):
+        if not include_bases and "__annotations__" not in vars(obj):
+            # Handle case when class has no explicit annotations, see python-typeapi#3
+            return {}
+        if sys.version_info[:2] <= (3, 8):
+            annotations = _get_type_hints(obj, globalns=globalns, localns=localns)
+        else:
+            annotations = _get_type_hints(obj, globalns=globalns, localns=localns, include_extras=True)
+        if not include_bases:
+            # To replicate the behaviour of #inspect.get_annotations(), which is to _not_ take into account
+            # the annotations of the base class, we discard all entries from the resulting dictionary that
+            # is not included in the types __annotations__.
+            local_annotations = getattr(obj, "__annotations__", {})
+            return {k: v for k, v in annotations.items() if k in local_annotations}
+        return annotations
+    elif isinstance(obj, type) and include_bases:
+        annotations = {}
+        for cls in obj.__mro__:
+            annotations.update(
+                {
+                    k: v
+                    for k, v in inspect.get_annotations(cls, globals=globalns, locals=localns, eval_str=True).items()
+                    if k not in annotations
+                }
+            )
+        return annotations
+    else:
+        return inspect.get_annotations(obj, globals=globalns, locals=localns, eval_str=True)
