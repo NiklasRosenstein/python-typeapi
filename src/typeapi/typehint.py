@@ -77,7 +77,8 @@ class _TypeHintMeta(abc.ABCMeta):
         return ClassTypeHint(hint)
 
 
-# NOTE(NiklasRosenstein): We inherit from object to workaround https://github.com/NiklasRosenstein/pydoc-markdown/issues/272.
+# NOTE(NiklasRosenstein): We inherit from object to workaround
+#       https://github.com/NiklasRosenstein/pydoc-markdown/issues/272.
 
 
 class TypeHint(object, metaclass=_TypeHintMeta):
