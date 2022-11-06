@@ -329,6 +329,21 @@ def test__typing_Any__introspection():
     assert get_type_hint_parameters(Any) == ()
 
 
+def test__TypeVar__introspection():
+
+    # Origin:
+
+    assert not hasattr(T, "__origin__")
+    assert get_type_hint_origin_or_none(T) is None
+
+    # Args and parameters:
+
+    assert not hasattr(T, "__args__")
+    assert not hasattr(T, "__parameters__")
+    assert get_type_hint_args(T) == ()
+    assert get_type_hint_parameters(T) == ()
+
+
 def test__int__introspection():
     assert get_type_hint_origin_or_none(int) is None
     assert get_type_hint_args(int) == ()

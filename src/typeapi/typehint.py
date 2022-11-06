@@ -1,5 +1,5 @@
 import abc
-from typing import Dict, Union
+from typing import Any, Dict, List, Tuple, TypeVar, Union, overload
 
 from .utils import get_type_hint_args, get_type_hint_origin_or_none, get_type_hint_parameters
 
@@ -53,6 +53,8 @@ class _TypeHintMeta(abc.ABCMeta):
             return LiteralTypeHint(hint)
         elif ".Annotated" in str(origin):
             return AnnotatedTypeHint(hint)
+        elif isinstance(hint, TypeVar):
+            return TypeVarTypeHint(hint)
 
         return ClassTypeHint(hint)
 
@@ -77,11 +79,11 @@ class TypeHint(metaclass=_TypeHintMeta):
         return self._origin
 
     @property
-    def args(self) -> object:
+    def args(self) -> Tuple[Any, ...]:
         return self._args
 
     @property
-    def parameters(self) -> object:
+    def parameters(self) -> Tuple[Any, ...]:
         return self._parameters
 
     def __eq__(self, other: object) -> bool:
@@ -95,6 +97,23 @@ class TypeHint(metaclass=_TypeHintMeta):
             other.parameters,
         )
 
+    def __len__(self) -> int:
+        return len(self.args)
+
+    @overload
+    def __getitem__(self, __index: int) -> "TypeHint":
+        ...
+
+    @overload
+    def __getitem__(self, __slice: slice) -> List["TypeHint"]:
+        ...
+
+    def __getitem__(self, index: "int | slice") -> "TypeHint | List[TypeHint]":
+        if isinstance(index, int):
+            return TypeHint(self.args[index])
+        else:
+            return [TypeHint(x) for x in self.args[index]]
+
 
 class ClassTypeHint(TypeHint):
     def __init__(self, hint: object) -> None:
@@ -104,14 +123,67 @@ class ClassTypeHint(TypeHint):
             f'Got "{self.hint!r}" with origin "{self.origin}"'
         )
 
+    @property
+    def type(self) -> type:
+        if isinstance(self.origin, type):
+            return self.origin
+        if isinstance(self.hint, type):
+            return self.hint
+        assert False, "ClassTypeHint not initialized from a real type or a generic that points to a real type."
+
 
 class UnionTypeHint(TypeHint):
     pass
 
 
 class LiteralTypeHint(TypeHint):
-    pass
+    @property
+    def args(self) -> Tuple[Any, ...]:
+        return ()
+
+    def __len__(self) -> int:
+        return 0
+
+    @property
+    def values(self) -> Tuple[Any, ...]:
+        return self._args
 
 
 class AnnotatedTypeHint(TypeHint):
-    pass
+    @property
+    def args(self) -> Tuple[Any, ...]:
+        return (self._args[0],)
+
+    def __len__(self) -> int:
+        return 1
+
+    @property
+    def metadata(self) -> Tuple[Any, ...]:
+        return self._args[1:]
+
+
+class TypeVarTypeHint(TypeHint):
+    @property
+    def hint(self) -> TypeVar:
+        assert isinstance(self._hint, TypeVar)
+        return self._hint
+
+    @property
+    def name(self) -> str:
+        return self.hint.__name__
+
+    @property
+    def covariant(self) -> bool:
+        return self.hint.__covariant__
+
+    @property
+    def contravariant(self) -> bool:
+        return self.hint.__contravariant__
+
+    @property
+    def constraints(self) -> "Tuple[Any, ...]":
+        return self.hint.__constraints__
+
+    @property
+    def bound(self) -> Any:
+        return self.hint.__bound__

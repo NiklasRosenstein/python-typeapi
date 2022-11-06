@@ -14,7 +14,7 @@ IS_PYTHON_AT_LEAST_3_9 = sys.version_info[:2] >= (3, 9)
 TYPING_MODULE_NAMES = frozenset(["typing", "typing_extensions"])
 
 
-def get_type_hint_origin_or_none(hint: object) -> Optional[Any]:
+def get_type_hint_origin_or_none(hint: object) -> "Any | None":
     """
     Returns the origin type of a low-level type hint, or None.
     """
