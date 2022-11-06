@@ -3,8 +3,9 @@ import inspect
 import sys
 import warnings
 from types import FrameType, FunctionType, ModuleType
-from typing import Any, Callable, Dict, Optional, Tuple, TypeVar, Union, get_type_hints as _get_type_hints
-from typing_extensions import TypedDict, TypeGuard
+from typing import Any, Callable, Dict, Optional, Set, Tuple, TypeVar, Union, get_type_hints as _get_type_hints
+
+from typing_extensions import Protocol, TypeGuard
 
 IS_PYTHON_AT_LAST_3_6 = sys.version_info[:2] <= (3, 6)
 IS_PYTHON_AT_LAST_3_8 = sys.version_info[:2] <= (3, 8)
@@ -257,7 +258,17 @@ def get_annotations(
         return inspect.get_annotations(obj, globals=globalns, locals=localns, eval_str=True)
 
 
-def is_typed_dict(hint: Any) -> TypeGuard[TypedDict]:
+class TypedDictProtocol(Protocol):
+    """A protocol that describes #typing.TypedDict values (which are actually instances of the #typing._TypedDictMeta
+    metaclass). Use #is_typed_dict() to check if a hint is matches this protocol."""
+
+    __annotations__: Dict[str, Any]
+    __required_keys__: Set[str]
+    __optional_keys__: Set[str]
+    __total__: bool
+
+
+def is_typed_dict(hint: Any) -> TypeGuard[TypedDictProtocol]:
     """
     Returns:
         `True` if *hint* is a #typing.TypedDict.
@@ -268,7 +279,9 @@ def is_typed_dict(hint: Any) -> TypeGuard[TypedDict]:
         #typeapi.models.Type.
     """
 
-    import typing, typing_extensions
+    import typing
+
+    import typing_extensions
 
     for m in (typing, typing_extensions):
         if hasattr(m, "_TypedDictMeta") and isinstance(hint, m._TypedDictMeta):  # type: ignore[attr-defined]

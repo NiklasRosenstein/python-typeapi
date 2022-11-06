@@ -1,7 +1,7 @@
 __version__ = "0.2.2"
 
 from .typehint import AnnotatedTypeHint, ClassTypeHint, LiteralTypeHint, TypeHint, UnionTypeHint
-from .utils import get_annotations, type_repr, is_typed_dict
+from .utils import TypedDictProtocol, get_annotations, is_typed_dict, type_repr
 
 __all__ = [
     "TypeHint",
@@ -12,4 +12,5 @@ __all__ = [
     "type_repr",
     "get_annotations",
     "is_typed_dict",
+    "TypedDictProtocol",
 ]
