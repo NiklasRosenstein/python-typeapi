@@ -20,7 +20,7 @@ Homepage = "https://github.com/NiklasRosenstein/python-typeapi"
 # Repository = ""
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.6"
 typing-extensions = ">=3.0.0"
 
 [tool.poetry.dev-dependencies]
