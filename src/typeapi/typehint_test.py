@@ -319,3 +319,27 @@ def test__TypeHint__evaluate_with_custom_mapping() -> None:
     item_hint = hint[0]
     assert isinstance(item_hint, ClassTypeHint)
     assert item_hint.type is int
+
+
+def test__TypeHint__caching_same_named_type_hints() -> None:
+    """
+    This test ensures that type hint caching is stable if two different
+    definitions with the same are encountered.
+    """
+
+    class A:
+        pass
+
+    hint = TypeHint(A)
+    assert isinstance(hint, ClassTypeHint)
+    assert hint.type is A
+
+    OldA = A
+
+    class A:  # type: ignore[no-redef]
+        pass
+
+    hint = TypeHint(A)
+    assert isinstance(hint, ClassTypeHint)
+    assert hint.type is not OldA
+    assert hint.type is A

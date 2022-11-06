@@ -25,28 +25,31 @@ class _TypeHintMeta(abc.ABCMeta):
     hint.
     """
 
-    _cache: Dict[str, "TypeHint"] = {}
+    # _cache: Dict[str, "TypeHint"] = {}
 
     def __call__(cls, hint: object) -> "TypeHint":  # type: ignore[override]
         # If the current class is not the base "TypeHint" class, we should let
         # object construction continue as usual.
         if cls is not TypeHint:
             return super().__call__(hint)  # type: ignore[no-any-return]
-
         # Otherwise, we are in this "TypeHint" class.
 
         # If the hint is a type hint in itself, we can return it as-is.
         if isinstance(hint, TypeHint):
             return hint
 
-        # Check if the hint is already cached.
-        hint_key = str(hint)
-        if hint_key in cls._cache:
-            return cls._cache[hint_key]
+        # TODO(NiklasRosenstein): Implement a caching method that does not rely
+        #       on the type name (there can be multiple definitions of a type
+        #       with the same name but they are still distinct types; for example
+        #       when defining a type in a function body).
+        # # Check if the hint is already cached.
+        # hint_key = str(hint)
+        # if hint_key in cls._cache:
+        #     return cls._cache[hint_key]
 
         # Create the wrapper for the low-level type hint.
         wrapper = cls._make_wrapper(hint)
-        cls._cache[hint_key] = wrapper
+        # cls._cache[hint_key] = wrapper
         return wrapper
 
     def _make_wrapper(cls, hint: object) -> "TypeHint":
@@ -170,7 +173,7 @@ class ClassTypeHint(TypeHint):
         )
 
     def parameterize(self, parameter_map: Mapping["TypeVar", Any]) -> "TypeHint":
-        if self.type is Generic:
+        if self.type is Generic:  # type: ignore[comparison-overlap]
             return self
         return super().parameterize(parameter_map)
 
