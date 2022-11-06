@@ -220,7 +220,7 @@ _TYPEVARS_CACHE = {
 def type_repr(obj: Any) -> str:
     """#typing._type_repr() stolen from Python 3.8."""
 
-    if getattr(obj, "__module__", None) == "typing" or getattr(type(obj), "__module__", None) == "typing":
+    if (getattr(obj, "__module__", None) or getattr(type(obj), "__module__", None)) in TYPING_MODULE_NAMES:
         # NOTE(NiklasRosenstein): In Python 3.6, List[int] is actually a "type" subclass so we can't
         #       rely on the fall through on the below.
         return repr(obj)
