@@ -127,7 +127,7 @@ class TypeHint(metaclass=_TypeHintMeta):
             #   In addition to builtins, we also need to map collections.abc back to typing because
             #   subscripting classes in collections.abc is only available since Python 3.9.
             origin_map = {self.origin: self.origin, list: List, dict: Dict}
-            new_hint = origin_map[self.origin][tuple(TypeHint(x).parameterize(parameter_map).hint for x in self.args)]
+            new_hint = origin_map[self.origin][tuple(TypeHint(x).parameterize(parameter_map).hint for x in self.args)]  # type: ignore[index]  # noqa: E501
         else:
             new_hint = self.origin
         return TypeHint(new_hint)
@@ -182,7 +182,7 @@ class AnnotatedTypeHint(TypeHint):
 
     def parameterize(self, parameter_map: Mapping["TypeVar", Any]) -> "TypeHint":
         args = (TypeHint(self.type).parameterize(parameter_map),) + self._args[1:]
-        return Annotated[args]
+        return TypeHint(Annotated[args])
 
     def __len__(self) -> int:
         return 1

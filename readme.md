@@ -78,6 +78,8 @@ assert isinstance(member_hint, ClassTypeHint)
 assert member_hint.type is int
 ```
 
+
+
 ## Planned work
 
 * Support more features of the typing system (e.g. `ClassVar`, `ParamSpec`, ...)
