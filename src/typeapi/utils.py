@@ -4,6 +4,7 @@ import sys
 import warnings
 from types import FrameType, FunctionType, ModuleType
 from typing import Any, Callable, Dict, Optional, Tuple, TypeVar, Union, get_type_hints as _get_type_hints
+from typing_extensions import TypedDict, TypeGuard
 
 IS_PYTHON_AT_LAST_3_6 = sys.version_info[:2] <= (3, 6)
 IS_PYTHON_AT_LAST_3_8 = sys.version_info[:2] <= (3, 8)
@@ -254,3 +255,22 @@ def get_annotations(
         return annotations
     else:
         return inspect.get_annotations(obj, globals=globalns, locals=localns, eval_str=True)
+
+
+def is_typed_dict(hint: Any) -> TypeGuard[TypedDict]:
+    """
+    Returns:
+        `True` if *hint* is a #typing.TypedDict.
+
+    !!! note
+
+        Typed dictionaries are actually just type objects. This means #typeapi.of() will represent them as
+        #typeapi.models.Type.
+    """
+
+    import typing, typing_extensions
+
+    for m in (typing, typing_extensions):
+        if hasattr(m, "_TypedDictMeta") and isinstance(hint, m._TypedDictMeta):  # type: ignore[attr-defined]
+            return True
+    return False
