@@ -19,11 +19,17 @@ def test__typing_List__introspection():
     # Origin:
 
     if sys.version_info[:2] <= (3, 6):
+        from typing import MutableSequence, T as _T
+
         assert List.__origin__ is None
         assert List[int].__origin__ is List
+        assert List.__orig_bases__ == (list, MutableSequence[_T])
+        assert List[int].__orig_bases__ == (list, MutableSequence[_T])
     else:
         assert List.__origin__ is list
         assert List[int].__origin__ is list
+        assert not hasattr(List, "__orig_bases__")
+        assert not hasattr(List[int], "__orig_bases__")
 
     assert get_type_hint_origin_or_none(List) is list
     assert get_type_hint_origin_or_none(List[int]) is list
@@ -134,12 +140,15 @@ def test__typing_Generic__introspection():
 
     # Origin:
 
+    assert MyGeneric.__orig_bases__ == (Generic[T, U],)
     if sys.version_info[:2] <= (3, 6):
         assert MyGeneric.__origin__ is None
         assert MyGeneric[int, str].__origin__ is MyGeneric
+        assert MyGeneric[int, str].__orig_bases__ == (Generic[T, U],)
     else:
         assert not hasattr(MyGeneric, "__origin__")
         assert MyGeneric[int, str].__origin__ is MyGeneric
+        assert not hasattr(MyGeneric[int, str], "__orig_bases__")
 
     assert get_type_hint_origin_or_none(MyGeneric) is None
     assert get_type_hint_origin_or_none(MyGeneric[int, str]) is MyGeneric
