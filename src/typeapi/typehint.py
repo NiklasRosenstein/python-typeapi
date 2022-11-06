@@ -10,6 +10,7 @@ from .utils import (
     HasGetitem,
     get_type_hint_args,
     get_type_hint_origin_or_none,
+    get_type_hint_original_bases,
     get_type_hint_parameters,
     type_repr,
 )
@@ -176,6 +177,10 @@ class ClassTypeHint(TypeHint):
             return self.hint
         assert False, "ClassTypeHint not initialized from a real type or a generic that points to a real type."
 
+    @property
+    def bases(self) -> "Tuple[Any, ...] | None":
+        return get_type_hint_original_bases(self.type)
+
     def get_parameter_map(self) -> Dict[Any, Any]:
         if not self.args:
             return {}
@@ -183,7 +188,8 @@ class ClassTypeHint(TypeHint):
 
 
 class UnionTypeHint(TypeHint):
-    pass
+    def has_none_type(self) -> bool:
+        return NoneType in self._args
 
 
 class LiteralTypeHint(TypeHint):

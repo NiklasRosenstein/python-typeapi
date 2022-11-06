@@ -8,7 +8,13 @@ from typing import Any, Dict, Generic, List, Mapping, MutableMapping, TypeVar, U
 import pytest
 import typing_extensions
 
-from typeapi.utils import ForwardRef, get_type_hint_args, get_type_hint_origin_or_none, get_type_hint_parameters
+from typeapi.utils import (
+    ForwardRef,
+    get_type_hint_args,
+    get_type_hint_origin_or_none,
+    get_type_hint_original_bases,
+    get_type_hint_parameters,
+)
 
 T = TypeVar("T")
 U = TypeVar("U")
@@ -33,6 +39,14 @@ def test__typing_List__introspection():
 
     assert get_type_hint_origin_or_none(List) is list
     assert get_type_hint_origin_or_none(List[int]) is list
+
+    # NOTE(NiklasRosenstein): We currently have a different behaviour for special generics
+    #   between Python 3.6 and other versions in that Python 3.6 actually returns original.
+    if sys.version_info[:2] <= (3, 6):
+        assert get_type_hint_original_bases(List) == (list, MutableSequence[_T])
+    else:
+        assert get_type_hint_original_bases(List) is None
+    assert get_type_hint_original_bases(List[int]) is None
 
     # Generic-form parameters:
 
@@ -152,6 +166,8 @@ def test__typing_Generic__introspection():
 
     assert get_type_hint_origin_or_none(MyGeneric) is None
     assert get_type_hint_origin_or_none(MyGeneric[int, str]) is MyGeneric
+    assert get_type_hint_original_bases(MyGeneric) == (Generic[T, U],)
+    assert get_type_hint_original_bases(MyGeneric[int, str]) is None
 
     # Generic-form parameters:
 

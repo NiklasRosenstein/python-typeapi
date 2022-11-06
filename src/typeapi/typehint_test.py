@@ -44,10 +44,11 @@ def test__TypeHint__list_generic() -> None:
     assert isinstance(hint, ClassTypeHint)
     assert hint.hint == List
     assert hint.origin is list
-    assert hint.type is list
     assert hint.args == ()
     assert str(hint.parameters) == "(~T,)"
     assert len(hint) == 0
+    assert hint.type is list
+    assert hint.bases is None
 
 
 def test__TypeHint__list_templatized() -> None:
@@ -55,10 +56,11 @@ def test__TypeHint__list_templatized() -> None:
     assert isinstance(hint, ClassTypeHint)
     assert hint.hint == List[T]
     assert hint.origin is list
-    assert hint.type is list
     assert hint.args == (T,)
     assert str(hint.parameters) == "(~T,)"
     assert len(hint) == 1
+    assert hint.type is list
+    assert hint.bases is None
 
 
 def test__TypeHint__list_specialized() -> None:
@@ -66,14 +68,16 @@ def test__TypeHint__list_specialized() -> None:
     assert isinstance(hint, ClassTypeHint)
     assert hint.hint == List[int]
     assert hint.origin is list
-    assert hint.type is list
     assert hint.args == (int,)
     assert hint.parameters == ()
     assert len(hint) == 1
+    assert hint.type is list
+    assert hint.bases is None
 
     hint_0 = hint[0]
     assert isinstance(hint_0, ClassTypeHint)
     assert hint_0.type == int
+    assert hint_0.bases is None
 
 
 def test__TypeHint__union() -> None:
@@ -131,6 +135,7 @@ def test__TypeHint__custom_generic_class() -> None:
     assert hint.args == ()
     assert hint.parameters == (T, U)
     assert len(hint) == 0
+    assert hint.bases == (Generic[T, U],)
 
     hint = TypeHint(MyGeneric[int, str])
     assert isinstance(hint, ClassTypeHint)
@@ -139,6 +144,7 @@ def test__TypeHint__custom_generic_class() -> None:
     assert hint.args == (int, str)
     assert hint.parameters == ()
     assert len(hint) == 2
+    assert hint.bases == (Generic[T, U],)
 
     hint = TypeHint(MyGeneric[int, T])
     assert isinstance(hint, ClassTypeHint)
@@ -147,6 +153,7 @@ def test__TypeHint__custom_generic_class() -> None:
     assert hint.args == (int, T)
     assert hint.parameters == (T,)
     assert len(hint) == 2
+    assert hint.bases == (Generic[T, U],)
 
     hint_0 = hint[0]
     assert isinstance(hint_0, ClassTypeHint)
@@ -210,6 +217,7 @@ def test__ClassTypeHint__parametrize() -> None:
     assert hint.parameters == ()
     assert hint.origin is MyClass
     assert hint.type is MyClass
+    assert hint.bases == (Generic[T, U],)
 
     # How do we find out what type MyClass[int, str].member1 and .member2 actually is?
     # -> We can inspect the original type to look for its type parameters and
