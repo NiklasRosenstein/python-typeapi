@@ -1,5 +1,5 @@
 import abc
-from typing import Any, Dict, List, Mapping, Tuple, TypeVar, Union, cast, overload
+from typing import Any, Dict, Generic, List, Mapping, Tuple, TypeVar, Union, cast, overload
 
 from typing_extensions import Annotated
 
@@ -168,6 +168,11 @@ class ClassTypeHint(TypeHint):
             "ClassTypeHint must be initialized from a real type or a generic that points to a real type. "
             f'Got "{self.hint!r}" with origin "{self.origin}"'
         )
+
+    def parameterize(self, parameter_map: Mapping["TypeVar", Any]) -> "TypeHint":
+        if self.type is Generic:
+            return self
+        return super().parameterize(parameter_map)
 
     @property
     def type(self) -> type:
