@@ -1,0 +1,5 @@
+[[entries]]
+id = "9c5e7d51-37c3-474a-86b3-5000bfd2c34a"
+type = "fix"
+description = "add `TypeHint.__iter__()`"
+author = "@NiklasRosenstein"

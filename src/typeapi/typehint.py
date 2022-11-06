@@ -1,5 +1,5 @@
 import abc
-from typing import Any, Dict, Generic, List, Mapping, Tuple, TypeVar, Union, cast, overload
+from typing import Any, Dict, Generic, Iterator, List, Mapping, Tuple, TypeVar, Union, cast, overload
 
 from typing_extensions import Annotated
 
@@ -121,6 +121,10 @@ class TypeHint(object, metaclass=_TypeHintMeta):
             other.args,
             other.parameters,
         )
+
+    def __iter__(self) -> Iterator["TypeHint"]:
+        for i in range(len(self.args)):
+            yield self[i]
 
     def __len__(self) -> int:
         return len(self.args)
