@@ -1,278 +1,252 @@
-""" This module provides helper functions to introspect raw #typing type hints. It is used mostly internally.
-You should use #typeapi.of() and the datatypes defined in #typeapi.models to introspect type hints. """
-
-from __future__ import annotations
-
-import functools
+import collections
 import inspect
 import sys
-import types
-import typing as t
+import warnings
+from types import FrameType, FunctionType, ModuleType
+from typing import Any, Callable, Dict, Generic, Optional, Set, Tuple, TypeVar, Union, get_type_hints as _get_type_hints
 
-import typing_extensions as te
+from typing_extensions import Protocol, TypeGuard
 
-if t.TYPE_CHECKING:
-    import builtins
+IS_PYTHON_AT_LAST_3_6 = sys.version_info[:2] <= (3, 6)
+IS_PYTHON_AT_LAST_3_8 = sys.version_info[:2] <= (3, 8)
+IS_PYTHON_AT_LEAST_3_7 = sys.version_info[:2] >= (3, 7)
+IS_PYTHON_AT_LEAST_3_9 = sys.version_info[:2] >= (3, 9)
+TYPING_MODULE_NAMES = frozenset(["typing", "typing_extensions", "collections.abc"])
+T_contra = TypeVar("T_contra", contravariant=True)
+U_co = TypeVar("U_co", covariant=True)
 
-T = t.TypeVar("T")
-TypeArg = t.Union[
-    te.ParamSpec,
-    t.TypeVar,
-    t.Tuple[()],
-    "builtins.ellipsis",
-    type,
+if sys.version_info[:2] <= (3, 6):
+    from typing import _ForwardRef as ForwardRef
+else:
+    from typing import ForwardRef
+
+__all__ = [
+    "ForwardRef",
+    "get_type_hint_origin_or_none",
+    "get_type_hint_args",
+    "get_type_hint_parameters",
+    "get_type_var_from_string_repr",
+    "type_repr",
+    "get_annotations",
+    "TypedDictProtocol",
+    "is_typed_dict",
 ]
 
 
-class _BaseGenericAlias(te.Protocol):
-    _inst: bool
-    _name: str
-    __origin__: type
-    __args__: t.Tuple[TypeArg, ...]
-
-
-class Generic(te.Protocol):
-    __orig_bases__: t.ClassVar[t.Tuple[type, ...]]
-    __parameters__: t.ClassVar[t.Tuple[t.TypeVar, ...]]
-
-
-class GenericAlias(_BaseGenericAlias, te.Protocol):
-    __parameters__: t.Tuple[t.TypeVar, ...]
-
-    if sys.version_info[:2] <= (3, 8):
-        _special: te.Literal[False]
-
-
-if sys.version_info[:2] <= (3, 8):
-
-    class SpecialGenericAlias(_BaseGenericAlias, te.Protocol):
-        __parameters__: t.Tuple[t.TypeVar, ...]
-        __args__: t.Tuple[TypeArg, ...]
-        _special: te.Literal[True]
-
-else:
-
-    class SpecialGenericAlias(_BaseGenericAlias, te.Protocol):
-        _nparams: int
-
-
-class UnionType(te.Protocol):
-    __args__: t.Tuple[TypeArg, ...]
-    __parameters__: t.Tuple[t.TypeVar, ...]
-
-
-class AnnotatedAlias(_BaseGenericAlias, te.Protocol):
-    __metadata__: t.Tuple[t.Any, ...]
-
-
-class SpecialForm(te.Protocol):
-    pass
-
-
-class NewType(te.Protocol):
-    __name__: str
-    __supertype__: type
-
-
-class TypedDict(te.Protocol):
-    """A protocol that describes #typing.TypedDict values (which are actually instances of the #typing._TypedDictMeta
-    metaclass). Use #is_typed_dict() to check if a hint is matches this protocol."""
-
-    __annotations__: t.Dict[str, t.Any]
-    __required_keys__: t.Set[str]
-    __optional_keys__: t.Set[str]
-    __total__: bool
-
-
-def is_generic(hint: t.Any) -> te.TypeGuard[t.Type[Generic]]:
+def get_type_hint_origin_or_none(hint: object) -> "Any | None":
     """
-    Returns:
-      `True` if *hint* is a subclass of #typing.Generic (and not an alias of it).
-
-    !!! note
-
-        This returns `False` for #typing.Generic because it does not have a `__parameters__` attribute.
+    Returns the origin type of a low-level type hint, or None.
     """
 
-    return isinstance(hint, type) and issubclass(hint, t.Generic) and hint is not t.Generic  # type: ignore[arg-type,comparison-overlap]  # noqa: E501
+    hint_origin = getattr(hint, "__origin__", None)
+
+    # In Python 3.6, List[int].__origin__ points to List; but we can look for
+    # the Python native type in its __bases__.
+    if (
+        IS_PYTHON_AT_LAST_3_6
+        and hasattr(hint, "__orig_bases__")
+        and getattr(hint, "__module__", None) in TYPING_MODULE_NAMES
+    ):
+
+        if hint.__name__ == "Annotated" and hint.__args__:  # type: ignore
+            from typing_extensions import Annotated
+
+            return Annotated
+
+        # Find a non-typing base class, which represents the actual Python type
+        # for this type hint.
+        bases = tuple(
+            x
+            for x in (hint_origin or hint).__orig_bases__  # type: ignore
+            if x.__module__ not in TYPING_MODULE_NAMES and not hasattr(x, "__orig_bases__")
+        )
+        if len(bases) == 1:
+            hint_origin = bases[0]
+        elif len(bases) > 1:
+            raise RuntimeError(
+                f"expected only one non-typing class in __orig_bases__ in type hint {hint!r}, got {bases!r}"
+            )
+        else:
+            # If we have a same-named type in collections.abc; use that.
+            type_name = hint.__name__  # type: ignore
+            if hasattr(collections.abc, type_name):
+                hint_origin = getattr(collections.abc, type_name)
+
+        return hint_origin
+
+    elif IS_PYTHON_AT_LAST_3_6 and type(hint).__name__ == "_Literal" and hint.__values__ is not None:  # type: ignore
+        from typing_extensions import Literal
+
+        return Literal
+
+    elif not IS_PYTHON_AT_LAST_3_6 and type(hint).__name__ == "_AnnotatedAlias":  # type: ignore
+        from typing_extensions import Annotated
+
+        return Annotated
+
+    if hint_origin is None and hint == Any:
+        return object
+
+    return hint_origin
 
 
-def is_generic_alias(hint: t.Any) -> te.TypeGuard[GenericAlias]:
+def get_type_hint_original_bases(hint: object) -> "Tuple[Any, ...] | None":
     """
-    Returns:
-      `True` if *hint* is a #typing._GenericAlias or #types.GenericAlias ([PEP 585][] since Python 3.10+).
-
-    [PEP 585]: https://peps.python.org/pep-0585/
-
-    !!! note
-
-        In Python versions 3.8 and older, #typing._GenericAlias is used also for special generic
-        aliases (see #is_special_generic_alias()). This function will return `False` for these
-        types of aliases to clearly distinct between special aliases and normal aliases, even if
-        they share the same type.
-    """
-
-    if isinstance(hint, t._GenericAlias):  # type: ignore[attr-defined]
-        if hint.__origin__ == t.Union:
-            return False
-        if sys.version_info[:2] <= (3, 8):
-            return not hint._special
-        return True  # type: ignore[unreachable]
-
-    _GenericAlias = getattr(types, "GenericAlias", None)
-    if _GenericAlias is not None and isinstance(hint, _GenericAlias) and hint.__origin__ != t.Union:
-        return True
-
-    return False
-
-
-def is_union_type(hint: t.Any) -> te.TypeGuard[UnionType]:
-    """
-    Returns:
-      `True` if *hint* is a #typing.Union or #types.UnionType.
-    """
-
-    if isinstance(hint, t._GenericAlias) and hint.__origin__ == t.Union:  # type: ignore[attr-defined]
-        return True
-
-    if sys.version_info[:2] >= (3, 10):
-        return isinstance(hint, types.UnionType)
-
-    return False  # type: ignore[unreachable]
-
-
-def is_special_generic_alias(hint: t.Any) -> te.TypeGuard[SpecialGenericAlias]:
-    """
-    Returns:
-      `True` if *hint* is a #typing._SpecialGenericAlias (like #typing.List or #typing.Mapping).
-
-    !!! note
-
-        For Python versions 3.8 and older, the function treats #typing._GenericAliases
-        as special if their `_special` attribute is set to `True`. #typing._SpecialGenericAlias
-        was introduced in Python 3.9.
+    Returns the original bases of a generic type.
     """
 
-    if sys.version_info[:2] <= (3, 8):
-        # We use isinstance() here instead of checking the exact type because typing.Tuple or
-        # typing.Callable in 3.8 or earlier are instances of typing._VariadicGenericAliases.
-        if isinstance(hint, t._GenericAlias):  # type: ignore[attr-defined]
-            return t.cast(bool, hint._special)
-        return False
+    orig_bases = getattr(hint, "__orig_bases__", None)
+
+    if orig_bases is not None and IS_PYTHON_AT_LAST_3_6 and getattr(hint, "__args__", None):
+        orig_bases = None
+
+    return orig_bases
+
+
+def get_type_hint_args(hint: object) -> Tuple[Any, ...]:
+    """
+    Returns the arguments of a low-level type hint. An empty tuple is returned
+    if the hint is unparameterized.
+    """
+
+    hint_args = getattr(hint, "__args__", None) or ()
+
+    # In Python 3.7 and 3.8, generics like List and Tuple have a "_special"
+    # but their __args__ contain type vars. For consistent results across
+    # Python versions, we treat those as having no arguments (as they have
+    # not been explicitly parametrized by the user).
+    if IS_PYTHON_AT_LEAST_3_7 and IS_PYTHON_AT_LAST_3_8 and getattr(hint, "_special", False):
+        hint_args = ()
+
+    # If we have an "Annotated" hint, we need to do some restructuring of the args.
+    if (
+        IS_PYTHON_AT_LAST_3_6
+        and getattr(hint, "__name__", None) == "Annotated"
+        and getattr(hint, "__module__", None) in TYPING_MODULE_NAMES
+        and hint_args
+    ):
+        # In Python 3.6, Annotated is only available through
+        # typing_extensions, where the second tuple element contains the
+        # metadata.
+        assert len(hint_args) == 2 and isinstance(hint_args[1], tuple), hint_args
+        hint_args = (hint_args[0],) + hint_args[1]
+    elif not IS_PYTHON_AT_LAST_3_6 and type(hint).__name__ == "_AnnotatedAlias":
+        hint_args += hint.__metadata__  # type: ignore
+
+    if not hint_args and IS_PYTHON_AT_LAST_3_6:
+        hint_args = getattr(hint, "__values__", None) or ()
+
+    return hint_args
+
+
+def get_type_hint_parameters(hint: object) -> Tuple[Any, ...]:
+    """
+    Returns the parameters of a type hint, i.e. the tuple of type variables.
+    """
+
+    hint_params = getattr(hint, "__parameters__", None) or ()
+
+    # In Python 3.9+, special generic aliases like List and Tuple don't store
+    # their type variables as parameters anymore; we try to restore those.
+    if IS_PYTHON_AT_LEAST_3_9 and getattr(hint, "_nparams", 0) > 0:
+        type_hint_name = getattr(hint, "_name", None) or hint.__name__  # type: ignore
+        if type_hint_name in _SPECIAL_ALIAS_TYPEVARS:
+            return tuple(get_type_var_from_string_repr(x) for x in _SPECIAL_ALIAS_TYPEVARS[type_hint_name])
+
+        warnings.warn(
+            "The following type hint appears like a special generic alias but its type parameters are not "
+            f"known to `typeapi`: {hint}",
+            UserWarning,
+        )
+
+    return hint_params
+
+
+def get_type_var_from_string_repr(type_var_repr: str) -> object:
+    """
+    Returns a :class:`TypeVar` for its string rerpesentation.
+    """
+
+    if type_var_repr in _TYPEVARS_CACHE:
+        return _TYPEVARS_CACHE[type_var_repr]
+
+    if type_var_repr.startswith("~"):
+        covariant = False
+        contravariant = False
+    elif type_var_repr.startswith("+"):
+        covariant = True
+        contravariant = False
+    elif type_var_repr.startswith("-"):
+        covariant = False
+        contravariant = True
     else:
-        return isinstance(hint, t._SpecialGenericAlias)  # type: ignore[attr-defined]
+        raise ValueError(f"invalid TypeVar string: {type_var_repr!r}")
+
+    type_var_name = type_var_repr[1:]  # noqa: F841
+    type_var = TypeVar(type_var_name, covariant=covariant, contravariant=contravariant)  # type: ignore
+    _TYPEVARS_CACHE[type_var_repr] = type_var
+    return type_var
 
 
-def is_special_form(hint: t.Any) -> te.TypeGuard[SpecialGenericAlias]:
-    """
-    Returns:
-      `True` if *hint* is a #typing._SpecialForm (like #typing.Final or #typing.Union).
-    """
+# Generated in Python 3.8 with scripts/dump_type_vars.py.
+# We use this map to create TypeVars in get_type_hint_parameters() on the fly
+# for Python 3.9+ since they no longer come with this information embedded.
+_SPECIAL_ALIAS_TYPEVARS = {
+    "Awaitable": ["+T_co"],
+    "Coroutine": ["+T_co", "-T_contra", "+V_co"],
+    "AsyncIterable": ["+T_co"],
+    "AsyncIterator": ["+T_co"],
+    "Iterable": ["+T_co"],
+    "Iterator": ["+T_co"],
+    "Reversible": ["+T_co"],
+    "Container": ["+T_co"],
+    "Collection": ["+T_co"],
+    "AbstractSet": ["+T_co"],
+    "MutableSet": ["~T"],
+    "Mapping": ["~KT", "+VT_co"],
+    "MutableMapping": ["~KT", "~VT"],
+    "Sequence": ["+T_co"],
+    "MutableSequence": ["~T"],
+    "List": ["~T"],
+    "Deque": ["~T"],
+    "Set": ["~T"],
+    "FrozenSet": ["+T_co"],
+    "MappingView": ["+T_co"],
+    "KeysView": ["~KT"],
+    "ItemsView": ["~KT", "+VT_co"],
+    "ValuesView": ["+VT_co"],
+    "ContextManager": ["+T_co"],
+    "AsyncContextManager": ["+T_co"],
+    "Dict": ["~KT", "~VT"],
+    "DefaultDict": ["~KT", "~VT"],
+    "OrderedDict": ["~KT", "~VT"],
+    "Counter": ["~T"],
+    "ChainMap": ["~KT", "~VT"],
+    "Generator": ["+T_co", "-T_contra", "+V_co"],
+    "AsyncGenerator": ["+T_co", "-T_contra"],
+    "Type": ["+CT_co"],
+    "SupportsAbs": ["+T_co"],
+    "SupportsRound": ["+T_co"],
+    "IO": ["~AnyStr"],
+    "Pattern": ["~AnyStr"],
+    "Match": ["~AnyStr"],
+}
 
-    return isinstance(hint, t._SpecialForm)
-
-
-def is_annotated_alias(hint: t.Any) -> te.TypeGuard[AnnotatedAlias]:
-    """
-    Returns:
-      `True` if *hint* is a #typing._AnnotatedAlias (e.g. `typing.Annotated[int, 42]`).
-    """
-
-    return isinstance(hint, te._AnnotatedAlias)  # type: ignore[attr-defined]
-
-
-def is_new_type(hint: t.Any) -> te.TypeGuard[NewType]:
-    """
-    Returns:
-      `True` if *hint* is a #typing.NewType object.
-    """
-
-    if sys.version_info[:2] <= (3, 9):
-        return isinstance(hint, types.FunctionType) and hasattr(hint, "__supertype__")
-    else:
-        return isinstance(hint, t.NewType)  # type: ignore[arg-type]
-
-
-def is_typed_dict(hint: t.Any) -> te.TypeGuard[TypedDict]:
-    """
-    Returns:
-      `True` if *hint* is a #typing.TypedDict.
-
-    !!! note
-
-      Typed dictionaries are actually just type objects. This means #typeapi.of() will represent them as
-      #typeapi.models.Type.
-    """
-
-    for m in (t, te):
-        if hasattr(m, "_TypedDictMeta") and isinstance(hint, m._TypedDictMeta):  # type: ignore[attr-defined]
-            return True
-    return False
-
-
-@functools.lru_cache()
-def get_special_generic_aliases() -> t.Dict[str, SpecialGenericAlias]:
-    """Returns a dictionary that contains all special generic aliases (like #typing.List and #typing.Mapping)
-    defined in the #typing module.
-
-    Example:
-
-    ```py
-    import typing
-    from typeapi.utils import get_special_generic_aliases
-    mapping = get_special_generic_aliases()
-    assert mapping['List'] is typing.List
-    ```"""
-
-    result = {}
-    for key, value in vars(t).items():
-        if is_special_generic_alias(value):
-            result[key] = value
-    return result
+_TYPEVARS_CACHE = {
+    "~AnyStr": TypeVar("AnyStr", bytes, str),
+    "~CT_co": TypeVar("CT_co", covariant=True, bound=type),
+}
 
 
-@functools.lru_cache()
-def get_origins_to_special_generic_aliases() -> t.Dict[type, SpecialGenericAlias]:
-    """Returns a dictionary that maps a native Python type to the #typing special generic alias.
-
-    Example:
-
-    ```py
-    import typing
-    from typeapi.utils import get_origins_to_special_generic_aliases
-    mapping = get_origins_to_special_generic_aliases()
-    assert mapping[list] is typing.List
-    ```
-    """
-
-    return {v.__origin__: v for v in get_special_generic_aliases().values()}
-
-
-@functools.lru_cache()
-def get_special_forms() -> t.Dict[str, SpecialGenericAlias]:
-    """Returns a dictionary that contains all special forms (like #typing.Final and #typing.Union)
-    defined in the #typing module.
-
-    Example:
-
-    ```py
-    import typing
-    from typeapi.utils import get_special_forms
-    mapping = get_special_forms()
-    assert mapping['Any'] is typing.Any
-    assert mapping['Union'] is typing.Union
-    ```
-    """
-
-    result = {}
-    for key, value in vars(t).items():
-        if is_special_form(value):
-            result[key] = value
-    return result
-
-
-def type_repr(obj: t.Any) -> str:
+def type_repr(obj: Any) -> str:
     """#typing._type_repr() stolen from Python 3.8."""
+
+    if (getattr(obj, "__module__", None) or getattr(type(obj), "__module__", None)) in TYPING_MODULE_NAMES or hasattr(
+        obj, "__args__"
+    ):
+        # NOTE(NiklasRosenstein): In Python 3.6, List[int] is actually a "type" subclass so we can't
+        #       rely on the fall through on the below.
+        return repr(obj)
 
     if isinstance(obj, type):
         if obj.__module__ == "builtins":
@@ -280,17 +254,17 @@ def type_repr(obj: t.Any) -> str:
         return f"{obj.__module__}.{obj.__qualname__}"
     if obj is ...:
         return "..."
-    if isinstance(obj, types.FunctionType):
+    if isinstance(obj, FunctionType):
         return obj.__name__
     return repr(obj)
 
 
 def get_annotations(
-    obj: t.Union[t.Callable[..., t.Any], types.ModuleType, type],
+    obj: Union[Callable[..., Any], ModuleType, type],
     include_bases: bool = False,
-    globalns: t.Optional[t.Dict[str, t.Any]] = None,
-    localns: t.Optional[t.Dict[str, t.Any]] = None,
-) -> t.Dict[str, t.Any]:
+    globalns: Optional[Dict[str, Any]] = None,
+    localns: Optional[Dict[str, Any]] = None,
+) -> Dict[str, Any]:
     """Like #typing.get_type_hints(), but always includes extras. This is important when we want to inspect
     #typing.Annotated hints (without extras the annotations are removed). In Python 3.10 and onwards, this is
     an alias for #inspect.get_annotations() with `eval_str=True`.
@@ -301,7 +275,7 @@ def get_annotations(
     a function or type by the #scoped() decorator."""
 
     if hasattr(obj, "__typeapi_frame__"):
-        frame: types.FrameType = obj.__typeapi_frame__  # type: ignore[union-attr]
+        frame: FrameType = obj.__typeapi_frame__  # type: ignore[union-attr]
         globalns = frame.f_globals
         localns = frame.f_locals
         del frame
@@ -311,9 +285,9 @@ def get_annotations(
             # Handle case when class has no explicit annotations, see python-typeapi#3
             return {}
         if sys.version_info[:2] <= (3, 8):
-            annotations = t.get_type_hints(obj, globalns=globalns, localns=localns)
+            annotations = _get_type_hints(obj, globalns=globalns, localns=localns)
         else:
-            annotations = t.get_type_hints(obj, globalns=globalns, localns=localns, include_extras=True)
+            annotations = _get_type_hints(obj, globalns=globalns, localns=localns, include_extras=True)
         if not include_bases:
             # To replicate the behaviour of #inspect.get_annotations(), which is to _not_ take into account
             # the annotations of the base class, we discard all entries from the resulting dictionary that
@@ -336,42 +310,37 @@ def get_annotations(
         return inspect.get_annotations(obj, globals=globalns, locals=localns, eval_str=True)
 
 
-# Backwards compatibility, remove in next minor version (minor because we're below 1.0.0)
-get_type_hints = get_annotations
+class TypedDictProtocol(Protocol):
+    """A protocol that describes #typing.TypedDict values (which are actually instances of the #typing._TypedDictMeta
+    metaclass). Use #is_typed_dict() to check if a hint is matches this protocol."""
+
+    __annotations__: Dict[str, Any]
+    __required_keys__: Set[str]
+    __optional_keys__: Set[str]
+    __total__: bool
 
 
-def scoped(obj: T) -> T:
-    """A decorator that associates the caller's frame with the object such that #get_annotations() can use it as
-    the scope to resolve forward references in.
+def is_typed_dict(hint: Any) -> TypeGuard[TypedDictProtocol]:
+    """
+    Returns:
+        `True` if *hint* is a #typing.TypedDict.
 
-    Example:
+    !!! note
 
-    ```py
-    import typeapi
-
-    def get_ab():
-      class A:
-        v: int
-
-      @typeapi.scoped
-      class B:
-        a: 'A'
-
-      return B
-
-    A, B = get_ab()
-    assert typeapi.get_annotations(B) == {'a': A}
-    ```
+        Typed dictionaries are actually just type objects. This means #typeapi.of() will represent them as
+        #typeapi.models.Type.
     """
 
-    obj.__typeapi_frame__ = sys._getframe(1)  # type: ignore
-    return obj
+    import typing
+
+    import typing_extensions
+
+    for m in (typing, typing_extensions):
+        if hasattr(m, "_TypedDictMeta") and isinstance(hint, m._TypedDictMeta):  # type: ignore[attr-defined]
+            return True
+    return False
 
 
-def scope(obj: t.Union[type, types.FunctionType]) -> t.Optional[t.Dict[str, t.Any]]:
-    """Retrieve the scope that was assigned to *obj* via the #scoped() decorator."""
-
-    frame = getattr(obj, "__typeapi_frame__", None)
-    if frame is not None:
-        return t.cast(types.FrameType, frame).f_locals
-    return None
+class HasGetitem(Protocol, Generic[T_contra, U_co]):
+    def __getitem__(self, __key: T_contra) -> U_co:
+        ...
