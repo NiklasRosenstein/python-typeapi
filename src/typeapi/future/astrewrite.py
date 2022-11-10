@@ -15,7 +15,7 @@ def rewrite_expr(source: str, lookup_target: str) -> CodeType:
     expr = ast.parse(source, "<expr>", "eval")
     expr = DynamicLookupRewriter(lookup_target).visit(expr)
     ast.fix_missing_locations(expr)
-    return compile(expr, "<expr>", "eval")
+    return t.cast(CodeType, compile(expr, "<expr>", "eval"))
 
 
 @dataclasses.dataclass
@@ -85,7 +85,7 @@ class DynamicLookupRewriter(ast.NodeTransformer):
         if len(assign.targets) == 1 and isinstance(assign.targets[0], ast.Name):
             name = assign.targets[0]
             if self.ignore_prefix is not None and name.id.startswith(self.ignore_prefix):
-                name.id = name.id[len(self.ignore_prefix) :]
+                name.id = name.id[len(self.ignore_prefix) :]  # noqa: E203
                 self._add_to_locals({name.id})
         return self.generic_visit(assign)
 
@@ -127,5 +127,5 @@ class DynamicLookupRewriter(ast.NodeTransformer):
         self.visit_Import(ast.Import(names=node.names))  # Dispatch name detection
         return self.generic_visit(node)
 
-    def visit(self, node: T_AST) -> T_AST:
+    def visit(self, node: T_AST) -> t.Any:
         return super().visit(node)

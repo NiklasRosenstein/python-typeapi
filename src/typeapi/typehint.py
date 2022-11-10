@@ -1,11 +1,9 @@
 import abc
-from typing import Any, Dict, Generic, Iterator, List, Mapping, Tuple, TypeVar, Union, cast, overload
+from typing import Any, Dict, Generic, Iterator, List, Mapping, Tuple, TypeVar, Union, overload
 
 from typing_extensions import Annotated
 
 from .utils import (
-    IS_PYTHON_AT_LAST_3_6,
-    IS_PYTHON_AT_LAST_3_8,
     ForwardRef,
     HasGetitem,
     get_subscriptable_type_hint_from_origin,

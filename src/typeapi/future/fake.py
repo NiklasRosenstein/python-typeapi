@@ -13,7 +13,7 @@ class FakeHint:
     A placeholder for an actual type hint.
     """
 
-    def __init__(self, origin: Any, args: Optional[Tuple["FakeHint"]] = None) -> None:
+    def __init__(self, origin: Any, args: Optional[Tuple["FakeHint", ...]] = None) -> None:
         self.origin = origin
         self.args = args
 
