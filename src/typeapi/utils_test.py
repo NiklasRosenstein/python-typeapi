@@ -398,10 +398,12 @@ def test__int__introspection():
 
 
 def test__ForwardRef__introspection_in_other_type():
-    assert List["int"].__args__ == (ForwardRef("int"),)
+    # NOTE(NiklasRosenstein): We use string equality because in Python <=3.7.6, ForwardRef does not
+    #       implement equality correctly.
+    assert str(List["int"].__args__) == str((ForwardRef("int"),))
     assert List["int"].__parameters__ == ()
-    get_type_hint_args(List["int"]) == (ForwardRef("int"),)
-    get_type_hint_parameters(List["int"]) == ()
+    assert str(get_type_hint_args(List["int"])) == str((ForwardRef("int"),))
+    assert get_type_hint_parameters(List["int"]) == ()
 
 
 def test__ForwardRef__introspection():
