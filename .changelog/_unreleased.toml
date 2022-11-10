@@ -1,0 +1,5 @@
+[[entries]]
+id = "59d99c8e-3c6a-48a0-82c1-dd17b903bbf6"
+type = "fix"
+description = "expose TupleTypeHint"
+author = "@NiklasRosenstein"
