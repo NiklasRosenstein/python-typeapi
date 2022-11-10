@@ -6,12 +6,3 @@ author = "@NiklasRosenstein"
 issues = [
     "https://github.com/NiklasRosenstein/python-typeapi/issues/5",
 ]
-
-[[entries]]
-id = "aef2834d-dca0-4b47-9ed0-c891a33b3101"
-type = "feature"
-description = "support future typing syntax (such as `list[int]` and `int | None`) when evaluating forward references."
-author = "@NiklasRosenstein"
-issues = [
-    "https://github.com/NiklasRosenstein/python-typeapi/issues/5",
-]
