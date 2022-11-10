@@ -3,3 +3,9 @@ id = "1035cda5-c2bf-46d2-b2a5-fe3ec3ebd2f9"
 type = "improvement"
 description = "support all common special generic aliases instead of just List and Dict when using TypeHint.parameterize() or TypeHint.evaluate()"
 author = "@NiklasRosenstein"
+
+[[entries]]
+id = "827beb4a-a796-4a11-a55f-556e0008563b"
+type = "fix"
+description = "Mark typeapi as requiring at least Python 3.6.3 or higher, this is because Forward references on class members are not correctly resolved by typing.get_type_hints() in 3.6.2 and before (see https://github.com/python/cpython/commit/1658ec07577ef9696cea76fcf7fac2da18403ec5#diff-ddb987fca5f5df0c9a2f5521ed687919d70bb3d64eaeb8021f98833a2a716887R1501-R1504)"
+author = "@NiklasRosenstein"

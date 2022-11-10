@@ -2,7 +2,7 @@
 
 [![Python](https://github.com/NiklasRosenstein/python-typeapi/actions/workflows/python.yml/badge.svg)](https://github.com/NiklasRosenstein/python-typeapi/actions/workflows/python.yml)
 
-__Compatibility__: Python 3.6+
+__Compatibility__: Python 3.6.3+
 
 The `typeapi` package provides an object-oriented interface for introspecting type hints from the `typing` and
 `typing_extensions` module at runtime. Currently, only a subset of the different kinds of type hints are supported,
