@@ -23,7 +23,7 @@ prefix = "        "
 max_line_width = 120
 line_width = 0
 
-print(f"{prefix}python-versions: [")
+print(f"{prefix}python-version: [")
 while versions:
     if line_width == 0:
         print(f"{prefix}  ", end='')
