@@ -1,3 +1,4 @@
+import sys
 from typing import List, Optional, Union
 
 import pytest
@@ -22,4 +23,7 @@ def test__FakeHint__subscript() -> None:
 
     with pytest.raises(TypeError) as excinfo:
         FakeHint(int)[FakeHint(str)].evaluate()
-    assert str(excinfo.value) == "'type' object is not subscriptable"
+    if sys.version_info[:2] <= (3, 10):
+        assert str(excinfo.value) == "'type' object is not subscriptable"
+    else:
+        assert str(excinfo.value) == "type 'int' is not subscriptable"
