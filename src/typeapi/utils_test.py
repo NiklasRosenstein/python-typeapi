@@ -10,11 +10,11 @@ import typing_extensions
 
 from typeapi.utils import (
     ForwardRef,
+    get_subscriptable_type_hint_from_origin,
     get_type_hint_args,
     get_type_hint_origin_or_none,
     get_type_hint_original_bases,
     get_type_hint_parameters,
-    get_subscriptable_type_hint_from_origin,
 )
 
 T = TypeVar("T")
