@@ -16,7 +16,7 @@ versions = {k: v for k, v in versions.items() if k >= (3, 6, 0)}
 
 versions = [it[1] for it in sorted(versions.items(), key=lambda it: it[0])]
 
-versions += ["3.x", "pypy-3.6", "pypy-3.7", "pypy-3.8", "pypy-3.9"]
+versions += ["3.x", "pypy-3.8"]
 
 # Format for Github actions.
 prefix = "        "
