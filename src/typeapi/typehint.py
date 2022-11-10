@@ -248,7 +248,7 @@ class AnnotatedTypeHint(TypeHint):
 
     def _copy_with_args(self, args: "Tuple[Any, ...]") -> "TypeHint":
         assert len(args) == 1
-        new_hint = Annotated[args + (self._args[1:])]  # type: ignore[valid-type]
+        new_hint = Annotated[args + (self._args[1:])]  # type: ignore
         return AnnotatedTypeHint(new_hint)
 
     def __len__(self) -> int:
