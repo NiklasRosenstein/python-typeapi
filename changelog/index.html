@@ -693,6 +693,12 @@
   <tr><td>Improvement</td><td>
 
 support all common special generic aliases instead of just List and Dict when using TypeHint.parameterize() or TypeHint.evaluate()</td><td></td><td></td><td>@NiklasRosenstein</td></tr>
+  <tr><td>Fix</td><td>
+
+Mark typeapi as requiring at least Python 3.6.3 or higher, this is because Forward references on class members are not correctly resolved by typing.get_type_hints() in 3.6.2 and before (see https://github.com/python/cpython/commit/1658ec07577ef9696cea76fcf7fac2da18403ec5#diff-ddb987fca5f5df0c9a2f5521ed687919d70bb3d64eaeb8021f98833a2a716887R1501-R1504)</td><td></td><td></td><td>@NiklasRosenstein</td></tr>
+  <tr><td>Improvement</td><td>
+
+Improve error message when `TypeHint._copy_with_args()` fails due to a TypeError (eg if the type is not actually subscriptable) to include the type in question.</td><td></td><td></td><td>@NiklasRosenstein</td></tr>
 </table>
 
 <h2 id="101-2022-11-06">1.0.1 (2022-11-06)</h2>
