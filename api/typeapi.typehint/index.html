@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.8">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.9">
     
     
       
@@ -20,7 +20,7 @@
       <link rel="stylesheet" href="../../assets/stylesheets/main.20d9efc8.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.815d1a91.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.08040f6c.min.css">
         
           
           
@@ -401,6 +401,19 @@
     Class TypeHint
   </a>
   
+    <nav class="md-nav" aria-label="Class TypeHint">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parameterize" class="md-nav__link">
+    parameterize
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -417,7 +430,7 @@
                 
                   
 
-  <a href="https://github.com/NiklasRosenstein/python-typeapi/blob/None/docs/content/api/typeapi.typehint.md" title="Edit this page" class="md-content__button md-icon">
+  <a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/content/api/typeapi.typehint.md" title="Edit this page" class="md-content__button md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
   </a>
@@ -430,8 +443,21 @@
 <h2 id="class-typehint">Class TypeHint</h2>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">TypeHint</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">_TypeHintMeta</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/e4dee7edc44d14dcb7b0c52ec253c0e2a60232e7/docs/../src/typeapi/typehint.py#L84">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/typehint.py#L85">[view_source]</a></p>
 <p>Base class that provides an object-oriented interface to a Python type hint.</p>
+<p><a id="typeapi.typehint.TypeHint.parameterize"></a></p>
+<p><a id="pydoc:typeapi.typehint.TypeHint.parameterize"></a></p>
+<h4 id="parameterize">parameterize</h4>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">parameterize</span><span class="p">(</span><span class="n">parameter_map</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">object</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;TypeHint&quot;</span>
+</code></pre></div>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/typehint.py#L158">[view_source]</a></p>
+<p>Replace references to the type variables in the keys of <em>parameter_map</em></p>
+<p>with the type hints of the associated values.</p>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><code>parameter_map</code>: A dictionary that maps :class:<code>TypeVar</code> to other
+type hints.</li>
+</ul>
 
 
 
