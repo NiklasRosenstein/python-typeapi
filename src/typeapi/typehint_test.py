@@ -195,7 +195,7 @@ def test__TypeHint__from_TypeVar() -> None:
     assert hint.constraints == ()
 
 
-def test__TypeHint__from_ForwardRef_string() -> None:
+def test__TypeHint__from_string() -> None:
     hint = TypeHint("int")
     assert isinstance(hint, ForwardRefTypeHint)
     assert hint.hint == "int"
@@ -203,6 +203,16 @@ def test__TypeHint__from_ForwardRef_string() -> None:
     assert hint.args == ()
     assert hint.parameters == ()
     assert hint.ref == ForwardRef("int")
+
+
+def test__TypeHint__from_ForwardRef_with_literal() -> None:
+    hint = TypeHint(ForwardRef("Literal[42, 'universe']")).evaluate({"Literal": Literal})
+    assert isinstance(hint, LiteralTypeHint)
+    assert hint.hint == Literal[42, "universe"]
+    assert hint.origin is Literal
+    assert hint.args == ()
+    assert hint.values == (42, "universe")
+    assert hint.parameters == ()
 
 
 def test__TypeHint__from_ForwardRef_instance() -> None:
@@ -213,6 +223,24 @@ def test__TypeHint__from_ForwardRef_instance() -> None:
     assert hint.args == ()
     assert hint.parameters == ()
     assert hint.ref == ForwardRef("int")
+
+
+def test__TypeHint__from_future_syntax_ForwardRef_builtin_subscript() -> None:
+    hint = TypeHint(ForwardRef("list[int]")).evaluate({})
+    assert isinstance(hint, ClassTypeHint)
+    assert hint.hint == List[int]
+    assert hint.origin is list
+    assert hint.args == (int,)
+    assert hint.parameters == ()
+
+
+def test__TypeHint__from_future_syntax_ForwardRef_union() -> None:
+    hint = TypeHint(ForwardRef("int | list[int]")).evaluate({})
+    assert isinstance(hint, UnionTypeHint)
+    assert hint.hint == Union[int, List[int]]
+    assert hint.origin is Union
+    assert hint.args == (int, List[int])
+    assert hint.parameters == ()
 
 
 def test__ClassTypeHint__parametrize() -> None:
@@ -307,6 +335,7 @@ def test__TypeHint__evaluate_recursive() -> None:
     assert isinstance(hint, ForwardRefTypeHint)
 
     hint = hint.evaluate(globals())
+    assert hint.hint == List[int]
     assert isinstance(hint, ClassTypeHint), hint
     assert isinstance(hint[0], ClassTypeHint), hint[0]
 
