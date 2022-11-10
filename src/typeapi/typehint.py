@@ -74,6 +74,8 @@ class _TypeHintMeta(abc.ABCMeta):
             return AnnotatedTypeHint(hint)
         elif isinstance(hint, TypeVar):
             return TypeVarTypeHint(hint)
+        elif origin == tuple or hint == tuple:
+            return TupleTypeHint(hint)
 
         return ClassTypeHint(hint)
 
@@ -337,3 +339,33 @@ class ForwardRefTypeHint(TypeHint):
     @property
     def expr(self) -> str:
         return self._forward_ref.__forward_arg__
+
+
+class TupleTypeHint(TypeHint):
+    def __init__(self, hint: object) -> None:
+        super().__init__(hint)
+        if self._args == ((),):
+            self._args = ()
+        elif self._args == () and self._hint == tuple:
+            self._args = (Any, ...)
+            self._origin = tuple
+        if ... in self._args:
+            assert self._args[-1] == ..., "Tuple Ellipsis not as last arg"
+            assert len(self._args) == 2, "Tuple with Ellipsis has more than two args"
+            self._repeated = True
+            self._args = self._args[:-1]
+        else:
+            self._repeated = False
+
+    def _copy_with_args(self, args: "Tuple[Any, ...]") -> "TypeHint":
+        if self._repeated:
+            args = args + (...,)
+        return super()._copy_with_args(args)
+
+    @property
+    def repeated(self) -> bool:
+        """
+        Returns `True` if the Tuple is of arbitrary length, but only of one type.
+        """
+
+        return self._repeated

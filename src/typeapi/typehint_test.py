@@ -7,6 +7,7 @@ from typeapi.typehint import (
     ClassTypeHint,
     ForwardRefTypeHint,
     LiteralTypeHint,
+    TupleTypeHint,
     TypeHint,
     TypeVarTypeHint,
     UnionTypeHint,
@@ -358,9 +359,79 @@ def test__TypeHint__parameterized_types() -> None:
     assert clsth(Sequence[T]).parameterize({T: int}).hint == Sequence[int]
     assert clsth(List[T]).parameterize({T: int}).hint == List[int]
     assert clsth(Dict[T, U]).parameterize({T: str, U: T}).hint == Dict[str, T]
-    assert clsth(Tuple[T, int]).parameterize({T: str}).hint == Tuple[str, int]
 
     class MyGeneric(Generic[U, T]):
         pass
 
     assert clsth(MyGeneric[T, U]).parameterize({T: int, U: str}).hint == MyGeneric[int, str]
+
+    def tupth(x: Any) -> TupleTypeHint:
+        hint = TypeHint(x)
+        assert isinstance(hint, TupleTypeHint)
+        return hint
+
+    assert tupth(Tuple[T, int]).parameterize({T: str}).hint == Tuple[str, int]
+    assert tupth(Tuple[T, ...]).parameterize({T: str}).hint == Tuple[str, ...]
+
+
+def test__TypeHint__native_tuple_type() -> None:
+    hint = TypeHint(tuple)
+    assert isinstance(hint, TupleTypeHint), hint
+    assert len(hint) == 1
+    assert hint.hint == tuple
+    assert hint.origin == tuple
+    assert hint.args == (Any,)
+    assert hint.parameters == ()
+    assert hint.repeated
+
+    hint = TypeHint(Tuple[Any, ...])
+    assert isinstance(hint, TupleTypeHint), hint
+    assert len(hint) == 1
+    assert hint.hint == Tuple[Any, ...]
+    assert hint.origin == tuple
+    assert hint.args == (Any,)
+    assert hint.parameters == ()
+
+
+def test__TypeHint__empty_tuple() -> None:
+    hint = TypeHint(Tuple[()])
+    assert isinstance(hint, TupleTypeHint), hint
+    assert len(hint) == 0
+    assert hint.hint == Tuple[()]
+    assert hint.origin == tuple
+    assert hint.args == ()
+    assert hint.parameters == ()
+    assert not hint.repeated
+
+
+def test__TypeHint__single_item() -> None:
+    hint = TypeHint(Tuple[int])
+    assert isinstance(hint, TupleTypeHint), hint
+    assert len(hint) == 1
+    assert hint.hint == Tuple[int]
+    assert hint.origin == tuple
+    assert hint.args == (int,)
+    assert hint.parameters == ()
+    assert not hint.repeated
+
+
+def test__TypeHint__two_items() -> None:
+    hint = TypeHint(Tuple[int, str])
+    assert isinstance(hint, TupleTypeHint), hint
+    assert len(hint) == 2
+    assert hint.hint == Tuple[int, str]
+    assert hint.origin == tuple
+    assert hint.args == (int, str)
+    assert hint.parameters == ()
+    assert not hint.repeated
+
+
+def test__TypeHint__repeated() -> None:
+    hint = TypeHint(Tuple[int, ...])
+    assert isinstance(hint, TupleTypeHint), hint
+    assert len(hint) == 1
+    assert hint.hint == Tuple[int, ...]
+    assert hint.origin == tuple
+    assert hint.args == (int,)
+    assert hint.parameters == ()
+    assert hint.repeated
