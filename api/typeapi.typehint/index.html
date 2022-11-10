@@ -325,6 +325,26 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#class-tupletypehint" class="md-nav__link">
+    Class TupleTypeHint
+  </a>
+  
+    <nav class="md-nav" aria-label="Class TupleTypeHint">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#repeated" class="md-nav__link">
+    repeated
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -452,6 +472,26 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#class-tupletypehint" class="md-nav__link">
+    Class TupleTypeHint
+  </a>
+  
+    <nav class="md-nav" aria-label="Class TupleTypeHint">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#repeated" class="md-nav__link">
+    repeated
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -479,14 +519,14 @@
 <h2 id="class-typehint">Class TypeHint</h2>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">TypeHint</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">_TypeHintMeta</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/typehint.py#L85">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/typehint.py#L87">[view_source]</a></p>
 <p>Base class that provides an object-oriented interface to a Python type hint.</p>
 <p><a id="typeapi.typehint.TypeHint.parameterize"></a></p>
 <p><a id="pydoc:typeapi.typehint.TypeHint.parameterize"></a></p>
 <h4 id="parameterize">parameterize</h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">parameterize</span><span class="p">(</span><span class="n">parameter_map</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">object</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;TypeHint&quot;</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/typehint.py#L162">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/typehint.py#L164">[view_source]</a></p>
 <p>Replace references to the type variables in the keys of <em>parameter_map</em></p>
 <p>with the type hints of the associated values.</p>
 <p><strong>Arguments</strong>:</p>
@@ -494,6 +534,20 @@
 <li><code>parameter_map</code>: A dictionary that maps :class:<code>TypeVar</code> to other
 type hints.</li>
 </ul>
+<p><a id="typeapi.typehint.TupleTypeHint"></a></p>
+<p><a id="pydoc:typeapi.typehint.TupleTypeHint"></a></p>
+<h2 id="class-tupletypehint">Class TupleTypeHint</h2>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">TupleTypeHint</span><span class="p">(</span><span class="n">TypeHint</span><span class="p">)</span>
+</code></pre></div>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/typehint.py#L344">[view_source]</a></p>
+<p><a id="typeapi.typehint.TupleTypeHint.repeated"></a></p>
+<p><a id="pydoc:typeapi.typehint.TupleTypeHint.repeated"></a></p>
+<h4 id="repeated">repeated</h4>
+<div class="highlight"><pre><span></span><code><span class="nd">@property</span>
+<span class="k">def</span> <span class="nf">repeated</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span>
+</code></pre></div>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/develop/docs/../src/typeapi/typehint.py#L366">[view_source]</a></p>
+<p>Returns <code>True</code> if the Tuple is of arbitrary length, but only of one type.</p>
 
 
 
