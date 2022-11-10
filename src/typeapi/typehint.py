@@ -152,8 +152,12 @@ class TypeHint(object, metaclass=_TypeHintMeta):
         Internal. Create a copy of this type hint with updated type arguments.
         """
 
-        type_hint = get_subscriptable_type_hint_from_origin(self.origin)
-        return TypeHint(type_hint[args])
+        generic = get_subscriptable_type_hint_from_origin(self.origin)
+        try:
+            new_hint = generic[args]
+        except TypeError as exc:
+            raise TypeError(f"{type_repr(generic)}: {exc}")
+        return TypeHint(new_hint)
 
     def parameterize(self, parameter_map: Mapping[object, Any]) -> "TypeHint":
         """
