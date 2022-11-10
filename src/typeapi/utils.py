@@ -198,12 +198,20 @@ def get_subscriptable_type_hint_from_origin(origin: object, *, __cache: Dict[Any
     from the :mod:`typing` module instead."""
 
     if not __cache:
+        if sys.version_info[:2] <= (3, 6):
+            attr = "__extra__"
+        else:
+            attr = "__origin__"
+
+        def _populate(hint: Any) -> None:
+            origin = getattr(hint, attr, None)
+            if origin is not None:
+                __cache[origin] = hint
+
         for value in vars(typing).values():
-            if hasattr(value, "__origin__"):
-                __cache[value.__origin__] = value
+            _populate(value)
         for value in vars(typing_extensions).values():
-            if hasattr(value, "__origin__"):
-                __cache[value.__origin__] = value
+            _populate(value)
 
     return __cache.get(origin, origin)
 
