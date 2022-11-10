@@ -14,6 +14,7 @@ from typeapi.utils import (
     get_type_hint_origin_or_none,
     get_type_hint_original_bases,
     get_type_hint_parameters,
+    get_subscriptable_type_hint_from_origin,
 )
 
 T = TypeVar("T")
@@ -412,3 +413,14 @@ def test__ForwardRef__introspection():
     get_type_hint_origin_or_none("int") is None
     get_type_hint_args("int") == ()
     get_type_hint_parameters("int") == ()
+
+
+def test__get_subscriptable_type_hint_from_origin():
+    assert get_subscriptable_type_hint_from_origin(List) is List
+    assert get_subscriptable_type_hint_from_origin(list) is List
+    assert get_subscriptable_type_hint_from_origin(Dict) is Dict
+    assert get_subscriptable_type_hint_from_origin(dict) is Dict
+    assert get_subscriptable_type_hint_from_origin(Mapping) is Mapping
+    assert get_subscriptable_type_hint_from_origin(collections.abc.Mapping) is Mapping
+    assert get_subscriptable_type_hint_from_origin(T) is T
+    assert get_subscriptable_type_hint_from_origin(int) is int
