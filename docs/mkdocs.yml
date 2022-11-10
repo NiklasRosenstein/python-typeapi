@@ -2,8 +2,7 @@ nav:
   - Home: index.md
   - API:
     - typeapi: api/typeapi.md
-    - typeapi.model: api/typeapi.model.md
-    - typeapi.parser: api/typeapi.parser.md
+    - typeapi.typehint: api/typeapi.typehint.md
     - typeapi.utils: api/typeapi.utils.md
   - Other:
     - Changelog: changelog.md
