@@ -16,7 +16,7 @@ namely through the following representations:
 | `AnnotatedTypeHint` | Represents an `Annotated` type hint and gives access to the annotated type as well as the metadata. | 1.0.0 |
 | `TypeVarTypeHint` | Represents a `TypeVar` type hint and gives an interface to access the variable's metadata (such as constarints, variance, ...). | 1.0.0 |
 | `ForwardRefTypeHint` | Represents a forward reference. | 1.0.0 |
-| `TupleTypeHint` |  1.2.0 |
+| `TupleTypeHint` | Reperesents a `Tuple` type hint, allowing you to differentiate between repeated and explicitly sized tuples. | 1.2.0 |
 
 The main entry point to wrapping a low-level type hint is the `TypeHint()` constructor.
 
