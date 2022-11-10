@@ -1,4 +1,4 @@
-from typing import Any, Dict, Generic, List, TypeVar, Union
+from typing import Any, Dict, Generic, List, Sequence, Tuple, TypeVar, Union
 
 from typing_extensions import Annotated, Literal
 
@@ -343,3 +343,24 @@ def test__TypeHint__caching_same_named_type_hints() -> None:
     assert isinstance(hint, ClassTypeHint)
     assert hint.type is not OldA
     assert hint.type is A
+
+
+def test__TypeHint__parameterized_types() -> None:
+    """This function tests support for the :meth:`TypeHint._copy_with_args()`
+    implementation to assert the compatibility with certain special generic
+    aliases."""
+
+    def clsth(x: Any) -> ClassTypeHint:
+        hint = TypeHint(x)
+        assert isinstance(hint, ClassTypeHint)
+        return hint
+
+    assert clsth(Sequence[T]).parameterize({T: int}).hint == Sequence[int]
+    assert clsth(List[T]).parameterize({T: int}).hint == List[int]
+    assert clsth(Dict[T, U]).parameterize({T: str, U: T}).hint == Dict[str, T]
+    assert clsth(Tuple[T, int]).parameterize({T: str}).hint == Tuple[str, int]
+
+    class MyGeneric(Generic[U, T]):
+        pass
+
+    assert clsth(MyGeneric[T, U]).parameterize({T: int, U: str}).hint == MyGeneric[int, str]

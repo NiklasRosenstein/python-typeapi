@@ -1,0 +1,5 @@
+[[entries]]
+id = "1035cda5-c2bf-46d2-b2a5-fe3ec3ebd2f9"
+type = "improvement"
+description = "support all common special generic aliases instead of just List and Dict when using TypeHint.parameterize() or TypeHint.evaluate()"
+author = "@NiklasRosenstein"

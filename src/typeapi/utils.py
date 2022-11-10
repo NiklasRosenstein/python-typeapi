@@ -1,10 +1,12 @@
 import collections
 import inspect
 import sys
+import typing
 import warnings
 from types import FrameType, FunctionType, ModuleType
 from typing import Any, Callable, Dict, Generic, Optional, Set, Tuple, TypeVar, Union, get_type_hints as _get_type_hints
 
+import typing_extensions
 from typing_extensions import Protocol, TypeGuard
 
 IS_PYTHON_AT_LAST_3_6 = sys.version_info[:2] <= (3, 6)
@@ -186,6 +188,24 @@ def get_type_var_from_string_repr(type_var_repr: str) -> object:
     type_var = TypeVar(type_var_name, covariant=covariant, contravariant=contravariant)  # type: ignore
     _TYPEVARS_CACHE[type_var_repr] = type_var
     return type_var
+
+
+def get_subscriptable_type_hint_from_origin(origin: object, *, __cache: Dict[Any, Any] = {}) -> Any:
+    """Given any type, returns its corresponding subscriptable version. This
+    is the type itself in most cases (assuming it is a subclass of
+    :class:`typing.Generic`), but for special types such as :class:`list` or
+    :class:`collections.abc.Sequence`, it returns the respective special alias
+    from the :mod:`typing` module instead."""
+
+    if not __cache:
+        for value in vars(typing).values():
+            if hasattr(value, "__origin__"):
+                __cache[value.__origin__] = value
+        for value in vars(typing_extensions).values():
+            if hasattr(value, "__origin__"):
+                __cache[value.__origin__] = value
+
+    return __cache.get(origin, origin)
 
 
 # Generated in Python 3.8 with scripts/dump_type_vars.py.
