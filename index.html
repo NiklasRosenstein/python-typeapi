@@ -467,9 +467,10 @@
 <h1 id="typeapi">typeapi</h1>
 <p><a href="https://github.com/NiklasRosenstein/python-typeapi/actions/workflows/python.yml"><img alt="Python" src="https://github.com/NiklasRosenstein/python-typeapi/actions/workflows/python.yml/badge.svg" /></a></p>
 <p><strong>Compatibility</strong>: Python 3.6.3+</p>
-<p>The <code>typeapi</code> package provides an object-oriented interface for introspecting type hints from the <code>typing</code> and
-<code>typing_extensions</code> module at runtime. Currently, only a subset of the different kinds of type hints are supported,
-namely through the following representations:</p>
+<p>The <code>typeapi</code> package provides an object-oriented interface for introspecting <a href="https://peps.python.org/pep-0484/">PEP484</a> type hints at runtime,
+including forward references that make use of the more recent <a href="https://peps.python.org/pep-0585/">PEP585</a> and <a href="https://peps.python.org/pep-0604/">PEP604</a> type hint features in
+Python versions that don't natively support them.</p>
+<p>The following kinds of type hints are currently supported:</p>
 <table>
 <thead>
 <tr>
