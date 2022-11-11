@@ -21,7 +21,7 @@ The following kinds of type hints are currently supported:
 | `LiteralTypeHint` | Represents a `Literal` type hint and gives access to the literal values. | 1.0.0 |
 | `AnnotatedTypeHint` | Represents an `Annotated` type hint and gives access to the annotated type as well as the metadata. | 1.0.0 |
 | `TypeVarTypeHint` | Represents a `TypeVar` type hint and gives an interface to access the variable's metadata (such as constarints, variance, ...). | 1.0.0 |
-| `ForwardRefTypeHint` | Represents a forward reference. Can be evaluated even if it contains [PEP585][] and [PEP604][] expressions. | 1.0.0, future support in 1.3.0 |
+| `ForwardRefTypeHint` | Represents a forward reference. Can be evaluated in Python 3.6+ even if it contains [PEP585][] and [PEP604][] expressions. | 1.0.0, future support in 1.3.0 |
 | `TupleTypeHint` | Reperesents a `Tuple` type hint, allowing you to differentiate between repeated and explicitly sized tuples. | 1.2.0 |
 
 The main entry point to wrapping a low-level type hint is the `TypeHint()` constructor.
