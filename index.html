@@ -249,13 +249,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#planned-work" class="md-nav__link">
-    Planned work
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -437,13 +430,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#planned-work" class="md-nav__link">
-    Planned work
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -507,8 +493,8 @@ Python versions that don't natively support them.</p>
 </tr>
 <tr>
 <td><code>ForwardRefTypeHint</code></td>
-<td>Represents a forward reference.</td>
-<td>1.0.0</td>
+<td>Represents a forward reference. Can be evaluated in Python 3.6+ even if it contains <a href="https://peps.python.org/pep-0585/">PEP585</a> and <a href="https://peps.python.org/pep-0604/">PEP604</a> expressions.</td>
+<td>1.0.0, future support in 1.3.0</td>
 </tr>
 <tr>
 <td><code>TupleTypeHint</code></td>
@@ -570,36 +556,21 @@ Python versions that don't natively support them.</p>
 <p>Evaluate forward references:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># cat &lt;&lt;EOF | python -</span>
 <span class="kn">from</span> <span class="nn">typeapi</span> <span class="kn">import</span> <span class="n">ClassTypeHint</span><span class="p">,</span> <span class="n">ForwardRefTypeHint</span><span class="p">,</span> <span class="n">TypeHint</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 
-<span class="n">MyVector</span> <span class="o">=</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;MyType&quot;</span><span class="p">]</span>
+<span class="n">MyVector</span> <span class="o">=</span> <span class="s2">&quot;list[MyType]&quot;</span>
 
 <span class="k">class</span> <span class="nc">MyType</span><span class="p">:</span>
   <span class="k">pass</span>
 
-<span class="n">hint</span> <span class="o">=</span> <span class="n">TypeHint</span><span class="p">(</span><span class="n">MyVector</span><span class="p">)</span>
+<span class="n">hint</span> <span class="o">=</span> <span class="n">TypeHint</span><span class="p">(</span><span class="n">MyVector</span><span class="p">)</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="nb">globals</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">hint</span><span class="p">)</span>  <span class="c1"># TypeHint(typing.List[__main__.MyType])</span>
 <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hint</span><span class="p">,</span> <span class="n">ClassTypeHint</span><span class="p">)</span>
 <span class="k">assert</span> <span class="n">hint</span><span class="o">.</span><span class="n">type</span> <span class="ow">is</span> <span class="nb">list</span>
 
 <span class="n">item_hint</span> <span class="o">=</span> <span class="n">hint</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item_hint</span><span class="p">,</span> <span class="n">ForwardRefTypeHint</span><span class="p">)</span>
-<span class="k">assert</span> <span class="n">item_hint</span><span class="o">.</span><span class="n">expr</span> <span class="o">==</span> <span class="s2">&quot;MyType&quot;</span>
-
-<span class="n">hint</span> <span class="o">=</span> <span class="n">hint</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="nb">globals</span><span class="p">())</span>
-<span class="n">item_hint</span> <span class="o">=</span> <span class="n">hint</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item_hint</span><span class="p">,</span> <span class="n">ClassTypeHint</span><span class="p">)</span>
 <span class="k">assert</span> <span class="n">item_hint</span><span class="o">.</span><span class="n">type</span> <span class="ow">is</span> <span class="n">MyType</span>
 </code></pre></div>
-<h2 id="planned-work">Planned work</h2>
-<ul>
-<li>Support more features of the typing system (e.g. <code>ClassVar</code>, <code>ParamSpec</code>, ...)</li>
-<li>Support evaluating forward references that utilize newer Python language features (such as built-in type subscripts
-  and type union syntax).<ul>
-<li>Subscript support could be achieved by mocking the built-in types during the evaluation of the expression.</li>
-<li>Type unions could be achieved by rewriting the expression AST before evaluating and mocking every value in the expression.</li>
-</ul>
-</li>
-</ul>
 
 
 
