@@ -105,11 +105,3 @@ item_hint = hint[0]
 assert isinstance(item_hint, ClassTypeHint)
 assert item_hint.type is MyType
 ```
-
-## Planned work
-
-* Support more features of the typing system (e.g. `ClassVar`, `ParamSpec`, ...)
-* Support evaluating forward references that utilize newer Python language features (such as built-in type subscripts
-  and type union syntax).
-    * Subscript support could be achieved by mocking the built-in types during the evaluation of the expression.
-    * Type unions could be achieved by rewriting the expression AST before evaluating and mocking every value in the expression.
