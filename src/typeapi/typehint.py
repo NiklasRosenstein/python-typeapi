@@ -1,11 +1,9 @@
 import abc
-from typing import Any, Dict, Generic, Iterator, List, Mapping, Tuple, TypeVar, Union, cast, overload
+from typing import Any, Dict, Generic, Iterator, List, Mapping, Tuple, TypeVar, Union, overload
 
 from typing_extensions import Annotated
 
 from .utils import (
-    IS_PYTHON_AT_LAST_3_6,
-    IS_PYTHON_AT_LAST_3_8,
     ForwardRef,
     HasGetitem,
     get_subscriptable_type_hint_from_origin,
@@ -317,15 +315,28 @@ class ForwardRefTypeHint(TypeHint):
         )
 
     def evaluate(self, context: HasGetitem[str, Any]) -> TypeHint:
-        retyped_context = cast(Mapping[str, Any], context)
+        from .future.astrewrite import rewrite_expr
+        from .future.fake import FakeHint, FakeProvider
 
-        if IS_PYTHON_AT_LAST_3_6:
-            hint = eval(self.expr, {}, retyped_context)
-        elif IS_PYTHON_AT_LAST_3_8:
-            # Mypy doesn't know about the third arg
-            hint = self.ref._evaluate({}, retyped_context)  # type: ignore[arg-type]
-        else:
-            hint = self.ref._evaluate({}, retyped_context, set())  # type: ignore[arg-type,call-arg]
+        code = rewrite_expr(self.expr, "__dict__")
+        scope = {"__dict__": FakeProvider(context)}
+        hint = eval(code, scope, {})
+
+        assert isinstance(hint, FakeHint), (self.expr, FakeHint)
+        hint = hint.evaluate()
+
+        # # Even though eval expects a Mapping, we know for forward references that we'll only
+        # # need to have __getitem__() as they are pure expressions.
+        # retyped_context = cast(Mapping[str, Any], FakeProvider(context))
+
+        # if IS_PYTHON_AT_LAST_3_6:
+        #     hint = eval(code, scope, {})
+        # elif IS_PYTHON_AT_LAST_3_8:
+        #     # Mypy doesn't know about the third arg
+        #     hint = self.ref._evaluate(scope, {})  # type: ignore[arg-type]
+        # else:
+        #     hint = self.ref._evaluate(scope, {}, set())  # type: ignore[arg-type,call-arg]
+
         return TypeHint(hint).evaluate(context)
 
     @property

@@ -1,0 +1,8 @@
+[[entries]]
+id = "d5e6704b-34d8-4345-b307-00469e03f001"
+type = "feature"
+description = "support future typing syntax (such as `list[int]` and `int | None`) when evaluating forward references."
+author = "@NiklasRosenstein"
+issues = [
+    "https://github.com/NiklasRosenstein/python-typeapi/issues/5",
+]

@@ -2,11 +2,17 @@
 
 [![Python](https://github.com/NiklasRosenstein/python-typeapi/actions/workflows/python.yml/badge.svg)](https://github.com/NiklasRosenstein/python-typeapi/actions/workflows/python.yml)
 
+  [PEP484]: https://peps.python.org/pep-0484/
+  [PEP585]: https://peps.python.org/pep-0585/
+  [PEP604]: https://peps.python.org/pep-0604/
+
 __Compatibility__: Python 3.6.3+
 
-The `typeapi` package provides an object-oriented interface for introspecting type hints from the `typing` and
-`typing_extensions` module at runtime. Currently, only a subset of the different kinds of type hints are supported,
-namely through the following representations:
+The `typeapi` package provides an object-oriented interface for introspecting [PEP484][] type hints at runtime,
+including forward references that make use of the more recent [PEP585][] and [PEP604][] type hint features in
+Python versions that don't natively support them.
+
+The following kinds of type hints are currently supported:
 
 | Concrete type | Description | Added in |
 | ------------- | ----------- | -------- |
