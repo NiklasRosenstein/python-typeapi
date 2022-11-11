@@ -21,7 +21,7 @@ The following kinds of type hints are currently supported:
 | `LiteralTypeHint` | Represents a `Literal` type hint and gives access to the literal values. | 1.0.0 |
 | `AnnotatedTypeHint` | Represents an `Annotated` type hint and gives access to the annotated type as well as the metadata. | 1.0.0 |
 | `TypeVarTypeHint` | Represents a `TypeVar` type hint and gives an interface to access the variable's metadata (such as constarints, variance, ...). | 1.0.0 |
-| `ForwardRefTypeHint` | Represents a forward reference. | 1.0.0 |
+| `ForwardRefTypeHint` | Represents a forward reference. Can be evaluated even if it contains [PEP585][] and [PEP604][] expressions. | 1.0.0 |
 | `TupleTypeHint` | Reperesents a `Tuple` type hint, allowing you to differentiate between repeated and explicitly sized tuples. | 1.2.0 |
 
 The main entry point to wrapping a low-level type hint is the `TypeHint()` constructor.
@@ -90,23 +90,18 @@ Evaluate forward references:
 ```py
 # cat <<EOF | python -
 from typeapi import ClassTypeHint, ForwardRefTypeHint, TypeHint
-from typing import List
 
-MyVector = List["MyType"]
+MyVector = "list[MyType]"
 
 class MyType:
   pass
 
-hint = TypeHint(MyVector)
+hint = TypeHint(MyVector).evaluate(globals())
+print(hint)  # TypeHint(typing.List[__main__.MyType])
 assert isinstance(hint, ClassTypeHint)
 assert hint.type is list
 
 item_hint = hint[0]
-assert isinstance(item_hint, ForwardRefTypeHint)
-assert item_hint.expr == "MyType"
-
-hint = hint.evaluate(globals())
-item_hint = hint[1]
 assert isinstance(item_hint, ClassTypeHint)
 assert item_hint.type is MyType
 ```
