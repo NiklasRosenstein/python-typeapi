@@ -1,4 +1,3 @@
-import sys
 from typing import List, Optional, Union
 
 import pytest
@@ -23,4 +22,4 @@ def test__FakeHint__subscript() -> None:
 
     with pytest.raises(TypeError) as excinfo:
         FakeHint(int)[FakeHint(str)].evaluate()
-    assert 'is not subscriptable' in str(excinfo.value)
+    assert "is not subscriptable" in str(excinfo.value)
