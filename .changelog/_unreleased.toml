@@ -1,0 +1,5 @@
+[[entries]]
+id = "d13e6aaa-402d-4b9c-8b3d-d3a20170f386"
+type = "fix"
+description = "fix evaluation of PEP604 optional type hints (e.g. `int | None`)"
+author = "@NiklasRosenstein"

@@ -81,6 +81,18 @@ class DynamicLookupRewriter(ast.NodeTransformer):
             ctx=node.ctx,
         )
 
+    if hasattr(ast, "NameConstant"):  # Deprecated in Python 3.8
+
+        def visit_NameConstant(self, node: ast.NameConstant) -> ast.AST:
+            return self.visit_Name(ast.Name(id=str(node.value), ctx=ast.Load()))
+
+    if hasattr(ast, "Constant"):  # Introduced in Python 3.8
+
+        def visit_Constant(self, node: ast.Constant) -> ast.AST:
+            if node.value in (None, True, False):
+                return self.visit_Name(ast.Name(id=str(node.value), ctx=ast.Load()))
+            return self.generic_visit(node)
+
     def visit_Assign(self, assign: ast.Assign) -> ast.AST:
         if len(assign.targets) == 1 and isinstance(assign.targets[0], ast.Name):
             name = assign.targets[0]

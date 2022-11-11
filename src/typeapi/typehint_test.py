@@ -1,4 +1,4 @@
-from typing import Any, Dict, Generic, List, Sequence, Tuple, TypeVar, Union
+from typing import Any, Dict, Generic, List, Optional, Sequence, Tuple, TypeVar, Union
 
 from typing_extensions import Annotated, Literal
 
@@ -240,6 +240,13 @@ def test__TypeHint__from_future_syntax_ForwardRef_union() -> None:
     assert hint.hint == Union[int, List[int]]
     assert hint.origin is Union
     assert hint.args == (int, List[int])
+    assert hint.parameters == ()
+
+    hint = TypeHint(ForwardRef("int | None")).evaluate({})
+    assert isinstance(hint, UnionTypeHint)
+    assert hint.hint == Optional[int]
+    assert hint.origin is Union
+    assert hint.args == (int, type(None))
     assert hint.parameters == ()
 
 
