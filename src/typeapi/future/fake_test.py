@@ -23,3 +23,11 @@ def test__FakeHint__subscript() -> None:
     with pytest.raises(TypeError) as excinfo:
         FakeHint(int)[FakeHint(str)].evaluate()
     assert "is not subscriptable" in str(excinfo.value)
+
+
+def test__FakeHint__getattr() -> None:
+    import typing
+
+    assert FakeHint(typing).Union.evaluate() == Union
+    assert FakeHint(typing).Union.evaluate() == Union
+    assert FakeHint(typing).List[FakeHint(int)].evaluate() == List[int]

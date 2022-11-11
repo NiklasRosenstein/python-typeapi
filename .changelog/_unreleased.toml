@@ -1,0 +1,5 @@
+[[entries]]
+id = "7e91748a-860f-4ff9-893a-376cd121b193"
+type = "fix"
+description = "fix evaluating type hints that are attributes of other objects (`FakeHint` did not implement `__getattr__()`)"
+author = "@NiklasRosenstein"

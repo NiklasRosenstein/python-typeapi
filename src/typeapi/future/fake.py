@@ -31,6 +31,9 @@ class FakeHint:
             args = (args,)
         return FakeHint(self.origin, tuple(x if isinstance(x, FakeHint) else FakeHint(x) for x in args))
 
+    def __getattr__(self, key: str) -> "FakeHint":
+        return FakeHint(getattr(self.evaluate(), key))
+
     def evaluate(self) -> Any:
         if self.args is None:
             return self.origin
