@@ -1,0 +1,5 @@
+[[entries]]
+id = "f59482ac-a708-4822-a893-0ca47d895c09"
+type = "feature"
+description = "add `TypeHint.source`, `TypeHint.get_context()` and make `TypeHint.evaluate(context)` argument optional"
+author = "@NiklasRosenstein"
