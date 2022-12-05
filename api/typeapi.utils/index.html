@@ -591,21 +591,21 @@
 <h4 id="get_type_hint_origin_or_none">get_type_hint_origin_or_none</h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_type_hint_origin_or_none</span><span class="p">(</span><span class="n">hint</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Any | None&quot;</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/57bdd6dbb13e34a84a266adee2902c984ac56fe2/docs/../src/typeapi/utils.py#L40">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/e2c9182494f1858f322d50003374bb967e143cdd/docs/../src/typeapi/utils.py#L40">[view_source]</a></p>
 <p>Returns the origin type of a low-level type hint, or None.</p>
 <p><a id="typeapi.utils.get_type_hint_original_bases"></a></p>
 <p><a id="pydoc:typeapi.utils.get_type_hint_original_bases"></a></p>
 <h4 id="get_type_hint_original_bases">get_type_hint_original_bases</h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_type_hint_original_bases</span><span class="p">(</span><span class="n">hint</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Tuple[Any, ...] | None&quot;</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/57bdd6dbb13e34a84a266adee2902c984ac56fe2/docs/../src/typeapi/utils.py#L100">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/e2c9182494f1858f322d50003374bb967e143cdd/docs/../src/typeapi/utils.py#L100">[view_source]</a></p>
 <p>Returns the original bases of a generic type.</p>
 <p><a id="typeapi.utils.get_type_hint_args"></a></p>
 <p><a id="pydoc:typeapi.utils.get_type_hint_args"></a></p>
 <h4 id="get_type_hint_args">get_type_hint_args</h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_type_hint_args</span><span class="p">(</span><span class="n">hint</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/57bdd6dbb13e34a84a266adee2902c984ac56fe2/docs/../src/typeapi/utils.py#L113">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/e2c9182494f1858f322d50003374bb967e143cdd/docs/../src/typeapi/utils.py#L113">[view_source]</a></p>
 <p>Returns the arguments of a low-level type hint. An empty tuple is returned
 if the hint is unparameterized.</p>
 <p><a id="typeapi.utils.get_type_hint_parameters"></a></p>
@@ -613,14 +613,14 @@ if the hint is unparameterized.</p>
 <h4 id="get_type_hint_parameters">get_type_hint_parameters</h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_type_hint_parameters</span><span class="p">(</span><span class="n">hint</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/57bdd6dbb13e34a84a266adee2902c984ac56fe2/docs/../src/typeapi/utils.py#L149">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/e2c9182494f1858f322d50003374bb967e143cdd/docs/../src/typeapi/utils.py#L149">[view_source]</a></p>
 <p>Returns the parameters of a type hint, i.e. the tuple of type variables.</p>
 <p><a id="typeapi.utils.get_type_var_from_string_repr"></a></p>
 <p><a id="pydoc:typeapi.utils.get_type_var_from_string_repr"></a></p>
 <h4 id="get_type_var_from_string_repr">get_type_var_from_string_repr</h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_type_var_from_string_repr</span><span class="p">(</span><span class="n">type_var_repr</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/57bdd6dbb13e34a84a266adee2902c984ac56fe2/docs/../src/typeapi/utils.py#L172">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/e2c9182494f1858f322d50003374bb967e143cdd/docs/../src/typeapi/utils.py#L172">[view_source]</a></p>
 <p>Returns a :class:<code>TypeVar</code> for its string rerpesentation.</p>
 <p><a id="typeapi.utils.get_subscriptable_type_hint_from_origin"></a></p>
 <p><a id="pydoc:typeapi.utils.get_subscriptable_type_hint_from_origin"></a></p>
@@ -630,7 +630,7 @@ if the hint is unparameterized.</p>
                                             <span class="n">__cache</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span>
                                                           <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{})</span> <span class="o">-&gt;</span> <span class="n">Any</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/57bdd6dbb13e34a84a266adee2902c984ac56fe2/docs/../src/typeapi/utils.py#L198">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/e2c9182494f1858f322d50003374bb967e143cdd/docs/../src/typeapi/utils.py#L198">[view_source]</a></p>
 <p>Given any type, returns its corresponding subscriptable version. This
 is the type itself in most cases (assuming it is a subclass of
 :class:<code>typing.Generic</code>), but for special types such as :class:<code>list</code> or
@@ -641,7 +641,7 @@ from the :mod:<code>typing</code> module instead.</p>
 <h4 id="type_repr">type_repr</h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">type_repr</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/57bdd6dbb13e34a84a266adee2902c984ac56fe2/docs/../src/typeapi/utils.py#L274">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/e2c9182494f1858f322d50003374bb967e143cdd/docs/../src/typeapi/utils.py#L274">[view_source]</a></p>
 <p><code>typing._type_repr()</code> stolen from Python 3.8.</p>
 <p><a id="typeapi.utils.get_annotations"></a></p>
 <p><a id="pydoc:typeapi.utils.get_annotations"></a></p>
@@ -652,7 +652,7 @@ from the :mod:<code>typing</code> module instead.</p>
         <span class="n">globalns</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">localns</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/57bdd6dbb13e34a84a266adee2902c984ac56fe2/docs/../src/typeapi/utils.py#L295">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/e2c9182494f1858f322d50003374bb967e143cdd/docs/../src/typeapi/utils.py#L295">[view_source]</a></p>
 <p>Like <code>typing.get_type_hints()</code>, but always includes extras. This is important when we want to inspect
 <code>typing.Annotated</code> hints (without extras the annotations are removed). In Python 3.10 and onwards, this is
 an alias for <code>inspect.get_annotations()</code> with <code>eval_str=True</code>.</p>
@@ -664,7 +664,7 @@ a function or type by the <code>scoped()</code> decorator.</p>
 <h2 id="class-typeddictprotocol">Class TypedDictProtocol</h2>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">TypedDictProtocol</span><span class="p">(</span><span class="n">Protocol</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/57bdd6dbb13e34a84a266adee2902c984ac56fe2/docs/../src/typeapi/utils.py#L346">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/e2c9182494f1858f322d50003374bb967e143cdd/docs/../src/typeapi/utils.py#L346">[view_source]</a></p>
 <p>A protocol that describes <code>typing.TypedDict</code> values (which are actually instances of the <code>typing._TypedDictMeta</code>
 metaclass). Use <a href="#pydoc:typeapi.utils.is_typed_dict">is_typed_dict()</a> to check if a hint is matches this protocol.</p>
 <p><a id="typeapi.utils.is_typed_dict"></a></p>
@@ -672,7 +672,7 @@ metaclass). Use <a href="#pydoc:typeapi.utils.is_typed_dict">is_typed_dict()</a>
 <h4 id="is_typed_dict">is_typed_dict</h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">is_typed_dict</span><span class="p">(</span><span class="n">hint</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TypeGuard</span><span class="p">[</span><span class="n">TypedDictProtocol</span><span class="p">]</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/57bdd6dbb13e34a84a266adee2902c984ac56fe2/docs/../src/typeapi/utils.py#L356">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/e2c9182494f1858f322d50003374bb967e143cdd/docs/../src/typeapi/utils.py#L356">[view_source]</a></p>
 <p><strong>Returns</strong>:</p>
 <p><code>True</code> if <em>hint</em> is a <code>typing.TypedDict</code>.</p>
 <p>!!! note</p>
