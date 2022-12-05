@@ -1,4 +1,3 @@
-import sys
 from typing import Any, Dict, Generic, List, Optional, Sequence, Tuple, TypeVar, Union
 
 from pytest import mark
@@ -14,7 +13,7 @@ from typeapi.typehint import (
     TypeVarTypeHint,
     UnionTypeHint,
 )
-from typeapi.utils import ForwardRef
+from typeapi.utils import IS_PYTHON_AT_LEAST_3_10, ForwardRef
 
 T = TypeVar("T")
 U = TypeVar("U")
@@ -83,7 +82,11 @@ def test__TypeHint__list_specialized() -> None:
     assert hint_0.bases is None
 
 
-@mark.parametrize("is_at_least_3_10", [False] if sys.version_info[:2] < (3, 10) else [False, True])
+@mark.parametrize(
+    argnames="is_at_least_3_10",
+    argvalues=[False, True] if IS_PYTHON_AT_LEAST_3_10 else [False],
+    ids=["typing.Union", "types.UnionType"] if IS_PYTHON_AT_LEAST_3_10 else ["typing.Union"],
+)
 def test__TypeHint__union(is_at_least_3_10: bool) -> None:
     if is_at_least_3_10:
         # Test native union type in Python 3.10+
