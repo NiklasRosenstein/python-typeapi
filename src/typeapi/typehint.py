@@ -1,4 +1,5 @@
 import abc
+from types import ModuleType
 from typing import Any, Dict, Generic, Iterator, List, Mapping, Tuple, TypeVar, Union, overload
 
 from typing_extensions import Annotated
@@ -87,30 +88,59 @@ class TypeHint(object, metaclass=_TypeHintMeta):
     Base class that provides an object-oriented interface to a Python type hint.
     """
 
-    def __init__(self, hint: object) -> None:
+    def __init__(self, hint: object, source: "Any | None" = None) -> None:
         self._hint = hint
         self._origin = get_type_hint_origin_or_none(hint)
         self._args = get_type_hint_args(hint)
         self._parameters = get_type_hint_parameters(hint)
+        self._source = source
 
     def __repr__(self) -> str:
         return f"TypeHint({type_repr(self._hint)})"
 
     @property
     def hint(self) -> object:
+        """
+        The original type hint.
+        """
+
         return self._hint
 
     @property
-    def origin(self) -> object:
+    def origin(self) -> "object | None":
+        """
+        The original type behind a type hint (e.g. the `Generic.__origin__`). For example, for :class:`typing.List`,
+        it is `list`. For :class:`typing.Sequence`, it is :class:`collections.abc.Sequence`.
+        """
+
         return self._origin
 
     @property
     def args(self) -> Tuple[Any, ...]:
+        """
+        Type hint arguments are the values passed into type hint subscripts, e.g. in `Union[int, str]`, the
+        arguments are `(int, str)`. We only return arguments that are expected to be types or other type hints.
+        For example, `Literal["foo", 0]` has an empty tuple for its `args`, and instead the values can be
+        retrievd using :attr:`LiteralTypeHint.valuse`.
+        """
+
         return self._args
 
     @property
     def parameters(self) -> Tuple[Any, ...]:
+        """
+        The parameters of a type hint is basically :attr:`args` but filtered for #typing.TypeVar objects.
+        """
+
         return self._parameters
+
+    @property
+    def source(self) -> "Any | None":
+        """
+        The object from which on which the type hint was found, for example a class or a function.
+        """
+
+        return self._source
 
     def __eq__(self, other: object) -> bool:
         if type(self) != type(other):
@@ -174,12 +204,38 @@ class TypeHint(object, metaclass=_TypeHintMeta):
         else:
             return self
 
-    def evaluate(self, context: HasGetitem[str, Any]) -> "TypeHint":
+    def evaluate(self, context: "HasGetitem[str, Any] | None" = None) -> "TypeHint":
+        """
+        Evaluate forward references in the type hint using the given *context*.
+
+        This method supports evaluating forward references that use PEP585 and PEP604 syntax even in older
+        versions of Python that do not support the PEPs.
+
+        :param context: An object that supports `__getitem__()` to retrieve a value by name. If this is
+            not specified, the globals of the `__module__` of the type hint's source :attr:`source` is
+            used instead. If no source exists, a :class:`RuntimeError` is raised.
+        """
+
+        if context is None:
+            context = self.get_context()
+
         if self.origin is not None and self.args:
             args = tuple(TypeHint(x).evaluate(context).hint for x in self.args)
             return self._copy_with_args(args)
         else:
             return self
+
+    def get_context(self) -> HasGetitem[str, Any]:
+        if self.source is None:
+            raise RuntimeError(
+                f"Missing context for {self}.evaluate(), the type hint has no `.source` "
+                "to which we could fall back to. Specify the `context` argument or make sure that the type "
+                "hint's `.source` is set."
+            )
+        if isinstance(self.source, ModuleType):
+            return vars(self.source)
+        else:
+            return vars(self.source.__module__)  # Should be a function or class, something that has __module__
 
 
 class ClassTypeHint(TypeHint):
@@ -272,7 +328,7 @@ class TypeVarTypeHint(TypeHint):
     def parameterize(self, parameter_map: Mapping[object, Any]) -> "TypeHint":
         return TypeHint(parameter_map.get(self.hint, self.hint))
 
-    def evaluate(self, context: HasGetitem[str, Any]) -> TypeHint:
+    def evaluate(self, context: "HasGetitem[str, Any] | None" = None) -> TypeHint:
         return self
 
     @property
@@ -314,9 +370,12 @@ class ForwardRefTypeHint(TypeHint):
             "evaluated before parameterization."
         )
 
-    def evaluate(self, context: HasGetitem[str, Any]) -> TypeHint:
+    def evaluate(self, context: "HasGetitem[str, Any] | None" = None) -> TypeHint:
         from .future.astrewrite import rewrite_expr
         from .future.fake import FakeHint, FakeProvider
+
+        if context is None:
+            context = self.get_context()
 
         code = rewrite_expr(self.expr, "__dict__")
         scope = {"__dict__": FakeProvider(context)}
