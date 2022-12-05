@@ -3,3 +3,12 @@ id = "f59482ac-a708-4822-a893-0ca47d895c09"
 type = "feature"
 description = "add `TypeHint.source`, `TypeHint.get_context()` and make `TypeHint.evaluate(context)` argument optional"
 author = "@NiklasRosenstein"
+
+[[entries]]
+id = "3c9e05b0-c32b-4648-a9a9-07fba8c823d0"
+type = "fix"
+description = "Support `types.UnionType` in Python 3.10+"
+author = "@NiklasRosenstein"
+issues = [
+    "https://github.com/NiklasRosenstein/python-typeapi/issues/7",
+]

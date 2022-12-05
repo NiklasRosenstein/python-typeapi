@@ -1,6 +1,7 @@
 import collections
 import inspect
 import sys
+import types
 import typing
 import warnings
 from types import FrameType, FunctionType, ModuleType
@@ -13,6 +14,7 @@ IS_PYTHON_AT_LAST_3_6 = sys.version_info[:2] <= (3, 6)
 IS_PYTHON_AT_LAST_3_8 = sys.version_info[:2] <= (3, 8)
 IS_PYTHON_AT_LEAST_3_7 = sys.version_info[:2] >= (3, 7)
 IS_PYTHON_AT_LEAST_3_9 = sys.version_info[:2] >= (3, 9)
+IS_PYTHON_AT_LEAST_3_10 = sys.version_info[:2] >= (3, 10)
 TYPING_MODULE_NAMES = frozenset(["typing", "typing_extensions", "collections.abc"])
 T_contra = TypeVar("T_contra", contravariant=True)
 U_co = TypeVar("U_co", covariant=True)
@@ -85,6 +87,9 @@ def get_type_hint_origin_or_none(hint: object) -> "Any | None":
         from typing_extensions import Annotated
 
         return Annotated
+
+    elif IS_PYTHON_AT_LEAST_3_10 and isinstance(hint, types.UnionType):  # type: ignore[attr-defined]
+        return Union
 
     if hint_origin is None and hint == Any:
         return object

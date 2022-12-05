@@ -1,5 +1,6 @@
 from typing import Any, Dict, Generic, List, Optional, Sequence, Tuple, TypeVar, Union
 
+from pytest import mark
 from typing_extensions import Annotated, Literal
 
 from typeapi.typehint import (
@@ -12,7 +13,7 @@ from typeapi.typehint import (
     TypeVarTypeHint,
     UnionTypeHint,
 )
-from typeapi.utils import ForwardRef
+from typeapi.utils import IS_PYTHON_AT_LEAST_3_10, ForwardRef
 
 T = TypeVar("T")
 U = TypeVar("U")
@@ -81,8 +82,18 @@ def test__TypeHint__list_specialized() -> None:
     assert hint_0.bases is None
 
 
-def test__TypeHint__union() -> None:
-    hint = TypeHint(Union[int, str])
+@mark.parametrize(
+    argnames="is_at_least_3_10",
+    argvalues=[False, True] if IS_PYTHON_AT_LEAST_3_10 else [False],
+    ids=["typing.Union", "types.UnionType"] if IS_PYTHON_AT_LEAST_3_10 else ["typing.Union"],
+)
+def test__TypeHint__union(is_at_least_3_10: bool) -> None:
+    if is_at_least_3_10:
+        # Test native union type in Python 3.10+
+        hint = TypeHint(eval("int | str"))
+    else:
+        hint = TypeHint(Union[int, str])
+
     assert isinstance(hint, UnionTypeHint)
     assert hint.hint == Union[int, str]
     assert hint.origin is Union
