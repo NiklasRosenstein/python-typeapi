@@ -1,0 +1,8 @@
+[[entries]]
+id = "3c9e05b0-c32b-4648-a9a9-07fba8c823d0"
+type = "fix"
+description = "Support `types.UnionType` in Python 3.10+"
+author = "@NiklasRosenstein"
+issues = [
+    "https://github.com/NiklasRosenstein/python-typeapi/issues/7",
+]
