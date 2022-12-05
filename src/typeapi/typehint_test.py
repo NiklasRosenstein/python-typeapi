@@ -1,5 +1,4 @@
 import sys
-import types
 from typing import Any, Dict, Generic, List, Optional, Sequence, Tuple, TypeVar, Union
 
 from pytest import mark
