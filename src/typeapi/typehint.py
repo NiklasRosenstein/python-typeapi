@@ -27,15 +27,15 @@ class _TypeHintMeta(abc.ABCMeta):
 
     # _cache: Dict[str, "TypeHint"] = {}
 
-    def __call__(cls, hint: object) -> "TypeHint":  # type: ignore[override]
+    def __call__(cls, hint: object, source: "Any | None" = None) -> "TypeHint":  # type: ignore[override]
         # If the current class is not the base "TypeHint" class, we should let
         # object construction continue as usual.
         if cls is not TypeHint:
-            return super().__call__(hint)  # type: ignore[no-any-return]
+            return super().__call__(hint, source)  # type: ignore[no-any-return]
         # Otherwise, we are in this "TypeHint" class.
 
         # If the hint is a type hint in itself, we can return it as-is.
-        if isinstance(hint, TypeHint):
+        if isinstance(hint, TypeHint) and hint.source == source:
             return hint
 
         # TODO(NiklasRosenstein): Implement a caching method that does not rely
@@ -48,11 +48,11 @@ class _TypeHintMeta(abc.ABCMeta):
         #     return cls._cache[hint_key]
 
         # Create the wrapper for the low-level type hint.
-        wrapper = cls._make_wrapper(hint)
+        wrapper = cls._make_wrapper(hint, source)
         # cls._cache[hint_key] = wrapper
         return wrapper
 
-    def _make_wrapper(cls, hint: object) -> "TypeHint":
+    def _make_wrapper(cls, hint: object, source: "Any | None") -> "TypeHint":
         """
         Create the :class:`TypeHint` implementation that wraps the given
         low-level type hint.
@@ -62,21 +62,21 @@ class _TypeHintMeta(abc.ABCMeta):
             hint = NoneType
 
         if isinstance(hint, (ForwardRef, str)):
-            return ForwardRefTypeHint(hint)
+            return ForwardRefTypeHint(hint, source)
 
         origin = get_type_hint_origin_or_none(hint)
         if origin == Union:
-            return UnionTypeHint(hint)
+            return UnionTypeHint(hint, source)
         elif str(origin).endswith(".Literal"):
-            return LiteralTypeHint(hint)
+            return LiteralTypeHint(hint, source)
         elif ".Annotated" in str(origin):
-            return AnnotatedTypeHint(hint)
+            return AnnotatedTypeHint(hint, source)
         elif isinstance(hint, TypeVar):
-            return TypeVarTypeHint(hint)
+            return TypeVarTypeHint(hint, source)
         elif origin == tuple or hint == tuple:
-            return TupleTypeHint(hint)
+            return TupleTypeHint(hint, source)
 
-        return ClassTypeHint(hint)
+        return ClassTypeHint(hint, source)
 
 
 # NOTE(NiklasRosenstein): We inherit from object to workaround
@@ -239,8 +239,8 @@ class TypeHint(object, metaclass=_TypeHintMeta):
 
 
 class ClassTypeHint(TypeHint):
-    def __init__(self, hint: object) -> None:
-        super().__init__(hint)
+    def __init__(self, hint: object, source: "Any | None" = None) -> None:
+        super().__init__(hint, source)
         assert isinstance(self.hint, type) or isinstance(self.origin, type), (
             "ClassTypeHint must be initialized from a real type or a generic that points to a real type. "
             f'Got "{self.hint!r}" with origin "{self.origin}"'
@@ -353,8 +353,8 @@ class TypeVarTypeHint(TypeHint):
 
 
 class ForwardRefTypeHint(TypeHint):
-    def __init__(self, hint: object) -> None:
-        super().__init__(hint)
+    def __init__(self, hint: object, source: "Any | None") -> None:
+        super().__init__(hint, source)
         if isinstance(self._hint, str):
             self._forward_ref = ForwardRef(self._hint)
         elif isinstance(self._hint, ForwardRef):
@@ -412,8 +412,8 @@ class ForwardRefTypeHint(TypeHint):
 
 
 class TupleTypeHint(TypeHint):
-    def __init__(self, hint: object) -> None:
-        super().__init__(hint)
+    def __init__(self, hint: object, source: "Any | None") -> None:
+        super().__init__(hint, source)
         if self._args == ((),):
             self._args = ()
         elif self._args == () and self._hint == tuple:

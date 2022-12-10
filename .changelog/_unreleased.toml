@@ -1,0 +1,5 @@
+[[entries]]
+id = "152afc62-b47b-4058-9064-31a209e93f03"
+type = "fix"
+description = "fix passing `TypeHint(source)` argument which before would not be accepted"
+author = "@NiklasRosenstein"
