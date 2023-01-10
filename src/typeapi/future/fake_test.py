@@ -31,3 +31,7 @@ def test__FakeHint__getattr() -> None:
     assert FakeHint(typing).Union.evaluate() == Union
     assert FakeHint(typing).Union.evaluate() == Union
     assert FakeHint(typing).List[FakeHint(int)].evaluate() == List[int]
+
+
+def test__FakeHint__Optional() -> None:
+    assert FakeHint(Optional)[FakeHint(int)].evaluate() == Optional[int]
