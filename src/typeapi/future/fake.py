@@ -38,7 +38,11 @@ class FakeHint:
         if self.args is None:
             return self.origin
         else:
-            return self.origin[tuple(x.evaluate() for x in self.args)]
+            if len(self.args) == 1:
+                # NOTE(NiklasRosenstein): We cannot pass a tuple with a single element to Optional[...]
+                return self.origin[self.args[0].evaluate()]
+            else:
+                return self.origin[tuple(x.evaluate() for x in self.args)]
 
 
 class FakeProvider:

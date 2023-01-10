@@ -1,0 +1,5 @@
+[[entries]]
+id = "c0282aa6-63f0-47e6-af0d-86b1b843f195"
+type = "fix"
+description = "fix type hint fake evaluation when an actual typing.Optional is encountered"
+author = "@NiklasRosenstein"
