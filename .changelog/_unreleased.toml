@@ -1,0 +1,5 @@
+[[entries]]
+id = "1664da60-1b53-4b74-b61a-48b3e4fa4270"
+type = "fix"
+description = "provide experimental support for evaluating future type hints that perform a function call; sometimes this is used in the metadata for `Anntoated[...]` hints"
+author = "@NiklasRosenstein"

@@ -17,6 +17,9 @@ class FakeHint:
         self.origin = origin
         self.args = args
 
+    def __repr__(self) -> str:
+        return f"FakeHint({self.origin}, args={self.args})"
+
     def __or__(self, other: "FakeHint") -> "FakeHint":
         assert isinstance(other, FakeHint)
         if self.origin == Union:
@@ -33,6 +36,12 @@ class FakeHint:
 
     def __getattr__(self, key: str) -> "FakeHint":
         return FakeHint(getattr(self.evaluate(), key))
+
+    def __call__(self, *args: Any, **kwds: Any) -> "FakeHint":
+        if self.args is None:
+            # NOTE(NiklasRosenstein): We don't actually do a lazy-evaluation here.
+            return FakeHint(self.origin(*args, **kwds))
+        raise RuntimeError(f"{self} is not callable")
 
     def evaluate(self) -> Any:
         if self.args is None:

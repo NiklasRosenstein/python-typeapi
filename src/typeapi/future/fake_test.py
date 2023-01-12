@@ -35,3 +35,11 @@ def test__FakeHint__getattr() -> None:
 
 def test__FakeHint__Optional() -> None:
     assert FakeHint(Optional)[FakeHint(int)].evaluate() == Optional[int]
+
+
+def test__FakeHint__callable() -> None:
+    assert FakeHint(int)("42").evaluate() == 42
+
+    with pytest.raises(RuntimeError) as excinfo:
+        FakeHint(Optional)[FakeHint(int)]("foobar")
+    assert str(excinfo.value) == "FakeHint(typing.Optional, args=(FakeHint(<class 'int'>, args=None),)) is not callable"
