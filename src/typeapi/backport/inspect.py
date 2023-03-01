@@ -4,7 +4,7 @@ import builtins
 import functools
 import sys
 import types
-from typing import Any, Callable, Mapping, Optional
+from typing import Any, Callable, Dict, Mapping, Optional
 
 
 def get_annotations(
@@ -14,7 +14,7 @@ def get_annotations(
     locals: Optional[Mapping[str, Any]] = None,
     eval_str: bool = False,
     eval: Callable[[str, Any, Any], Any] = builtins.eval,
-) -> dict[str, Any]:
+) -> Dict[str, Any]:
     """Compute the annotations dict for an object.
 
     obj may be a callable, class, or module.
