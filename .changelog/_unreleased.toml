@@ -7,5 +7,5 @@ author = "@NiklasRosenstein"
 [[entries]]
 id = "570591ef-afae-4637-8621-f788a52f83cc"
 type = "fix"
-description = "Support evaluation of future type hints in `typing.get_annotations()` and add new `typing.get_annotations(eval_str)` parameter. We backport a modified version of `inspect.get_annotations()` from Python 3.11 for this."
+description = "Support evaluation of future type hints in `typeapi.get_annotations()` and add new `typeapi.get_annotations(eval_str)` parameter. We backport a modified version of `inspect.get_annotations()` from Python 3.11 for this."
 author = "@NiklasRosenstein"
