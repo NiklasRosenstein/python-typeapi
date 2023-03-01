@@ -54,11 +54,11 @@ def test__TypeHint__list_generic() -> None:
 
 
 def test__TypeHint__list_templatized() -> None:
-    hint = TypeHint(List[T])
+    hint = TypeHint(List[T])  # type: ignore[valid-type]
     assert isinstance(hint, ClassTypeHint)
-    assert hint.hint == List[T]
+    assert hint.hint == List[T]  # type: ignore[valid-type]
     assert hint.origin is list
-    assert hint.args == (T,)
+    assert hint.args == (T,)  # type: ignore[valid-type]
     assert str(hint.parameters) == "(~T,)"
     assert len(hint) == 1
     assert hint.type is list
@@ -174,9 +174,9 @@ def test__TypeHint__custom_generic_class() -> None:
     assert len(hint) == 2
     assert hint.bases == (Generic[T, U],)
 
-    hint = TypeHint(MyGeneric[int, T])
+    hint = TypeHint(MyGeneric[int, T])  # type: ignore[valid-type]
     assert isinstance(hint, ClassTypeHint)
-    assert hint.hint == MyGeneric[int, T]
+    assert hint.hint == MyGeneric[int, T]  # type: ignore[valid-type]
     assert hint.origin is MyGeneric
     assert hint.args == (int, T)
     assert hint.parameters == (T,)
@@ -309,7 +309,7 @@ def test__ClassTypeHint__parametrize() -> None:
     assert isinstance(hint, ClassTypeHint)
     assert hint.get_parameter_map() == {}
 
-    hint = TypeHint(MyClass[U, int])
+    hint = TypeHint(MyClass[U, int])  # type: ignore[valid-type]
     assert isinstance(hint, ClassTypeHint)
     assert hint.get_parameter_map() == {T: U, U: int}
 
@@ -325,7 +325,7 @@ def test__ClassTypeHint__generic_class_hierarchy() -> None:
     assert isinstance(hint, ClassTypeHint)
     assert hint.hint == B[int, str]
     assert hint.origin is B
-    assert hint.bases == (A[T], Generic[T, U])
+    assert hint.bases == (A[T], Generic[T, U])  # type: ignore[valid-type]
 
 
 def test__TypeHint__evaluate() -> None:
@@ -403,14 +403,14 @@ def test__TypeHint__parameterized_types() -> None:
         assert isinstance(hint, ClassTypeHint)
         return hint
 
-    assert clsth(Sequence[T]).parameterize({T: int}).hint == Sequence[int]
-    assert clsth(List[T]).parameterize({T: int}).hint == List[int]
-    assert clsth(Dict[T, U]).parameterize({T: str, U: T}).hint == Dict[str, T]
+    assert clsth(Sequence[T]).parameterize({T: int}).hint == Sequence[int]  # type: ignore[valid-type]
+    assert clsth(List[T]).parameterize({T: int}).hint == List[int]  # type: ignore[valid-type]
+    assert clsth(Dict[T, U]).parameterize({T: str, U: T}).hint == Dict[str, T]  # type: ignore[valid-type]
 
     class MyGeneric(Generic[U, T]):
         pass
 
-    assert clsth(MyGeneric[T, U]).parameterize({T: int, U: str}).hint == MyGeneric[int, str]
+    assert clsth(MyGeneric[T, U]).parameterize({T: int, U: str}).hint == MyGeneric[int, str]  # type: ignore[valid-type]
 
     def tupth(x: Any) -> TupleTypeHint:
         hint = TypeHint(x)
