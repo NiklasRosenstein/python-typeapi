@@ -1,14 +1,15 @@
 import collections
-import inspect
 import sys
 import types
 import typing
 import warnings
 from types import FrameType, FunctionType, ModuleType
-from typing import Any, Callable, Dict, Generic, Optional, Set, Tuple, TypeVar, Union, get_type_hints as _get_type_hints
+from typing import Any, Callable, Dict, Generic, Optional, Set, Tuple, TypeVar, Union
 
 import typing_extensions
 from typing_extensions import Protocol, TypeGuard
+
+from .backport.inspect import get_annotations as _inspect_get_annotations
 
 IS_PYTHON_AT_LAST_3_6 = sys.version_info[:2] <= (3, 6)
 IS_PYTHON_AT_LAST_3_8 = sys.version_info[:2] <= (3, 8)
@@ -297,6 +298,7 @@ def get_annotations(
     include_bases: bool = False,
     globalns: Optional[Dict[str, Any]] = None,
     localns: Optional[Dict[str, Any]] = None,
+    eval_str: bool = True,
 ) -> Dict[str, Any]:
     """Like #typing.get_type_hints(), but always includes extras. This is important when we want to inspect
     #typing.Annotated hints (without extras the annotations are removed). In Python 3.10 and onwards, this is
@@ -313,34 +315,25 @@ def get_annotations(
         localns = frame.f_locals
         del frame
 
-    if sys.version_info[:2] <= (3, 9):
-        if not include_bases and "__annotations__" not in vars(obj):
-            # Handle case when class has no explicit annotations, see python-typeapi#3
-            return {}
-        if sys.version_info[:2] <= (3, 8):
-            annotations = _get_type_hints(obj, globalns=globalns, localns=localns)
-        else:
-            annotations = _get_type_hints(obj, globalns=globalns, localns=localns, include_extras=True)
-        if not include_bases:
-            # To replicate the behaviour of #inspect.get_annotations(), which is to _not_ take into account
-            # the annotations of the base class, we discard all entries from the resulting dictionary that
-            # is not included in the types __annotations__.
-            local_annotations = getattr(obj, "__annotations__", {})
-            return {k: v for k, v in annotations.items() if k in local_annotations}
-        return annotations
-    elif isinstance(obj, type) and include_bases:
+    from collections import ChainMap
+
+    from .typehint import TypeHint
+
+    def eval_callback(obj: str, globals: Any, locals: Any) -> Any:
+        hint = TypeHint(obj, ChainMap(locals, globals))
+        return hint.evaluate().hint
+
+    annotations = _inspect_get_annotations(obj, globals=globalns, locals=localns, eval_str=eval_str, eval=eval_callback)
+
+    if isinstance(obj, type) and include_bases:
         annotations = {}
-        for cls in obj.__mro__:
-            annotations.update(
-                {
-                    k: v
-                    for k, v in inspect.get_annotations(cls, globals=globalns, locals=localns, eval_str=True).items()
-                    if k not in annotations
-                }
+        for base in obj.__mro__:
+            base_annotations = _inspect_get_annotations(
+                base, globals=globalns, locals=localns, eval_str=eval_str, eval=eval_callback
             )
-        return annotations
-    else:
-        return inspect.get_annotations(obj, globals=globalns, locals=localns, eval_str=True)
+            annotations.update({k: v for k, v in base_annotations.items() if k not in annotations})
+
+    return annotations
 
 
 class TypedDictProtocol(Protocol):

@@ -3,13 +3,14 @@
 import collections.abc
 import sys
 import typing as t
-from typing import Any, Dict, Generic, List, Mapping, MutableMapping, TypeVar, Union
+from typing import Any, Dict, Generic, List, Mapping, MutableMapping, Optional, TypeVar, Union
 
 import pytest
 import typing_extensions
 
 from typeapi.utils import (
     ForwardRef,
+    get_annotations,
     get_subscriptable_type_hint_from_origin,
     get_type_hint_args,
     get_type_hint_origin_or_none,
@@ -426,3 +427,32 @@ def test__get_subscriptable_type_hint_from_origin():
     assert get_subscriptable_type_hint_from_origin(collections.abc.Mapping) is Mapping
     assert get_subscriptable_type_hint_from_origin(T) is T
     assert get_subscriptable_type_hint_from_origin(int) is int
+
+
+def test__get_annotations_does_not_evaluate_strings() -> None:
+    class A:
+        a: "str | None"
+
+    assert get_annotations(A, eval_str=False) == {"a": "str | None"}
+
+
+def test__get_annotations_includes_bases() -> None:
+    class A:
+        a: "str | None"
+        b: int
+
+    class B(A):
+        b: "str"
+        c: Optional[int]
+
+    assert get_annotations(B, include_bases=True, eval_str=False) == {"a": "str | None", "b": "str", "c": Optional[int]}
+
+
+def test__get_annotations_can_evaluate_future_type_hints() -> None:
+    class A:
+        a: "str | None"
+
+    if sys.version_info[:2] < (3, 10):
+        assert get_annotations(A) == {"a": Optional[str]}
+    else:
+        assert get_annotations(A) == {"a": str | None}
