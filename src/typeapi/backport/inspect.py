@@ -109,7 +109,7 @@ def get_annotations(
     if unwrap is not None:
         while True:
             if hasattr(unwrap, "__wrapped__"):
-                unwrap = unwrap.__wrapped__  # type: ignore[union-attr]
+                unwrap = unwrap.__wrapped__  # type: ignore[attr-defined, union-attr]
                 continue
             if isinstance(unwrap, functools.partial):
                 unwrap = unwrap.func  # type: ignore[union-attr, unreachable, assignment]
