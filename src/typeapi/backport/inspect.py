@@ -1,19 +1,17 @@
 # Taken from CPython 3.11; with the addition of type hints and type ignore comments as well as an "eval" callback.
 
-from __future__ import annotations
-
 import builtins
 import functools
 import sys
 import types
-from typing import Any, Callable, Mapping
+from typing import Any, Callable, Mapping, Optional
 
 
 def get_annotations(
     obj: Any,
     *,
-    globals: Mapping[str, Any] | None = None,
-    locals: Mapping[str, Any] | None = None,
+    globals: Optional[Mapping[str, Any]] = None,
+    locals: Optional[Mapping[str, Any]] = None,
     eval_str: bool = False,
     eval: Callable[[str, Any, Any], Any] = builtins.eval,
 ) -> dict[str, Any]:
