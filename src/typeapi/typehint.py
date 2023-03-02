@@ -234,8 +234,9 @@ class TypeHint(object, metaclass=_TypeHintMeta):
             )
         if isinstance(self.source, ModuleType):
             return vars(self.source)
-        else:
-            return vars(self.source.__module__)  # type: ignore[no-any-return] # Should be a function or class, something that has __module__  # noqa: E501
+        if isinstance(self.source, Mapping):
+            return self.source
+        return vars(self.source.__module__)  # type: ignore[no-any-return] # Should be a function or class, something that has __module__  # noqa: E501
 
 
 class ClassTypeHint(TypeHint):

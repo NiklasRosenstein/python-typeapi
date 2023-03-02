@@ -3,3 +3,9 @@ id = "1664da60-1b53-4b74-b61a-48b3e4fa4270"
 type = "fix"
 description = "provide experimental support for evaluating future type hints that perform a function call; sometimes this is used in the metadata for `Anntoated[...]` hints"
 author = "@NiklasRosenstein"
+
+[[entries]]
+id = "570591ef-afae-4637-8621-f788a52f83cc"
+type = "fix"
+description = "Support evaluation of future type hints in `typeapi.get_annotations()` and add new `typeapi.get_annotations(eval_str)` parameter. We backport a modified version of `inspect.get_annotations()` from Python 3.11 for this."
+author = "@NiklasRosenstein"

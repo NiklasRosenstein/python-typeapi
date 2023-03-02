@@ -12,6 +12,11 @@ The `typeapi` package provides an object-oriented interface for introspecting [P
 including forward references that make use of the more recent [PEP585][] and [PEP604][] type hint features in
 Python versions that don't natively support them.
 
+The main API of this module is comprised of:
+
+* `typeapi.TypeHint()` &ndash; A class to parse low-level type hints and present them in a consistent, object-oriented API.
+* `typeapi.get_annotations()` &ndash; Retrieve an object's `__annotations__` with support for evaluating future type hints ([PEP585][], [PEP604][]).
+
 The following kinds of type hints are currently supported:
 
 | Concrete type | Description | Added in |
@@ -23,8 +28,6 @@ The following kinds of type hints are currently supported:
 | `TypeVarTypeHint` | Represents a `TypeVar` type hint and gives an interface to access the variable's metadata (such as constarints, variance, ...). | 1.0.0 |
 | `ForwardRefTypeHint` | Represents a forward reference. Can be evaluated in Python 3.6+ even if it contains [PEP585][] and [PEP604][] expressions. | 1.0.0, future support in 1.3.0 |
 | `TupleTypeHint` | Reperesents a `Tuple` type hint, allowing you to differentiate between repeated and explicitly sized tuples. | 1.2.0 |
-
-The main entry point to wrapping a low-level type hint is the `TypeHint()` constructor.
 
 ## Examples
 
@@ -85,7 +88,26 @@ assert isinstance(member_hint, ClassTypeHint)
 assert member_hint.type is int
 ```
 
-Evaluate forward references:
+Evaluate forward references with `get_annotations()`:
+
+```py
+# cat <<EOF | python -
+from typeapi import get_annotations
+from typing import Optional
+from sys import version_info
+
+class MyType:
+  a: "str | None"
+
+annotations = get_annotations(MyType)
+
+if version_info[:2] < (3, 10):
+  assert annotations == {"a": Optional[str]}
+else:
+  assert annotations == {"a": str | None}
+```
+
+Evaluating forward references with the `TypeHint` API:
 
 ```py
 # cat <<EOF | python -
