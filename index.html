@@ -13,7 +13,7 @@
         <link rel="next" href="api/typeapi/">
       
       <link rel="icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.15">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.0">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.113286f1.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.402914a4.min.css">
       
         
         <link rel="stylesheet" href="assets/stylesheets/palette.a0c5b2b5.min.css">
@@ -77,7 +77,9 @@
     
       
 
-<header class="md-header" data-md-component="header">
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="." title="python-typeapi" class="md-header__button md-logo" aria-label="python-typeapi" data-md-component="logo">
       
@@ -455,6 +457,11 @@
 <p>The <code>typeapi</code> package provides an object-oriented interface for introspecting <a href="https://peps.python.org/pep-0484/">PEP484</a> type hints at runtime,
 including forward references that make use of the more recent <a href="https://peps.python.org/pep-0585/">PEP585</a> and <a href="https://peps.python.org/pep-0604/">PEP604</a> type hint features in
 Python versions that don't natively support them.</p>
+<p>The main API of this module is comprised of:</p>
+<ul>
+<li><code>typeapi.TypeHint()</code> &ndash; A class to parse low-level type hints and present them in a consistent, object-oriented API.</li>
+<li><code>typeapi.get_annotations()</code> &ndash; Retrieve an object's <code>__annotations__</code> with support for evaluating future type hints (<a href="https://peps.python.org/pep-0585/">PEP585</a>, <a href="https://peps.python.org/pep-0604/">PEP604</a>).</li>
+</ul>
 <p>The following kinds of type hints are currently supported:</p>
 <table>
 <thead>
@@ -502,7 +509,6 @@ Python versions that don't natively support them.</p>
 </tr>
 </tbody>
 </table>
-<p>The main entry point to wrapping a low-level type hint is the <code>TypeHint()</code> constructor.</p>
 <h2 id="examples">Examples</h2>
 <p>Inspect a <code>List[int]</code> type hint:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># cat &lt;&lt;EOF | python -</span>
@@ -552,7 +558,23 @@ Python versions that don't natively support them.</p>
 <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">member_hint</span><span class="p">,</span> <span class="n">ClassTypeHint</span><span class="p">)</span>
 <span class="k">assert</span> <span class="n">member_hint</span><span class="o">.</span><span class="n">type</span> <span class="ow">is</span> <span class="nb">int</span>
 </code></pre></div>
-<p>Evaluate forward references:</p>
+<p>Evaluate forward references with <code>get_annotations()</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># cat &lt;&lt;EOF | python -</span>
+<span class="kn">from</span> <span class="nn">typeapi</span> <span class="kn">import</span> <span class="n">get_annotations</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">version_info</span>
+
+<span class="k">class</span> <span class="nc">MyType</span><span class="p">:</span>
+  <span class="n">a</span><span class="p">:</span> <span class="s2">&quot;str | None&quot;</span>
+
+<span class="n">annotations</span> <span class="o">=</span> <span class="n">get_annotations</span><span class="p">(</span><span class="n">MyType</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">version_info</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+  <span class="k">assert</span> <span class="n">annotations</span> <span class="o">==</span> <span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]}</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="k">assert</span> <span class="n">annotations</span> <span class="o">==</span> <span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">}</span>
+</code></pre></div>
+<p>Evaluating forward references with the <code>TypeHint</code> API:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># cat &lt;&lt;EOF | python -</span>
 <span class="kn">from</span> <span class="nn">typeapi</span> <span class="kn">import</span> <span class="n">ClassTypeHint</span><span class="p">,</span> <span class="n">ForwardRefTypeHint</span><span class="p">,</span> <span class="n">TypeHint</span>
 
@@ -615,7 +637,7 @@ Python versions that don't natively support them.</p>
     <script id="__config" type="application/json">{"base": ".", "features": ["navigation.indexes", "navigation.instant", "navigation.tracking", "navigation.top", "toc.follow", "navigation.sections"], "search": "assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="assets/javascripts/bundle.2a6f1dda.min.js"></script>
+      <script src="assets/javascripts/bundle.ce72ebac.min.js"></script>
       
     
   </body>

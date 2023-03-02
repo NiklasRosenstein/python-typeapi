@@ -15,7 +15,7 @@
         <link rel="next" href="../typeapi.utils/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.15">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.0">
     
     
       
@@ -23,7 +23,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.113286f1.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.402914a4.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
@@ -79,7 +79,9 @@
     
       
 
-<header class="md-header" data-md-component="header">
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="python-typeapi" class="md-header__button md-logo" aria-label="python-typeapi" data-md-component="logo">
       
@@ -604,7 +606,7 @@
 <h2 id="class-typehint">Class TypeHint</h2>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">TypeHint</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">_TypeHintMeta</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/9944f1dff9b6cdf50d389f858c8931128798f573/docs/../src/typeapi/typehint.py#L86">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/dee5657ec08ac88de0ed70f6688b8bc9fd518b87/docs/../src/typeapi/typehint.py#L86">[view_source]</a></p>
 <p>Base class that provides an object-oriented interface to a Python type hint.</p>
 <p><a id="typeapi.typehint.TypeHint.hint"></a></p>
 <p><a id="pydoc:typeapi.typehint.TypeHint.hint"></a></p>
@@ -612,7 +614,7 @@
 <div class="highlight"><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">hint</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">object</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/9944f1dff9b6cdf50d389f858c8931128798f573/docs/../src/typeapi/typehint.py#L102">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/dee5657ec08ac88de0ed70f6688b8bc9fd518b87/docs/../src/typeapi/typehint.py#L102">[view_source]</a></p>
 <p>The original type hint.</p>
 <p><a id="typeapi.typehint.TypeHint.origin"></a></p>
 <p><a id="pydoc:typeapi.typehint.TypeHint.origin"></a></p>
@@ -620,7 +622,7 @@
 <div class="highlight"><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">origin</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="s2">&quot;object | None&quot;</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/9944f1dff9b6cdf50d389f858c8931128798f573/docs/../src/typeapi/typehint.py#L110">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/dee5657ec08ac88de0ed70f6688b8bc9fd518b87/docs/../src/typeapi/typehint.py#L110">[view_source]</a></p>
 <p>The original type behind a type hint (e.g. the <code>Generic.__origin__</code>). For example, for :class:<code>typing.List</code>,
 it is <code>list</code>. For :class:<code>typing.Sequence</code>, it is :class:<code>collections.abc.Sequence</code>.</p>
 <p><a id="typeapi.typehint.TypeHint.args"></a></p>
@@ -629,7 +631,7 @@ it is <code>list</code>. For :class:<code>typing.Sequence</code>, it is :class:<
 <div class="highlight"><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">args</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/9944f1dff9b6cdf50d389f858c8931128798f573/docs/../src/typeapi/typehint.py#L119">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/dee5657ec08ac88de0ed70f6688b8bc9fd518b87/docs/../src/typeapi/typehint.py#L119">[view_source]</a></p>
 <p>Type hint arguments are the values passed into type hint subscripts, e.g. in <code>Union[int, str]</code>, the
 arguments are <code>(int, str)</code>. We only return arguments that are expected to be types or other type hints.
 For example, <code>Literal["foo", 0]</code> has an empty tuple for its <code>args</code>, and instead the values can be
@@ -640,7 +642,7 @@ retrievd using :attr:<code>LiteralTypeHint.valuse</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">parameters</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/9944f1dff9b6cdf50d389f858c8931128798f573/docs/../src/typeapi/typehint.py#L130">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/dee5657ec08ac88de0ed70f6688b8bc9fd518b87/docs/../src/typeapi/typehint.py#L130">[view_source]</a></p>
 <p>The parameters of a type hint is basically :attr:<code>args</code> but filtered for <code>typing.TypeVar</code> objects.</p>
 <p><a id="typeapi.typehint.TypeHint.source"></a></p>
 <p><a id="pydoc:typeapi.typehint.TypeHint.source"></a></p>
@@ -648,14 +650,14 @@ retrievd using :attr:<code>LiteralTypeHint.valuse</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">source</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="s2">&quot;Any | None&quot;</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/9944f1dff9b6cdf50d389f858c8931128798f573/docs/../src/typeapi/typehint.py#L138">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/dee5657ec08ac88de0ed70f6688b8bc9fd518b87/docs/../src/typeapi/typehint.py#L138">[view_source]</a></p>
 <p>The object from which on which the type hint was found, for example a class or a function.</p>
 <p><a id="typeapi.typehint.TypeHint.parameterize"></a></p>
 <p><a id="pydoc:typeapi.typehint.TypeHint.parameterize"></a></p>
 <h4 id="parameterize">parameterize</h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">parameterize</span><span class="p">(</span><span class="n">parameter_map</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">object</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;TypeHint&quot;</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/9944f1dff9b6cdf50d389f858c8931128798f573/docs/../src/typeapi/typehint.py#L192">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/dee5657ec08ac88de0ed70f6688b8bc9fd518b87/docs/../src/typeapi/typehint.py#L192">[view_source]</a></p>
 <p>Replace references to the type variables in the keys of <em>parameter_map</em></p>
 <p>with the type hints of the associated values.</p>
 <p><strong>Arguments</strong>:</p>
@@ -668,7 +670,7 @@ type hints.</li>
 <h4 id="evaluate">evaluate</h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="n">context</span><span class="p">:</span> <span class="s2">&quot;HasGetitem[str, Any] | None&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TypeHint&quot;</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/9944f1dff9b6cdf50d389f858c8931128798f573/docs/../src/typeapi/typehint.py#L207">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/dee5657ec08ac88de0ed70f6688b8bc9fd518b87/docs/../src/typeapi/typehint.py#L207">[view_source]</a></p>
 <p>Evaluate forward references in the type hint using the given <em>context</em>.</p>
 <p>This method supports evaluating forward references that use PEP585 and PEP604 syntax even in older
 versions of Python that do not support the PEPs.</p>
@@ -683,14 +685,14 @@ used instead. If no source exists, a :class:<code>RuntimeError</code> is raised.
 <h2 id="class-tupletypehint">Class TupleTypeHint</h2>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">TupleTypeHint</span><span class="p">(</span><span class="n">TypeHint</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/9944f1dff9b6cdf50d389f858c8931128798f573/docs/../src/typeapi/typehint.py#L415">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/dee5657ec08ac88de0ed70f6688b8bc9fd518b87/docs/../src/typeapi/typehint.py#L415">[view_source]</a></p>
 <p><a id="typeapi.typehint.TupleTypeHint.repeated"></a></p>
 <p><a id="pydoc:typeapi.typehint.TupleTypeHint.repeated"></a></p>
 <h4 id="repeated">repeated</h4>
 <div class="highlight"><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">repeated</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span>
 </code></pre></div>
-<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/9944f1dff9b6cdf50d389f858c8931128798f573/docs/../src/typeapi/typehint.py#L437">[view_source]</a></p>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/blob/dee5657ec08ac88de0ed70f6688b8bc9fd518b87/docs/../src/typeapi/typehint.py#L437">[view_source]</a></p>
 <p>Returns <code>True</code> if the Tuple is of arbitrary length, but only of one type.</p>
 
 
@@ -737,7 +739,7 @@ used instead. If no source exists, a :class:<code>RuntimeError</code> is raised.
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.indexes", "navigation.instant", "navigation.tracking", "navigation.top", "toc.follow", "navigation.sections"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.2a6f1dda.min.js"></script>
+      <script src="../../assets/javascripts/bundle.ce72ebac.min.js"></script>
       
     
   </body>
