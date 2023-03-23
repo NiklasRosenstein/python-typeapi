@@ -315,12 +315,24 @@ def get_annotations(
         localns = frame.f_locals
         del frame
 
+    elif hasattr(obj, "__module__"):
+        module = sys.modules.get(obj.__module__)
+        if module is None:
+            warnings.warn(
+                f"sys.modules[{obj.__module__!r}] does not exist, type hint resolution context for object of type "
+                f"{type(obj).__name__!r} will not be available.",
+                UserWarning,
+            )
+        else:
+            assert hasattr(module, "__dict__"), module
+            globalns = vars(module)
+
     from collections import ChainMap
 
     from .typehint import TypeHint
 
     def eval_callback(obj: str, globals: Any, locals: Any) -> Any:
-        hint = TypeHint(obj, ChainMap(locals, globals))
+        hint = TypeHint(obj, ChainMap(locals or {}, globals or {}))
         return hint.evaluate().hint
 
     annotations = _inspect_get_annotations(obj, globals=globalns, locals=localns, eval_str=eval_str, eval=eval_callback)
