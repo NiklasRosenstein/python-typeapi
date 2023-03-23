@@ -1,0 +1,5 @@
+[[entries]]
+id = "f0ffe76e-8711-40c2-9ecd-c58a1809dd76"
+type = "docs"
+description = "Clarify that future type hint evaluation for Union-style syntax continues to return a `typing.Union` instead of `types.UnionType` even in Python 3.10+."
+author = "@NiklasRosenstein"

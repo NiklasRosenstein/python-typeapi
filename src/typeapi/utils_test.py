@@ -452,7 +452,11 @@ def test__get_annotations_can_evaluate_future_type_hints() -> None:
     class A:
         a: "str | None"
 
-    if sys.version_info[:2] < (3, 10):
-        assert get_annotations(A) == {"a": Optional[str]}
-    else:
-        assert get_annotations(A) == {"a": str | None}
+    annotations = get_annotations(A)
+    assert annotations == {"a": Optional[str]}
+
+    from typing import _UnionGenericAlias  # type: ignore
+
+    # NOTE(@NiklasRosenstein): Even though `str | None` is of type `types.UnionType` in Python 3.10+,
+    #   our fake evaluation will still return legacy type hints.
+    assert type(annotations["a"]) is _UnionGenericAlias
