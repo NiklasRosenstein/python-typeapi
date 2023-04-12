@@ -62,7 +62,5 @@ class FakeProvider:
         try:
             value = self.content[key]
         except KeyError:
-            if key not in vars(builtins):
-                breakpoint()
             value = vars(builtins)[key]
         return FakeHint(get_subscriptable_type_hint_from_origin(value))
