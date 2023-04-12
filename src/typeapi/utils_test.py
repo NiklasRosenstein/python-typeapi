@@ -9,6 +9,7 @@ import pytest
 import typing_extensions
 
 from typeapi.utils import (
+    IS_PYTHON_AT_LEAST_3_9,
     ForwardRef,
     get_annotations,
     get_subscriptable_type_hint_from_origin,
@@ -455,11 +456,17 @@ def test__get_annotations__can_evaluate_future_type_hints() -> None:
     annotations = get_annotations(A)
     assert annotations == {"a": Optional[str]}
 
-    from typing import _UnionGenericAlias  # type: ignore
-
     # NOTE(@NiklasRosenstein): Even though `str | None` is of type `types.UnionType` in Python 3.10+,
     #   our fake evaluation will still return legacy type hints.
-    assert type(annotations["a"]) is _UnionGenericAlias
+    if IS_PYTHON_AT_LEAST_3_9:
+        from typing import _UnionGenericAlias  # type: ignore
+
+        assert type(annotations["a"]) is _UnionGenericAlias
+
+    else:
+        from typing import _GenericAlias  # type: ignore
+
+        assert type(annotations["a"]) is _GenericAlias
 
 
 def test__get_annotations__evaluate_forward_references_on_class_level() -> None:
