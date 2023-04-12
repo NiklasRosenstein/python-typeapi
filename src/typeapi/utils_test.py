@@ -9,6 +9,7 @@ import pytest
 import typing_extensions
 
 from typeapi.utils import (
+    IS_PYTHON_AT_LEAST_3_7,
     IS_PYTHON_AT_LEAST_3_9,
     ForwardRef,
     get_annotations,
@@ -463,10 +464,13 @@ def test__get_annotations__can_evaluate_future_type_hints() -> None:
 
         assert type(annotations["a"]) is _UnionGenericAlias
 
-    else:
+    elif IS_PYTHON_AT_LEAST_3_7:
         from typing import _GenericAlias  # type: ignore
 
         assert type(annotations["a"]) is _GenericAlias
+
+    else:
+        assert str(type(annotations["a"])) == "typing.Union"
 
 
 def test__get_annotations__evaluate_forward_references_on_class_level() -> None:
