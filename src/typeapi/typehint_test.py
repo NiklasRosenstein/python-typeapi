@@ -369,6 +369,18 @@ def test__TypeHint__evaluate_with_custom_mapping() -> None:
     assert item_hint.type is int
 
 
+def test__TypeHint__evaluate_forward_reference_on_class_level() -> None:
+    class A:
+        class B:
+            pass
+
+    hint = TypeHint("B", A)
+    assert hint.evaluate() == TypeHint(A.B)
+
+    hint = TypeHint("str", A)
+    assert hint.evaluate() == TypeHint(str)
+
+
 def test__TypeHint__caching_same_named_type_hints() -> None:
     """
     This test ensures that type hint caching is stable if two different

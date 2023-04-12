@@ -429,14 +429,14 @@ def test__get_subscriptable_type_hint_from_origin():
     assert get_subscriptable_type_hint_from_origin(int) is int
 
 
-def test__get_annotations_does_not_evaluate_strings() -> None:
+def test__get_annotations__does_not_evaluate_strings() -> None:
     class A:
         a: "str | None"
 
     assert get_annotations(A, eval_str=False) == {"a": "str | None"}
 
 
-def test__get_annotations_includes_bases() -> None:
+def test__get_annotations__includes_bases() -> None:
     class A:
         a: "str | None"
         b: int
@@ -448,7 +448,7 @@ def test__get_annotations_includes_bases() -> None:
     assert get_annotations(B, include_bases=True, eval_str=False) == {"a": "str | None", "b": "str", "c": Optional[int]}
 
 
-def test__get_annotations_can_evaluate_future_type_hints() -> None:
+def test__get_annotations__can_evaluate_future_type_hints() -> None:
     class A:
         a: "str | None"
 
@@ -460,3 +460,15 @@ def test__get_annotations_can_evaluate_future_type_hints() -> None:
     # NOTE(@NiklasRosenstein): Even though `str | None` is of type `types.UnionType` in Python 3.10+,
     #   our fake evaluation will still return legacy type hints.
     assert type(annotations["a"]) is _UnionGenericAlias
+
+
+def test__get_annotations__evaluate_forward_references_on_class_level() -> None:
+    class A:
+        class B:
+            pass
+
+        a: "str"
+        b: "B"
+
+    annotations = get_annotations(A)
+    assert annotations == {"a": str, "b": A.B}

@@ -1,6 +1,8 @@
 import abc
+import sys
+from collections import ChainMap
 from types import ModuleType
-from typing import Any, Dict, Generic, Iterator, List, Mapping, Tuple, TypeVar, Union, overload
+from typing import Any, Dict, Generic, Iterator, List, Mapping, MutableMapping, Tuple, TypeVar, Union, cast, overload
 
 from typing_extensions import Annotated
 
@@ -236,7 +238,12 @@ class TypeHint(object, metaclass=_TypeHintMeta):
             return vars(self.source)
         if isinstance(self.source, Mapping):
             return self.source
-        return vars(self.source.__module__)  # type: ignore[no-any-return] # Should be a function or class, something that has __module__  # noqa: E501
+        if isinstance(self.source, type):
+            return ChainMap(
+                cast(MutableMapping[str, Any], vars(self.source)),
+                cast(MutableMapping[str, Any], vars(sys.modules[self.source.__module__])),
+            )
+        raise RuntimeError(f"Unable to determine TypeHint.source context from source={self.source!r}")
 
 
 class ClassTypeHint(TypeHint):

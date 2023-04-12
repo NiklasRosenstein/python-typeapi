@@ -4,7 +4,7 @@ import types
 import typing
 import warnings
 from types import FrameType, FunctionType, ModuleType
-from typing import Any, Callable, Dict, Generic, Optional, Set, Tuple, TypeVar, Union
+from typing import Any, Callable, Dict, Generic, MutableMapping, Optional, Set, Tuple, TypeVar, Union, cast
 
 import typing_extensions
 from typing_extensions import Protocol, TypeGuard
@@ -331,8 +331,11 @@ def get_annotations(
 
     from .typehint import TypeHint
 
-    def eval_callback(obj: str, globals: Any, locals: Any) -> Any:
-        hint = TypeHint(obj, ChainMap(locals or {}, globals or {}))
+    def eval_callback(hint_expr: str, globals: Any, locals: Any) -> Any:
+        chainmap = ChainMap(locals or {}, globals or {})
+        if isinstance(obj, type):
+            chainmap = chainmap.new_child(cast(MutableMapping[str, Any], vars(obj)))
+        hint = TypeHint(hint_expr, chainmap)
         return hint.evaluate().hint
 
     annotations = _inspect_get_annotations(obj, globals=globalns, locals=localns, eval_str=eval_str, eval=eval_callback)

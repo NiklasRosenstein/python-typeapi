@@ -1,0 +1,5 @@
+[[entries]]
+id = "3d1de699-fbad-4390-80a5-f03664566833"
+type = "fix"
+description = "Fixed evaluating forward references to members on the class level. Note that the `TypeHint(source)` parameter must be set accordingly to the class where the forward reference should be resolved in."
+author = "@NiklasRosenstein"
