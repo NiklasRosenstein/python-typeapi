@@ -36,7 +36,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: NiklasRosenstein/slap@gha/install/v1
     - run: slap install --only-extras docs --no-venv-check
-    - run: slap run docs:build
+    - run: slap run --no-venv-check docs:build
     - uses: actions/upload-artifact@v2
       with:
         name: docs
