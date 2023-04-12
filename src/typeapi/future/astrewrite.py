@@ -15,7 +15,7 @@ def rewrite_expr(source: str, lookup_target: str) -> CodeType:
     expr = ast.parse(source, "<expr>", "eval")
     expr = DynamicLookupRewriter(lookup_target).visit(expr)
     ast.fix_missing_locations(expr)
-    return t.cast(CodeType, compile(expr, "<expr>", "eval"))
+    return t.cast(CodeType, compile(expr, "<expr>", "eval"))  # type: ignore[redundant-cast]  # Redundant in 3.7+
 
 
 @dataclasses.dataclass
