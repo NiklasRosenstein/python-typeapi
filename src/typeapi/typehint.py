@@ -441,6 +441,10 @@ class TupleTypeHint(TypeHint):
         return super()._copy_with_args(args)
 
     @property
+    def type(self) -> type:
+        return tuple
+
+    @property
     def repeated(self) -> bool:
         """
         Returns `True` if the Tuple is of arbitrary length, but only of one type.

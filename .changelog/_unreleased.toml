@@ -1,0 +1,5 @@
+[[entries]]
+id = "b9c4c42a-55e9-4ddd-9ab3-0eee773fcdc9"
+type = "improvement"
+description = "Add `TupleTypeHint.type`"
+author = "@NiklasRosenstein"
