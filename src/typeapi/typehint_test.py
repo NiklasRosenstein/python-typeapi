@@ -381,6 +381,10 @@ def test__TypeHint__evaluate_forward_reference_on_class_level() -> None:
     assert hint.evaluate() == TypeHint(str)
 
 
+def test__TypeHint__tuple_evaluate() -> None:
+    assert TypeHint(tuple, source=tuple).evaluate() == TypeHint(tuple)
+
+
 def test__TypeHint__caching_same_named_type_hints() -> None:
     """
     This test ensures that type hint caching is stable if two different
@@ -435,13 +439,12 @@ def test__TypeHint__parameterized_types() -> None:
 
 def test__TypeHint__native_tuple_type() -> None:
     hint = TypeHint(tuple)
-    assert isinstance(hint, TupleTypeHint), hint
-    assert len(hint) == 1
+    assert isinstance(hint, ClassTypeHint), hint
+    assert len(hint) == 0
     assert hint.hint == tuple
-    assert hint.origin == tuple
-    assert hint.args == (Any,)
+    assert hint.origin is None
+    assert hint.args == ()
     assert hint.parameters == ()
-    assert hint.repeated
     assert hint.bases == (object,)
 
     hint = TypeHint(Tuple[Any, ...])

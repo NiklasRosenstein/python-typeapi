@@ -89,7 +89,7 @@ class _TypeHintMeta(abc.ABCMeta):
             return AnnotatedTypeHint(hint, source)
         elif isinstance(hint, TypeVar):
             return TypeVarTypeHint(hint, source)
-        elif origin == tuple or hint == tuple:
+        elif origin == tuple:
             return TupleTypeHint(hint, source)
 
         return ClassTypeHint(hint, source)
@@ -473,13 +473,17 @@ class ForwardRefTypeHint(TypeHint):
 
 
 class TupleTypeHint(ClassTypeHint):
+    """
+    A special class to represent a type hint for a parameterized tuple. This class does not represent a plain tuple
+    type without parameterization.
+    """
+
     def __init__(self, hint: object, source: "Any | None") -> None:
         super().__init__(hint, source)
         if self._args == ((),):
             self._args = ()
         elif self._args == () and self._hint == tuple:
-            self._args = (Any, ...)
-            self._origin = tuple
+            raise ValueError(f"TupleTypeHint can only represent a parameterized tuple.")
         if ... in self._args:
             assert self._args[-1] == ..., "Tuple Ellipsis not as last arg"
             assert len(self._args) == 2, "Tuple with Ellipsis has more than two args"
