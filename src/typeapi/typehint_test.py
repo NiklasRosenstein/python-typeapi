@@ -50,7 +50,7 @@ def test__TypeHint__list_generic() -> None:
     assert str(hint.parameters) == "(~T,)"
     assert len(hint) == 0
     assert hint.type is list
-    assert hint.bases == ()
+    assert hint.bases == (object,)
 
 
 def test__TypeHint__list_templatized() -> None:
@@ -62,7 +62,7 @@ def test__TypeHint__list_templatized() -> None:
     assert str(hint.parameters) == "(~T,)"
     assert len(hint) == 1
     assert hint.type is list
-    assert hint.bases == ()
+    assert hint.bases == (object,)
 
 
 def test__TypeHint__list_specialized() -> None:
@@ -74,12 +74,12 @@ def test__TypeHint__list_specialized() -> None:
     assert hint.parameters == ()
     assert len(hint) == 1
     assert hint.type is list
-    assert hint.bases == ()
+    assert hint.bases == (object,)
 
     hint_0 = hint[0]
     assert isinstance(hint_0, ClassTypeHint)
     assert hint_0.type == int
-    assert hint_0.bases == ()
+    assert hint_0.bases == (object,)
 
 
 @mark.parametrize(
@@ -442,7 +442,7 @@ def test__TypeHint__native_tuple_type() -> None:
     assert hint.args == (Any,)
     assert hint.parameters == ()
     assert hint.repeated
-    assert hint.bases == ()
+    assert hint.bases == (object,)
 
     hint = TypeHint(Tuple[Any, ...])
     assert isinstance(hint, TupleTypeHint), hint
@@ -452,7 +452,7 @@ def test__TypeHint__native_tuple_type() -> None:
     assert hint.args == (Any,)
     assert hint.parameters == ()
     assert hint.repeated
-    assert hint.bases == ()
+    assert hint.bases == (object,)
 
 
 def test__TypeHint__empty_tuple() -> None:

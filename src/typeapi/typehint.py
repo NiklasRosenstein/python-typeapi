@@ -269,7 +269,12 @@ class ClassTypeHint(TypeHint):
 
     @property
     def bases(self) -> "Tuple[Any, ...]":
-        return get_type_hint_original_bases(self.type)
+        """
+        Return the bases of the classes' types. If the type is a generic, the bases of the generic's origin are
+        returned in their parameterized form (e.g. `Generic[T]` instead of `Generic` is returned).
+        """
+
+        return get_type_hint_original_bases(self.type) or self.type.__bases__
 
     def get_parameter_map(self) -> Dict[Any, Any]:
         if not self.args:
