@@ -274,6 +274,8 @@ class ClassTypeHint(TypeHint):
     def get_parameter_map(self) -> Dict[Any, Any]:
         if not self.args:
             return {}
+        # We need to look at the parameters of the original, un-parameterized type. That's why we can't
+        # use self.parameters.
         return dict(zip(TypeHint(self.type).parameters, self.args))
 
 
