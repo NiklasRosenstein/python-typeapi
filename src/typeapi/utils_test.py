@@ -49,8 +49,8 @@ def test__typing_List__introspection():
     if sys.version_info[:2] <= (3, 6):
         assert get_type_hint_original_bases(List) == (list, MutableSequence[_T])
     else:
-        assert get_type_hint_original_bases(List) is None
-    assert get_type_hint_original_bases(List[int]) is None
+        assert get_type_hint_original_bases(List) == ()
+    assert get_type_hint_original_bases(List[int]) == ()
 
     # Generic-form parameters:
 
@@ -176,7 +176,7 @@ def test__typing_Generic__introspection():
     assert get_type_hint_origin_or_none(MyGeneric) is None
     assert get_type_hint_origin_or_none(MyGeneric[int, str]) is MyGeneric
     assert get_type_hint_original_bases(MyGeneric) == (Generic[T, U],)
-    assert get_type_hint_original_bases(MyGeneric[int, str]) is None
+    assert get_type_hint_original_bases(MyGeneric[int, str]) == ()
 
     # Generic-form parameters:
 
@@ -234,7 +234,7 @@ def test__typing_Generic__class_hierarchy():
     assert get_type_hint_origin_or_none(SubGeneric) is None
     assert get_type_hint_origin_or_none(SubGeneric[int]) is SubGeneric
     assert get_type_hint_original_bases(SubGeneric) == (MyGeneric[T], AnotherGeneric[int], int)
-    assert get_type_hint_original_bases(SubGeneric[int]) is None
+    assert get_type_hint_original_bases(SubGeneric[int]) == ()
 
 
 @pytest.mark.parametrize(

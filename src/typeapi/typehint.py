@@ -268,7 +268,7 @@ class ClassTypeHint(TypeHint):
         assert False, "ClassTypeHint not initialized from a real type or a generic that points to a real type."
 
     @property
-    def bases(self) -> "Tuple[Any, ...] | None":
+    def bases(self) -> "Tuple[Any, ...]":
         return get_type_hint_original_bases(self.type)
 
     def get_parameter_map(self) -> Dict[Any, Any]:
@@ -419,7 +419,7 @@ class ForwardRefTypeHint(TypeHint):
         return self._forward_ref.__forward_arg__
 
 
-class TupleTypeHint(TypeHint):
+class TupleTypeHint(ClassTypeHint):
     def __init__(self, hint: object, source: "Any | None") -> None:
         super().__init__(hint, source)
         if self._args == ((),):

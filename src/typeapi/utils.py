@@ -98,7 +98,7 @@ def get_type_hint_origin_or_none(hint: object) -> "Any | None":
     return hint_origin
 
 
-def get_type_hint_original_bases(hint: object) -> "Tuple[Any, ...] | None":
+def get_type_hint_original_bases(hint: object) -> "Tuple[Any, ...]":
     """
     Returns the original bases of a generic type.
     """
@@ -108,7 +108,7 @@ def get_type_hint_original_bases(hint: object) -> "Tuple[Any, ...] | None":
     if orig_bases is not None and IS_PYTHON_AT_LAST_3_6 and getattr(hint, "__args__", None):
         orig_bases = None
 
-    return orig_bases
+    return orig_bases or ()
 
 
 def get_type_hint_args(hint: object) -> Tuple[Any, ...]:
