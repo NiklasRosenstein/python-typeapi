@@ -1,10 +1,24 @@
 import abc
 import sys
-from collections import ChainMap
+from collections import ChainMap, deque
 from types import ModuleType
-from typing import Any, Dict, Generic, Iterator, List, Mapping, MutableMapping, Tuple, TypeVar, Union, cast, overload
+from typing import (
+    Any,
+    Dict,
+    Generator,
+    Generic,
+    Iterator,
+    List,
+    Mapping,
+    MutableMapping,
+    Tuple,
+    TypeVar,
+    Union,
+    cast,
+    overload,
+)
 
-from typing_extensions import Annotated
+from typing_extensions import Annotated, Literal
 
 from .utils import (
     ForwardRef,
@@ -282,6 +296,38 @@ class ClassTypeHint(TypeHint):
         # We need to look at the parameters of the original, un-parameterized type. That's why we can't
         # use self.parameters.
         return dict(zip(TypeHint(self.type).parameters, self.args))
+
+    def recurse_bases(
+        self, order: Literal["dfs", "bfs"] = "bfs"
+    ) -> Generator["ClassTypeHint", Union[Literal["skip"], None], None]:
+        """
+        Iterate over all base classes of this type hint, and continues recursively. The iteration order is
+        determined by the *order* parameter, which can be either depth-first or breadh-first. If the generator
+        receives the string `"skip"` from the caller, it will skip the bases of the last yielded type.
+        """
+
+        # Find the item type in the base classes of the collection type.
+        bases = deque([self])
+
+        while bases:
+            current = bases.popleft()
+            if not isinstance(current, ClassTypeHint):
+                raise RuntimeError(
+                    f"Expected to find a ClassTypeHint in the base classes of {self!r}, found {current!r} instead."
+                )
+
+            response = yield current
+            if response == "skip":
+                continue
+
+            current_bases = cast(List[ClassTypeHint], [TypeHint(x, current.type).evaluate() for x in current.bases])
+
+            if order == "bfs":
+                bases.extend(current_bases)
+            elif order == "dfs":
+                bases.extendleft(reversed(current_bases))
+            else:
+                raise ValueError(f"Invalid order {order!r}")
 
 
 class UnionTypeHint(TypeHint):

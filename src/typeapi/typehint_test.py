@@ -497,3 +497,39 @@ def test__TypeHint__repeated() -> None:
     assert hint.args == (int,)
     assert hint.parameters == ()
     assert hint.repeated
+
+
+def test__ClassTypeHint__iter_all_bases() -> None:
+    class A:
+        pass
+
+    class B(A, int):
+        pass
+
+    class C(B, Generic[T]):
+        pass
+
+    hint = TypeHint(C)
+    assert isinstance(hint, ClassTypeHint)
+    assert hint.type is C
+    assert hint.bases == (B, Generic[T])
+    assert list(hint.recurse_bases("bfs")) == [
+        TypeHint(C),
+        TypeHint(B),
+        TypeHint(Generic[T]),
+        TypeHint(A),
+        TypeHint(int),
+        TypeHint(object),
+        TypeHint(object),
+        TypeHint(object),
+    ]
+    assert list(hint.recurse_bases("dfs")) == [
+        TypeHint(C),
+        TypeHint(B),
+        TypeHint(A),
+        TypeHint(object),
+        TypeHint(int),
+        TypeHint(object),
+        TypeHint(Generic[T]),
+        TypeHint(object),
+    ]

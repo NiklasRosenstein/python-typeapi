@@ -3,3 +3,9 @@ id = "a5578e7f-32ca-442e-b52a-e6a16c573c35"
 type = "fix"
 description = "`ClassTypeHint.bases` now falls back to the types actual base classes if it is not a generic type"
 author = "@NiklasRosenstein"
+
+[[entries]]
+id = "5883174c-0b7b-4be0-b28e-b7c69922f551"
+type = "feature"
+description = "add `ClassTypeHint.recurse_bases()`"
+author = "@NiklasRosenstein"
