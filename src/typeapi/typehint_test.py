@@ -502,7 +502,7 @@ def test__TypeHint__repeated() -> None:
     assert hint.repeated
 
 
-def test__ClassTypeHint__iter_all_bases() -> None:
+def test__ClassTypeHint__recurse_bases_generic() -> None:
     class A:
         pass
 
@@ -510,6 +510,9 @@ def test__ClassTypeHint__iter_all_bases() -> None:
         pass
 
     class C(B, Generic[T]):
+        pass
+
+    class D(C[T]):
         pass
 
     hint = TypeHint(C)
@@ -534,5 +537,46 @@ def test__ClassTypeHint__iter_all_bases() -> None:
         TypeHint(int),
         TypeHint(object),
         TypeHint(Generic[T]),
+        TypeHint(object),
+    ]
+
+    hint = TypeHint(D[int])
+    assert isinstance(hint, ClassTypeHint)
+    assert hint.type is D
+    assert hint.bases == (C[T],)
+    assert list(hint.recurse_bases("bfs")) == [
+        TypeHint(D[int]),
+        TypeHint(C[int]),
+        TypeHint(B),
+        TypeHint(Generic[T]),
+        TypeHint(A),
+        TypeHint(int),
+        TypeHint(object),
+        TypeHint(object),
+        TypeHint(object),
+    ]
+
+
+def test__ClassTypeHint__recurse_bases_for_list_subclass() -> None:
+    class CustomList(List[T]):
+        pass
+
+    hint = TypeHint(CustomList)
+    assert isinstance(hint, ClassTypeHint)
+    assert hint.type is CustomList
+    assert hint.bases == (List[T],)
+    assert list(hint.recurse_bases("bfs")) == [
+        TypeHint(CustomList),
+        TypeHint(List[T]),
+        TypeHint(object),
+    ]
+
+    hint = TypeHint(CustomList[int])
+    assert isinstance(hint, ClassTypeHint)
+    assert hint.type is CustomList
+    assert hint.bases == (List[T],)
+    assert list(hint.recurse_bases("bfs")) == [
+        TypeHint(CustomList[int]),
+        TypeHint(List[int]),
         TypeHint(object),
     ]

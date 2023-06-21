@@ -1,0 +1,5 @@
+[[entries]]
+id = "984c08a5-3fa1-40d7-baa7-3886f8fd2548"
+type = "fix"
+description = "`ClassTypeHint.recurse_bases()` now parameterizes type parameters."
+author = "@NiklasRosenstein"

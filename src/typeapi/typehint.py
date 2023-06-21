@@ -320,7 +320,10 @@ class ClassTypeHint(TypeHint):
             if response == "skip":
                 continue
 
-            current_bases = cast(List[ClassTypeHint], [TypeHint(x, current.type).evaluate() for x in current.bases])
+            current_bases = cast(
+                List[ClassTypeHint],
+                [TypeHint(x, current.type).evaluate().parameterize(current.get_parameter_map()) for x in current.bases],
+            )
 
             if order == "bfs":
                 bases.extend(current_bases)
