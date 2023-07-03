@@ -95,7 +95,7 @@ class _TypeHintMeta(abc.ABCMeta):
 
         elif origin is None and type(hint).__name__ == "_TypeAliasBase":  # Python 3.6
             return TypeAliasTypeHint(hint, source)
-        elif origin is None and getattr(hint, "_name") == "TypeAlias":  # Python <3.10
+        elif origin is None and getattr(hint, "_name", None) == "TypeAlias":  # Python <3.10
             return TypeAliasTypeHint(hint, source)
         elif origin is None and getattr(hint, "__name__", None) == "TypeAlias":  # Python >=3.10
             return TypeAliasTypeHint(hint, source)
