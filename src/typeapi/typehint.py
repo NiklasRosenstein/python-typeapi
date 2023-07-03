@@ -92,7 +92,7 @@ class _TypeHintMeta(abc.ABCMeta):
             return TypeVarTypeHint(hint, source)
         elif origin == tuple:
             return TupleTypeHint(hint, source)
-        elif origin is None and getattr(hint, "__name__") == "TypeAlias":
+        elif origin is None and getattr(hint, "__name__", None) == "TypeAlias":
             return TypeAliasTypeHint(hint, source)
         elif origin is ClassVar or hint is ClassVar:
             return ClassVarTypeHint(hint, source)
