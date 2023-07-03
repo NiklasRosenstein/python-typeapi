@@ -92,9 +92,15 @@ class _TypeHintMeta(abc.ABCMeta):
             return TypeVarTypeHint(hint, source)
         elif origin == tuple:
             return TupleTypeHint(hint, source)
-        elif origin is None and getattr(hint, "__name__", None) == "TypeAlias":
+
+        elif origin is None and type(hint).__name__ == "_TypeAliasBase":  # Python <3.10
             return TypeAliasTypeHint(hint, source)
-        elif origin is ClassVar or hint is ClassVar:
+        elif origin is None and getattr(hint, "__name__", None) == "TypeAlias":  # Python >=3.10
+            return TypeAliasTypeHint(hint, source)
+
+        elif origin is None and type(hint).__name__ == "_ClassVar":  # Python <3.10
+            return ClassVarTypeHint(hint, source)
+        elif origin is ClassVar or hint is ClassVar:  # Python >=3.10
             return ClassVarTypeHint(hint, source)
 
         return ClassTypeHint(hint, source)
@@ -523,4 +529,10 @@ class TypeAliasTypeHint(TypeHint):
 
 
 class ClassVarTypeHint(TypeHint):
-    pass
+    def __init__(self, hint: object, source: "Any | None" = None) -> None:
+        super().__init__(hint, source)
+        if hasattr(self.hint, "__type__"):  # Python <3.10? (Maybe lower)
+            if self.hint.__type__ is not None:  # type: ignore[attr-defined]
+                self._args = (self.hint.__type__,)  # type: ignore[attr-defined]
+            else:
+                self._args = ()
