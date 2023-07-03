@@ -4,6 +4,7 @@ from collections import ChainMap, deque
 from types import ModuleType
 from typing import (
     Any,
+    ClassVar,
     Dict,
     Generator,
     Generic,
@@ -91,6 +92,10 @@ class _TypeHintMeta(abc.ABCMeta):
             return TypeVarTypeHint(hint, source)
         elif origin == tuple:
             return TupleTypeHint(hint, source)
+        elif origin is None and getattr(hint, "__name__") == "TypeAlias":
+            return TypeAliasTypeHint(hint, source)
+        elif origin is ClassVar or hint is ClassVar:
+            return ClassVarTypeHint(hint, source)
 
         return ClassTypeHint(hint, source)
 
@@ -486,7 +491,7 @@ class TupleTypeHint(ClassTypeHint):
         if self._args == ((),):
             self._args = ()
         elif self._args == () and self._hint == tuple:
-            raise ValueError(f"TupleTypeHint can only represent a parameterized tuple.")
+            raise ValueError("TupleTypeHint can only represent a parameterized tuple.")
         if ... in self._args:
             assert self._args[-1] == ..., "Tuple Ellipsis not as last arg"
             assert len(self._args) == 2, "Tuple with Ellipsis has more than two args"
@@ -511,3 +516,11 @@ class TupleTypeHint(ClassTypeHint):
         """
 
         return self._repeated
+
+
+class TypeAliasTypeHint(TypeHint):
+    pass
+
+
+class ClassVarTypeHint(TypeHint):
+    pass

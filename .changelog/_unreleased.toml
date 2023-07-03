@@ -1,0 +1,5 @@
+[[entries]]
+id = "0e037f5f-10c3-4e38-92c5-9bef92c74e91"
+type = "feature"
+description = "Support `TypeAlias` and `ClassVar` type hints"
+author = "@NiklasRosenstein"

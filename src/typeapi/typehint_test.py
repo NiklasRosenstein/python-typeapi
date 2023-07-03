@@ -1,14 +1,16 @@
-from typing import Any, Dict, Generic, List, Optional, Sequence, Tuple, TypeVar, Union
+from typing import Any, ClassVar, Dict, Generic, List, Optional, Sequence, Tuple, TypeVar, Union
 
 from pytest import mark
-from typing_extensions import Annotated, Literal
+from typing_extensions import Annotated, Literal, TypeAlias
 
 from typeapi.typehint import (
     AnnotatedTypeHint,
     ClassTypeHint,
+    ClassVarTypeHint,
     ForwardRefTypeHint,
     LiteralTypeHint,
     TupleTypeHint,
+    TypeAliasTypeHint,
     TypeHint,
     TypeVarTypeHint,
     UnionTypeHint,
@@ -543,7 +545,7 @@ def test__ClassTypeHint__recurse_bases_generic() -> None:
     hint = TypeHint(D[int])
     assert isinstance(hint, ClassTypeHint)
     assert hint.type is D
-    assert hint.bases == (C[T],)
+    assert hint.bases == (C[T],)  # type: ignore[valid-type]
     assert list(hint.recurse_bases("bfs")) == [
         TypeHint(D[int]),
         TypeHint(C[int]),
@@ -564,19 +566,39 @@ def test__ClassTypeHint__recurse_bases_for_list_subclass() -> None:
     hint = TypeHint(CustomList)
     assert isinstance(hint, ClassTypeHint)
     assert hint.type is CustomList
-    assert hint.bases == (List[T],)
+    assert hint.bases == (List[T],)  # type: ignore[valid-type]
     assert list(hint.recurse_bases("bfs")) == [
         TypeHint(CustomList),
-        TypeHint(List[T]),
+        TypeHint(List[T]),  # type: ignore[valid-type]
         TypeHint(object),
     ]
 
     hint = TypeHint(CustomList[int])
     assert isinstance(hint, ClassTypeHint)
     assert hint.type is CustomList
-    assert hint.bases == (List[T],)
+    assert hint.bases == (List[T],)  # type: ignore[valid-type]
     assert list(hint.recurse_bases("bfs")) == [
         TypeHint(CustomList[int]),
         TypeHint(List[int]),
         TypeHint(object),
     ]
+
+
+def test__TypeHint__with_TypeAlias() -> None:
+    hint = TypeHint(TypeAlias)
+    assert isinstance(hint, TypeAliasTypeHint)
+    assert hint.hint == TypeAlias
+    assert hint.args == ()
+
+
+def test__TypeHint__with_ClassVar() -> None:
+    hint = TypeHint(ClassVar)
+    assert isinstance(hint, ClassVarTypeHint)
+    assert hint.hint == ClassVar
+    assert hint.args == ()
+
+    hint = TypeHint(ClassVar[Union[int, str]])
+    assert isinstance(hint, ClassVarTypeHint)
+    assert hint.hint == ClassVar[Union[int, str]]
+    assert hint.args == (Union[int, str],)
+    assert hint[0] == TypeHint(Union[int, str])
