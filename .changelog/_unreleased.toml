@@ -1,0 +1,5 @@
+[[entries]]
+id = "20ce9dbc-dcb5-432c-9a72-b0c085f70180"
+type = "fix"
+description = "Fix `ClassVarTypeHint._copy_with_args()`"
+author = "@NiklasRosenstein"

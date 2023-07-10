@@ -538,3 +538,7 @@ class ClassVarTypeHint(TypeHint):
                 self._args = (self.hint.__type__,)  # type: ignore[attr-defined]
             else:
                 self._args = ()
+
+    def _copy_with_args(self, args: Tuple[Any, ...]) -> TypeHint:
+        assert len(args) == 1, "a ClassVar type hint requires exactly one argument"
+        return ClassVarTypeHint(ClassVar[args[0]])

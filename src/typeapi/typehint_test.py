@@ -602,3 +602,8 @@ def test__TypeHint__with_ClassVar() -> None:
     assert hint.hint == ClassVar[Union[int, str]]
     assert hint.args == (Union[int, str],)
     assert hint[0] == TypeHint(Union[int, str])
+
+
+def test__ClassVarTypeHint__copy_with_args() -> None:
+    hint = TypeHint(ClassVar[int])
+    assert hint._copy_with_args((str,)).hint == ClassVar[str]
