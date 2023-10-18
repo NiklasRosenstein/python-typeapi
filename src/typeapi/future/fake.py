@@ -20,8 +20,10 @@ class FakeHint:
     def __repr__(self) -> str:
         return f"FakeHint({self.origin}, args={self.args})"
 
-    def __or__(self, other: "FakeHint") -> "FakeHint":
-        assert isinstance(other, FakeHint)
+    def __or__(self, other: "FakeHint | None") -> "FakeHint":
+        if other is None:
+            other = FakeHint(None)
+        assert isinstance(other, FakeHint), type(other)
         if self.origin == Union:
             assert self.args is not None
             return FakeHint(Union, self.args + (other,))

@@ -35,6 +35,7 @@ def test__FakeHint__getattr() -> None:
 
 def test__FakeHint__Optional() -> None:
     assert FakeHint(Optional)[FakeHint(int)].evaluate() == Optional[int]
+    assert (FakeHint(None) | FakeHint(int)).evaluate() == Optional[int]
 
 
 def test__FakeHint__callable() -> None:
