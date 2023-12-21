@@ -1,8 +1,13 @@
-nav:
-  - Home: index.md
-  - API:
-    - typeapi: api/typeapi.md
-    - typeapi.typehint: api/typeapi.typehint.md
-    - typeapi.utils: api/typeapi.utils.md
-  - Other:
-    - Changelog: changelog.md
+site_name: Python Typeapi
+repo_name: GitHub
+repo_url: https://github.com/NiklasRosenstein/python-typeapi
+edit_uri: edit/develop/docs/content/
+theme: readthedocs
+markdown_extensions:
+  - footnotes
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [../src]

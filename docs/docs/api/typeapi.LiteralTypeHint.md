@@ -1,0 +1,3 @@
+# typeapi.LiteralTypeHint
+
+::: typeapi.LiteralTypeHint

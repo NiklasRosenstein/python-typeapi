@@ -1,0 +1,33 @@
+name: Documentation
+
+on:
+  push:
+    branches: [ "develop" ]
+    tags: [ "*" ]
+  pull_request:
+    branches: [ "develop" ]
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: NiklasRosenstein/slap@gha/install/v1
+    - run: cd docs && slap venv -ac
+    - run: cd docs && slap run -- pip install -r requirements.txt
+    - run: cd docs && slap run -- bash changelog.md
+    - run: cd docs && slap run -- mkdocs build
+    - uses: actions/upload-artifact@v2
+      with:
+        name: docs
+        path: docs/site
+
+  docs-publish:
+    needs: [ test, docs ]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/download-artifact@v2
+      with: { name: docs, path: docs/site }
+    - uses: JamesIves/github-pages-deploy-action@4.1.4
+      with: { branch: gh-pages, folder: docs/site, ssh-key: "${{ secrets.DEPLOY_KEY }}" }

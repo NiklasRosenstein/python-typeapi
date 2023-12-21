@@ -1,0 +1,3 @@
+# typeapi.TypeHint
+
+::: typeapi.TypeHint
