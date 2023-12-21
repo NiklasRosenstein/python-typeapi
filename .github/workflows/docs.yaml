@@ -17,7 +17,7 @@ jobs:
         version: "1.10.4"
     - run: cd docs && slap venv -ac
     - run: cd docs && slap run -- pip install -r requirements.txt
-    - run: cd docs && slap run -- bash changelog.md
+    - run: cd docs && slap run -- bash changelog.sh
     - run: cd docs && slap run -- mkdocs build
     - uses: actions/upload-artifact@v2
       with:
