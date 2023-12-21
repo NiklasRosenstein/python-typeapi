@@ -23,7 +23,7 @@ jobs:
         path: docs/site
 
   docs-publish:
-    needs: [ test, docs ]
+    needs: [ docs ]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
