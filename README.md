@@ -1,4 +1,4 @@
-<img src="https://i.imgur.com/b8GiY3n.jpeg">
+<p align="center"><img src="https://i.imgur.com/11FvXpa.png"></p>
 
 <h1 align="center">python-typeapi</h1>
 
