@@ -33,20 +33,14 @@ isort = "^5.10.1"
 flake8 = "^4.0.1"
 black = "^22.3.0"
 
-[tool.poetry.extras]
-docs = ["novella==0.1.12", "pydoc-markdown==4.6.3", "mkdocs", "mkdocs-material"]
+[tool.poetry.group.docs]
+optional = true
 
-# For newer Poetry Core versions only. We need to stick with the old way that Poetry doesn't complain
-#   about in older versions but work with Slap above.
-#
-# [tool.poetry.group.docs]
-# optional = true
-#
-# [tool.poetry.group.docs.dependencies]
-# mkdocs = "*"
-# mkdocs-material = "*"
-# novella = "0.2.3"
-# pydoc-markdown = "4.6.0"
+[tool.poetry.group.docs.dependencies]
+mkdocs = "*"
+mkdocs-material = "*"
+novella = "0.1.12"
+pydoc-markdown = "4.6.3"
 
 [tool.slap]
 typed = true
