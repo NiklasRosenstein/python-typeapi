@@ -1,7 +1,7 @@
 [build-system]
 # NOTE(NiklasRosenstein): We pin this version so we can keep using the old way that Slap supports installing
 #                         the "docs" extra without Poetry complaining about invalid format of the requirements.
-requires = ["poetry-core==1.1.0a6"]
+requires = ["poetry-core==1.6.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
@@ -33,20 +33,14 @@ isort = "^5.10.1"
 flake8 = "^4.0.1"
 black = "^22.3.0"
 
-[tool.poetry.extras]
-docs = ["novella==0.1.12", "pydoc-markdown==4.6.3", "mkdocs", "mkdocs-material"]
+[tool.poetry.group.docs]
+optional = true
 
-# For newer Poetry Core versions only. We need to stick with the old way that Poetry doesn't complain
-#   about in older versions but work with Slap above.
-#
-# [tool.poetry.group.docs]
-# optional = true
-#
-# [tool.poetry.group.docs.dependencies]
-# mkdocs = "*"
-# mkdocs-material = "*"
-# novella = "0.2.3"
-# pydoc-markdown = "4.6.0"
+[tool.poetry.group.docs.dependencies]
+mkdocs = "*"
+mkdocs-material = "*"
+novella = "0.1.12"
+pydoc-markdown = "4.6.3"
 
 [tool.slap]
 typed = true
