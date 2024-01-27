@@ -39,7 +39,7 @@ optional = true
 [tool.poetry.group.docs.dependencies]
 mkdocs = "*"
 mkdocs-material = "*"
-novella = "0.1.12"
+novella = "0.2.6"
 pydoc-markdown = "4.6.3"
 
 [tool.slap]
