@@ -40,7 +40,7 @@ optional = true
 mkdocs = "*"
 mkdocs-material = "*"
 novella = "0.1.12"
-pydoc-markdown = "4.6.3"
+pydoc-markdown = "4.8.2"
 
 [tool.slap]
 typed = true
