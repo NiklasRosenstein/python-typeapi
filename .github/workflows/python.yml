@@ -23,7 +23,7 @@ jobs:
           "3.10.3", "3.10.4", "3.10.5", "3.10.6", "3.10.7", "3.10.8", "3.11.0", "3.x", "pypy-3.8",
         ]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - uses: NiklasRosenstein/slap@gha/install/v1
     - uses: actions/setup-python@v5
       with: { python-version: "${{ matrix.python-version }}" }
@@ -33,7 +33,7 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - uses: NiklasRosenstein/slap@gha/install/v1
     - run: slap install --only-extras docs --no-venv-check
     - run: slap run --no-venv-check docs:build
@@ -46,7 +46,7 @@ jobs:
     needs: [ test, docs ]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - uses: actions/download-artifact@v4
       with: { name: docs, path: docs/_site }
     - uses: JamesIves/github-pages-deploy-action@4.1.4
