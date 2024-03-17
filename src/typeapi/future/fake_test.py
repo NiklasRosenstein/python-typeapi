@@ -2,7 +2,8 @@ from typing import List, Optional, Union
 
 import pytest
 
-from typeapi.future.fake import FakeHint
+from src.typeapi.future.astrewrite import rewrite_expr
+from typeapi.future.fake import FakeHint, FakeProvider
 
 
 def test__FakeHint__evaluate() -> None:
@@ -44,3 +45,9 @@ def test__FakeHint__callable() -> None:
     with pytest.raises(RuntimeError) as excinfo:
         FakeHint(Optional)[FakeHint(int)]("foobar")
     assert str(excinfo.value) == "FakeHint(typing.Optional, args=(FakeHint(<class 'int'>, args=None),)) is not callable"
+
+
+def test__FakeHint__from_forward_ref() -> None:
+    context = {}
+    scope = {"__dict__": FakeProvider()}
+    expr = eval(rewrite_expr("'MyForwardRef'"))

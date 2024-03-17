@@ -454,12 +454,15 @@ class ForwardRefTypeHint(TypeHint):
         if context is None:
             context = self.get_context()
 
-        code = rewrite_expr(self.expr, "__dict__")
-        scope = {"__dict__": FakeProvider(context)}
-        hint = eval(code, scope, {})
+        hint = FakeProvider(context).execute(self.expr).evaluate()
+        # code = rewrite_expr(self.expr, "__dict__")
+        # scope = {"__dict__": FakeProvider(context)}
+        # hint = eval(code, scope, {})
+        # if isinstance(hint, str):
+        #     hint = FakeHint(hint)
 
-        assert isinstance(hint, FakeHint), (self.expr, FakeHint)
-        hint = hint.evaluate()
+        # assert isinstance(hint, FakeHint), (self.expr, FakeHint)
+        # hint = hint.evaluate()
 
         # # Even though eval expects a Mapping, we know for forward references that we'll only
         # # need to have __getitem__() as they are pure expressions.
