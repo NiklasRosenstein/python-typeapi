@@ -10,7 +10,7 @@ version = "2.1.2"
 description = ""
 authors = ["Niklas Rosenstein <rosensteinniklas@gmail.com>"]
 license = "MIT"
-readme = "readme.md"
+readme = "README.md"
 packages = [{ include = "typeapi", from = "src" }]
 classifiers = []
 keywords = []
@@ -39,8 +39,8 @@ optional = true
 [tool.poetry.group.docs.dependencies]
 mkdocs = "*"
 mkdocs-material = "*"
-novella = "0.1.12"
-pydoc-markdown = "4.6.3"
+mkdocstrings = {version = "*", extras = ["python"]}
+mksync = "^0.1.4"
 
 [tool.slap]
 typed = true
@@ -54,8 +54,8 @@ isort = "isort --check-only src/"
 flake8 = "flake8 src/"
 
 [tool.slap.run]
-"docs:build" = "cd docs && novella --base-url python-typeapi/"
-"docs:dev" = "cd docs && novella --serve"
+"docs:build" = "cd docs && mkdocs build"
+"docs:dev" = "cd docs && mkdocs serve"
 fmt = "black src/ && isort src/"
 
 [tool.mypy]

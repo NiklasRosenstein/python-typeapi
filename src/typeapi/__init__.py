@@ -10,7 +10,7 @@ from .typehint import (
     TypeVarTypeHint,
     UnionTypeHint,
 )
-from .utils import TypedDictProtocol, get_annotations, is_typed_dict, type_repr
+from .utils import get_annotations, is_typed_dict, type_repr
 
 __all__ = [
     # .typehint
@@ -26,5 +26,4 @@ __all__ = [
     "get_annotations",
     "is_typed_dict",
     "type_repr",
-    "TypedDictProtocol",
 ]
