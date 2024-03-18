@@ -15,17 +15,47 @@ jobs:
       matrix:
         # Generated with scripts/github_actions_get_python_versions.py
         python-version: [
-          "3.6.7", "3.6.8", "3.6.9", "3.6.10", "3.6.11", "3.6.12", "3.6.13", "3.6.14", "3.6.15", "3.7.1", "3.7.5",
-          "3.7.6", "3.7.7", "3.7.8", "3.7.9", "3.7.10", "3.7.11", "3.7.12", "3.7.13", "3.7.14", "3.7.15", "3.8.0",
-          "3.8.1", "3.8.2", "3.8.3", "3.8.4", "3.8.5", "3.8.6", "3.8.7", "3.8.8", "3.8.9", "3.8.10", "3.8.11",
-          "3.8.12", "3.8.13", "3.8.14", "3.9.0", "3.9.1", "3.9.2", "3.9.3", "3.9.4", "3.9.5", "3.9.6", "3.9.7",
-          "3.9.8", "3.9.9", "3.9.10", "3.9.11", "3.9.12", "3.9.13", "3.9.14", "3.9.15", "3.10.0", "3.10.1", "3.10.2",
-          "3.10.3", "3.10.4", "3.10.5", "3.10.6", "3.10.7", "3.10.8", "3.11.0", "3.x", "pypy-3.8",
+          "3.8.0", "3.8.1", "3.8.2", "3.8.3", "3.8.4", "3.8.5", "3.8.6", "3.8.7", "3.8.8", "3.8.9", "3.8.10", "3.8.11",
+          "3.8.12", "3.8.13", "3.8.14", "3.8.15", "3.8.16", "3.8.17", "3.8.18",
+          "3.9.0", "3.9.1", "3.9.2", "3.9.3", "3.9.4", "3.9.5", "3.9.6", "3.9.7", "3.9.8", "3.9.9", "3.9.10", "3.9.11",
+          "3.9.12", "3.9.13", "3.9.14", "3.9.15", "3.9.16", "3.9.17", "3.9.18",
+          "3.10.0", "3.10.1", "3.10.2", "3.10.3", "3.10.4", "3.10.5", "3.10.6", "3.10.7", "3.10.8", "3.10.9", "3.10.10",
+          "3.10.11", "3.10.12", "3.10.13",
+          "3.11.0", "3.11.1", "3.11.2", "3.11.3", "3.11.4", "3.11.5", "3.11.6", "3.11.7", "3.11.8",
+          "3.12.0", "3.12.1", "3.12.2",
+          "3.x", "pypy-3.8", # "pypy-3.9", "pypy-3.10"
         ]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - uses: NiklasRosenstein/slap@gha/install/v1
-    - uses: actions/setup-python@v2
+    - uses: actions/setup-python@v5
       with: { python-version: "${{ matrix.python-version }}" }
-    - run: slap install --no-venv-check
+    - run: slap install --link --no-venv-check
+
+    # NOTE(@niklas): Flake8 doesn't run on 3.12 yet, so we only run pytest here.
     - run: slap test
+      if: ${{ !startsWith(matrix.python-version, '3.12.') && matrix.python-version != '3.x' }}
+    - run: slap test pytest
+      if: ${{ startsWith(matrix.python-version, '3.12.') || matrix.python-version == '3.x' }}
+
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: NiklasRosenstein/slap@gha/install/v1
+    - run: slap install --only-extras docs --no-venv-check
+    - run: slap run --no-venv-check docs:build
+    - uses: actions/upload-artifact@v4
+      with:
+        name: docs
+        path: docs/_site
+
+  docs-publish:
+    needs: [ test, docs ]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/download-artifact@v4
+      with: { name: docs, path: docs/_site }
+    - uses: JamesIves/github-pages-deploy-action@v4.5.0
+      with: { branch: gh-pages, folder: docs/_site, ssh-key: "${{ secrets.DEPLOY_KEY }}" }
