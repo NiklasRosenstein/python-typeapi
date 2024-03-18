@@ -91,4 +91,5 @@ class FakeProvider:
         if not isinstance(result, FakeHint):
             result = FakeHint(result)
 
+        assert isinstance(result, FakeHint)
         return result
