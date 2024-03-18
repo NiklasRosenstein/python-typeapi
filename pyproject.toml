@@ -54,7 +54,7 @@ isort = "isort --check-only src/"
 flake8 = "flake8 src/"
 
 [tool.slap.run]
-"docs:build" = "cd docs && mkdocs build"
+"docs:build" = "cd docs && mkdocs build --site-dir _site"
 "docs:dev" = "cd docs && mkdocs serve"
 fmt = "black src/ && isort src/"
 
