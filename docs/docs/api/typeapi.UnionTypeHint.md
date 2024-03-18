@@ -1,3 +1,0 @@
-# typeapi.UnionTypeHint
-
-::: typeapi.UnionTypeHint

@@ -1,3 +1,0 @@
-# typeapi.TypeVarTypeHint
-
-::: typeapi.TypeVarTypeHint

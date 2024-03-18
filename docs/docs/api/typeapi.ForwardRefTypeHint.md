@@ -1,3 +1,0 @@
-# typeapi.ForwardRefTypeHint
-
-::: typeapi.ForwardRefTypeHint

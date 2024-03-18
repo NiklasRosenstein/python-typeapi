@@ -1,3 +1,0 @@
-# typeapi.TupleTypeHint
-
-::: typeapi.TupleTypeHint
