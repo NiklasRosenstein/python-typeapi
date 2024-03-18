@@ -1,5 +1,13 @@
+release-date = "2024-03-18"
+
 [[entries]]
 id = "e7afde99-2c2d-493a-bb4e-120d56e41a36"
 type = "fix"
 description = "Fixed an error when evaluating `FakeHint` objects when an argument to a type-hint such as `Annotated` was the constant value `True`, `False`, `None`, `0` or `1`."
+author = "@NiklasRosenstein"
+
+[[entries]]
+id = "3dda2afd-034f-4b72-8738-ffef316aa16e"
+type = "breaking change"
+description = "Drop support for Python 3.6 and 3.7"
 author = "@NiklasRosenstein"
