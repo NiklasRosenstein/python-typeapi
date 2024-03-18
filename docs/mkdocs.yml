@@ -44,8 +44,9 @@ markdown_extensions:
 
 nav:
   - Home: index.md
+  - features.md
+  - examples.md
   - API:
     - typeapi: api/typeapi.md
-    - typeapi.utils: api/typeapi.utils.md
   - Other:
     - Changelog: changelog.md
