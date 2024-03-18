@@ -10,7 +10,7 @@
       
       
       
-        <link rel="next" href="features/">
+        <link rel="next" href="api/typeapi/">
       
       
       <link rel="icon" href="assets/images/favicon.png">
@@ -68,6 +68,11 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
+      
+        
+        <a href="#typeapi" class="md-skip">
+          Skip to content
+        </a>
       
     </div>
     <div data-md-component="announce">
@@ -224,6 +229,19 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="." class="md-nav__link md-nav__link--active">
         
@@ -235,46 +253,34 @@
 
       </a>
       
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="features/" class="md-nav__link">
         
-  
-  <span class="md-ellipsis">
-    Supported Features
-  </span>
-  
 
-      </a>
-    </li>
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
-
+  
+  
     
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
       
+    </ul>
   
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="examples/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Examples
-  </span>
-  
-
-      </a>
+</nav>
+      
     </li>
   
 
@@ -298,10 +304,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -312,8 +318,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             API
           </label>
@@ -331,6 +337,27 @@
   
   <span class="md-ellipsis">
     typeapi
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/typeapi.utils/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    typeapi.utils
   </span>
   
 
@@ -366,10 +393,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -380,8 +407,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             Other
           </label>
@@ -432,6 +459,25 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -449,15 +495,149 @@
   
 
 
-<p align="center"><img src="https://i.imgur.com/11FvXpa.png"></p>
-
-<h1 align="center">python-typeapi</h1>
-
-<p>The <code>typeapi</code> package provides a <strong>unified and consistent</strong> API for the reflection Python type hints from
-CPython 3.6.3 onwards. It also allows evaluating string-literal type annotations of more recent Python releases in
-older versions (such as <a href="https://peps.python.org/pep-0585/">PEP585</a> and <a href="https://peps.python.org/pep-0604/">PEP604</a> expressions).</p>
-<p>To learn more about this package, visit its <a href="https://niklasrosenstein.github.io/python-typeapi/">documentation</a>.</p>
-<p>Please file bug reports and feature requests <a href="https://github.com/NiklasRosenstein/python-typeapi/issues">on GitHub</a>.</p>
+<h1 id="typeapi">typeapi</h1>
+<p><a href="https://github.com/NiklasRosenstein/python-typeapi/actions/workflows/python.yml"><img alt="Python" src="https://github.com/NiklasRosenstein/python-typeapi/actions/workflows/python.yml/badge.svg" /></a></p>
+<p><strong>Compatibility</strong>: Python 3.8+</p>
+<p>The <code>typeapi</code> package provides an object-oriented interface for introspecting <a href="https://peps.python.org/pep-0484/">PEP484</a> type hints at runtime,
+including forward references that make use of the more recent <a href="https://peps.python.org/pep-0585/">PEP585</a> and <a href="https://peps.python.org/pep-0604/">PEP604</a> type hint features in
+Python versions that don't natively support them.</p>
+<p>The main API of this module is comprised of:</p>
+<ul>
+<li><code>typeapi.TypeHint()</code> &ndash; A class to parse low-level type hints and present them in a consistent, object-oriented API.</li>
+<li><code>typeapi.get_annotations()</code> &ndash; Retrieve an object's <code>__annotations__</code> with support for evaluating future type hints (<a href="https://peps.python.org/pep-0585/">PEP585</a>, <a href="https://peps.python.org/pep-0604/">PEP604</a>).</li>
+</ul>
+<p>The following kinds of type hints are currently supported:</p>
+<table>
+<thead>
+<tr>
+<th>Concrete type</th>
+<th>Description</th>
+<th>Added in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ClassTypeHint</code></td>
+<td>For any normal or generic type as well as <code>typing.Any</code>. Provides access to the underlying type, the type arguments and parameters, if any.</td>
+<td>1.0.0</td>
+</tr>
+<tr>
+<td><code>UnionTypeHint</code></td>
+<td>Represents <code>Union</code> type hint and gives access to the union members.</td>
+<td>1.0.0</td>
+</tr>
+<tr>
+<td><code>LiteralTypeHint</code></td>
+<td>Represents a <code>Literal</code> type hint and gives access to the literal values.</td>
+<td>1.0.0</td>
+</tr>
+<tr>
+<td><code>AnnotatedTypeHint</code></td>
+<td>Represents an <code>Annotated</code> type hint and gives access to the annotated type as well as the metadata.</td>
+<td>1.0.0</td>
+</tr>
+<tr>
+<td><code>TypeVarTypeHint</code></td>
+<td>Represents a <code>TypeVar</code> type hint and gives an interface to access the variable's metadata (such as constarints, variance, ...).</td>
+<td>1.0.0</td>
+</tr>
+<tr>
+<td><code>ForwardRefTypeHint</code></td>
+<td>Represents a forward reference. Can be evaluated in Python 3.6+ even if it contains <a href="https://peps.python.org/pep-0585/">PEP585</a> (3.9+) and <a href="https://peps.python.org/pep-0604/">PEP604</a> (3.10+) expressions. <sup>1)</sup></td>
+<td>1.0.0, future support in 1.3.0</td>
+</tr>
+<tr>
+<td><code>TupleTypeHint</code></td>
+<td>Reperesents a <code>Tuple</code> type hint, allowing you to differentiate between repeated and explicitly sized tuples.</td>
+<td>1.2.0</td>
+</tr>
+</tbody>
+</table>
+<p><sup>1)</sup> New-style type union evaluation will continue to return a <code>typing.Union</code>, even if the same syntax
+evaluated natively by Python 3.10+ results in a <code>types.UnionType</code>.</p>
+<h2 id="examples">Examples</h2>
+<p>Inspect a <code>List[int]</code> type hint:</p>
+<div class="language-py highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># cat &lt;&lt;EOF | python -</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span> <span class="nn">typeapi</span> <span class="kn">import</span> <span class="n">ClassTypeHint</span><span class="p">,</span> <span class="n">TypeHint</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">hint</span> <span class="o">=</span> <span class="n">TypeHint</span><span class="p">(</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hint</span><span class="p">,</span> <span class="n">ClassTypeHint</span><span class="p">)</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="k">assert</span> <span class="n">hint</span><span class="o">.</span><span class="n">type</span> <span class="ow">is</span> <span class="nb">list</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">item_hint</span> <span class="o">=</span> <span class="n">hint</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item_hint</span><span class="p">,</span> <span class="n">ClassTypeHint</span><span class="p">)</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="k">assert</span> <span class="n">item_hint</span><span class="o">.</span><span class="n">type</span> <span class="ow">is</span> <span class="nb">int</span>
+</span></code></pre></div>
+<p>Retrieve the metadata from an <code>Annotated[...]</code> type hint:</p>
+<div class="language-py highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># cat &lt;&lt;EOF | python -</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">from</span> <span class="nn">typeapi</span> <span class="kn">import</span> <span class="n">AnnotatedTypeHint</span><span class="p">,</span> <span class="n">ClassTypeHint</span><span class="p">,</span> <span class="n">TypeHint</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">Annotated</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">hint</span> <span class="o">=</span> <span class="n">TypeHint</span><span class="p">(</span><span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="mi">42</span><span class="p">])</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hint</span><span class="p">,</span> <span class="n">AnnotatedTypeHint</span><span class="p">)</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="k">assert</span> <span class="n">hint</span><span class="o">.</span><span class="n">type</span> <span class="ow">is</span> <span class="nb">int</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="k">assert</span> <span class="n">hint</span><span class="o">.</span><span class="n">metadata</span> <span class="o">==</span> <span class="p">(</span><span class="mi">42</span><span class="p">,)</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="n">sub_hint</span> <span class="o">=</span> <span class="n">hint</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sub_hint</span><span class="p">,</span> <span class="n">ClassTypeHint</span><span class="p">)</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="k">assert</span> <span class="n">sub_hint</span><span class="o">.</span><span class="n">type</span> <span class="ow">is</span> <span class="nb">int</span>
+</span></code></pre></div>
+<p>Parameterize one type hint with the parameterization of a generic alias:</p>
+<div class="language-py highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># cat &lt;&lt;EOF | python -</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kn">from</span> <span class="nn">typeapi</span> <span class="kn">import</span> <span class="n">ClassTypeHint</span><span class="p">,</span> <span class="n">TypeHint</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Generic</span><span class="p">,</span> <span class="n">TypeVar</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">Annotated</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">)</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="nd">@dataclass</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="k">class</span> <span class="nc">MyGeneric</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">T</span><span class="p">]):</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>  <span class="n">value</span><span class="p">:</span> <span class="n">T</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="n">hint</span> <span class="o">=</span> <span class="n">TypeHint</span><span class="p">(</span><span class="n">MyGeneric</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hint</span><span class="p">,</span> <span class="n">ClassTypeHint</span><span class="p">)</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="k">assert</span> <span class="n">hint</span><span class="o">.</span><span class="n">get_parameter_map</span><span class="p">()</span> <span class="o">==</span> <span class="p">{</span><span class="n">T</span><span class="p">:</span> <span class="nb">int</span><span class="p">}</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="n">member_hint</span> <span class="o">=</span> <span class="n">TypeHint</span><span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">parameterize</span><span class="p">(</span><span class="n">hint</span><span class="o">.</span><span class="n">get_parameter_map</span><span class="p">())</span>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">member_hint</span><span class="p">,</span> <span class="n">ClassTypeHint</span><span class="p">)</span>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="k">assert</span> <span class="n">member_hint</span><span class="o">.</span><span class="n">type</span> <span class="ow">is</span> <span class="nb">int</span>
+</span></code></pre></div>
+<p>Evaluate forward references with <code>get_annotations()</code>:</p>
+<div class="language-py highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># cat &lt;&lt;EOF | python -</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">from</span> <span class="nn">typeapi</span> <span class="kn">import</span> <span class="n">get_annotations</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">version_info</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="k">class</span> <span class="nc">MyType</span><span class="p">:</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>  <span class="n">a</span><span class="p">:</span> <span class="s2">&quot;str | None&quot;</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="n">annotations</span> <span class="o">=</span> <span class="n">get_annotations</span><span class="p">(</span><span class="n">MyType</span><span class="p">)</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="k">if</span> <span class="n">version_info</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>  <span class="k">assert</span> <span class="n">annotations</span> <span class="o">==</span> <span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]}</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="k">else</span><span class="p">:</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>  <span class="k">assert</span> <span class="n">annotations</span> <span class="o">==</span> <span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">}</span>
+</span></code></pre></div>
+<p>Evaluating forward references with the <code>TypeHint</code> API:</p>
+<div class="language-py highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># cat &lt;&lt;EOF | python -</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">from</span> <span class="nn">typeapi</span> <span class="kn">import</span> <span class="n">ClassTypeHint</span><span class="p">,</span> <span class="n">ForwardRefTypeHint</span><span class="p">,</span> <span class="n">TypeHint</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">MyVector</span> <span class="o">=</span> <span class="s2">&quot;list[MyType]&quot;</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="k">class</span> <span class="nc">MyType</span><span class="p">:</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>  <span class="k">pass</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="n">hint</span> <span class="o">=</span> <span class="n">TypeHint</span><span class="p">(</span><span class="n">MyVector</span><span class="p">)</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="nb">globals</span><span class="p">())</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="nb">print</span><span class="p">(</span><span class="n">hint</span><span class="p">)</span>  <span class="c1"># TypeHint(typing.List[__main__.MyType])</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hint</span><span class="p">,</span> <span class="n">ClassTypeHint</span><span class="p">)</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="k">assert</span> <span class="n">hint</span><span class="o">.</span><span class="n">type</span> <span class="ow">is</span> <span class="nb">list</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="n">item_hint</span> <span class="o">=</span> <span class="n">hint</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item_hint</span><span class="p">,</span> <span class="n">ClassTypeHint</span><span class="p">)</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="k">assert</span> <span class="n">item_hint</span><span class="o">.</span><span class="n">type</span> <span class="ow">is</span> <span class="n">MyType</span>
+</span></code></pre></div>
 
 
 
