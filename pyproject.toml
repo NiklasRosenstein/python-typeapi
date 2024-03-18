@@ -30,7 +30,7 @@ mypy = "*"
 pytest = "*"
 types-dataclasses = "^0.6.5"
 isort = "^5.10.1"
-flake8 = "^7.0.0"
+flake8 = "^5.0.4"
 black = "^22.3.0"
 
 [tool.poetry.group.docs]
