@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/develop'
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - uses: actions/download-artifact@v2
       with: { name: docs, path: docs/site }
     - uses: JamesIves/github-pages-deploy-action@4.1.4
