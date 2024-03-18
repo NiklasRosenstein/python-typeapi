@@ -320,16 +320,16 @@ class ClassTypeHint(TypeHint):
         """
         Returns a dictionary that maps generic parameters to their values.
 
-            >>> TypeHint(list[int]).type
+            >>> TypeHint(List[int]).type
             <class 'list'>
-            >>> TypeHint(list[int]).args
+            >>> TypeHint(List[int]).args
             (<class 'int'>,)
 
             # NOTE(@niklas): This is a bug for built-in types, but it's not that big of a deal because we don't
             #       usually need to recursively expand forward references in these types.
-            >>> TypeHint(list[int]).parameters
+            >>> TypeHint(List[int]).parameters
             ()
-            >>> TypeHint(list[int]).get_parameter_map()
+            >>> TypeHint(List[int]).get_parameter_map()
             {}
 
             >>> T = TypeVar("T")
@@ -597,7 +597,7 @@ class ForwardRefTypeHint(TypeHint):
 
             >>> TypeHint(ForwardRef("Foobar")).expr
             'Foobar'
-            >>> TypeHint(TypeHint(list["Foobar"]).args[0]).expr
+            >>> TypeHint(TypeHint(List["Foobar"]).args[0]).expr
             'Foobar'
         """
 
