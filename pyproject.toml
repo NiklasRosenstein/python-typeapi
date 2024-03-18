@@ -22,7 +22,7 @@ Homepage = "https://github.com/NiklasRosenstein/python-typeapi"
 # Repository = ""
 
 [tool.poetry.dependencies]
-python = "^3.6.3"
+python = "^3.8"
 typing-extensions = ">=3.0.0"
 
 [tool.poetry.dev-dependencies]
@@ -59,7 +59,7 @@ flake8 = "flake8 src/"
 fmt = "black src/ && isort src/"
 
 [tool.mypy]
-python_version = "3.7"
+python_version = "3.8"
 explicit_package_bases = true
 mypy_path = ["src"]
 namespace_packages = true
