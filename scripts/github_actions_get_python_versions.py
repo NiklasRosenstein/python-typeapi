@@ -11,8 +11,8 @@ versions = [x for x in versions if '-' not in x]
 # Map orderable keys to string values.
 versions = {tuple(map(int, x.split('.'))): x for x in versions}
 
-# Minimum Python 3.6.0.
-versions = {k: v for k, v in versions.items() if k >= (3, 6, 0)}
+# Minimum Python 3.8.0.
+versions = {k: v for k, v in versions.items() if k >= (3, 8, 0)}
 
 versions = [it[1] for it in sorted(versions.items(), key=lambda it: it[0])]
 
