@@ -700,6 +700,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#typeapi.TypedDictProtocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;TypedDictProtocol
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#typeapi.UnionTypeHint" class="md-nav__link">
     <span class="md-ellipsis">
       <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;UnionTypeHint
@@ -1221,6 +1230,15 @@
         
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typeapi.TypedDictProtocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;TypedDictProtocol
+    </span>
+  </a>
   
 </li>
         
@@ -3490,6 +3508,66 @@ True
 
 
 
+<h4 id="typeapi.TypedDictProtocol" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>          <span class="doc doc-object-name doc-class-name">TypedDictProtocol</span>
+
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="typing_extensions.Protocol">Protocol</span></code></p>
+
+  
+      <p>A protocol that describes #typing.TypedDict values (which are actually instances of the #typing._TypedDictMeta
+metaclass). Use #is_typed_dict() to check if a hint is matches this protocol.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>typeapi/utils.py</code></summary>
+              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-354">354</a></span>
+<span class="normal"><a href="#__codelineno-0-355">355</a></span>
+<span class="normal"><a href="#__codelineno-0-356">356</a></span>
+<span class="normal"><a href="#__codelineno-0-357">357</a></span>
+<span class="normal"><a href="#__codelineno-0-358">358</a></span>
+<span class="normal"><a href="#__codelineno-0-359">359</a></span>
+<span class="normal"><a href="#__codelineno-0-360">360</a></span>
+<span class="normal"><a href="#__codelineno-0-361">361</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-354"><a id="__codelineno-0-354" name="__codelineno-0-354"></a><span class="k">class</span> <span class="nc">TypedDictProtocol</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+</span><span id="__span-0-355"><a id="__codelineno-0-355" name="__codelineno-0-355"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;A protocol that describes #typing.TypedDict values (which are actually instances of the #typing._TypedDictMeta</span>
+</span><span id="__span-0-356"><a id="__codelineno-0-356" name="__codelineno-0-356"></a><span class="sd">    metaclass). Use #is_typed_dict() to check if a hint is matches this protocol.&quot;&quot;&quot;</span>
+</span><span id="__span-0-357"><a id="__codelineno-0-357" name="__codelineno-0-357"></a>
+</span><span id="__span-0-358"><a id="__codelineno-0-358" name="__codelineno-0-358"></a>    <span class="vm">__annotations__</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+</span><span id="__span-0-359"><a id="__codelineno-0-359" name="__codelineno-0-359"></a>    <span class="n">__required_keys__</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+</span><span id="__span-0-360"><a id="__codelineno-0-360" name="__codelineno-0-360"></a>    <span class="n">__optional_keys__</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+</span><span id="__span-0-361"><a id="__codelineno-0-361" name="__codelineno-0-361"></a>    <span class="n">__total__</span><span class="p">:</span> <span class="nb">bool</span>
+</span></code></pre></div></td></tr></table></div>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
 <h4 id="typeapi.UnionTypeHint" class="doc doc-heading">
 <code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>          <span class="doc doc-object-name doc-class-name">UnionTypeHint</span>
 
@@ -3705,7 +3783,7 @@ a function or type by the #scoped() decorator.</p>
 
 
 </h4>
-<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">is_typed_dict</span><span class="p">(</span><span class="n">hint</span><span class="p">:</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="typing_extensions.TypeGuard">TypeGuard</span></span><span class="p">[</span><span class="n"><span title="typeapi.utils.TypedDictProtocol">TypedDictProtocol</span></span><span class="p">]</span>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">is_typed_dict</span><span class="p">(</span><span class="n">hint</span><span class="p">:</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="typing_extensions.TypeGuard">TypeGuard</span></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-internal" title="typeapi.utils.TypedDictProtocol" href="#typeapi.TypedDictProtocol">TypedDictProtocol</a></span><span class="p">]</span>
 </span></code></pre></div>
 
   <div class="doc doc-contents ">
@@ -3724,7 +3802,7 @@ a function or type by the #scoped() decorator.</p>
     <tbody>
         <tr>
           <td>
-                <code><span title="typing_extensions.TypeGuard">TypeGuard</span>[<span title="typeapi.utils.TypedDictProtocol">TypedDictProtocol</span>]</code>
+                <code><span title="typing_extensions.TypeGuard">TypeGuard</span>[<a class="autorefs autorefs-internal" title="typeapi.utils.TypedDictProtocol" href="#typeapi.TypedDictProtocol">TypedDictProtocol</a>]</code>
           </td>
           <td>
             <div class="doc-md-description">
