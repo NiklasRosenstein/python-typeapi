@@ -1,0 +1,11 @@
+[[entries]]
+id = "d7921d6e-555c-4ae7-ac16-2298c7d77966"
+type = "fix"
+description = "Export `TypedDictProtocol` again in `typeapi` module (regression introduced in 2.2.0)"
+author = "@NiklasRosenstein"
+
+[[entries]]
+id = "34ea93f2-c302-46b8-bb23-d30a4b212c6a"
+type = "fix"
+description = "Export `ClassVarTypeHint` and `TypeAliasTypeHint` in `typeapi`"
+author = "@NiklasRosenstein"
