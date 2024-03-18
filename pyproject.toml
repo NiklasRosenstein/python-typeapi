@@ -32,6 +32,7 @@ types-dataclasses = "^0.6.5"
 isort = "^5.10.1"
 flake8 = "^4.0.1"
 black = "^22.3.0"
+astor = "^0.8.1"
 
 [tool.poetry.group.docs]
 optional = true
