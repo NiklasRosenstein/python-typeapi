@@ -6,7 +6,7 @@
   [PEP585]: https://peps.python.org/pep-0585/
   [PEP604]: https://peps.python.org/pep-0604/
 
-__Compatibility__: Python 3.6.3+
+__Compatibility__: Python 3.8+
 
 The `typeapi` package provides an object-oriented interface for introspecting [PEP484][] type hints at runtime,
 including forward references that make use of the more recent [PEP585][] and [PEP604][] type hint features in
@@ -19,15 +19,15 @@ The main API of this module is comprised of:
 
 The following kinds of type hints are currently supported:
 
-| Concrete type | Description | Added in |
-| ------------- | ----------- | -------- |
-| `ClassTypeHint` | For any normal or generic type as well as `typing.Any`. Provides access to the underlying type, the type arguments and parameters, if any. | 1.0.0 |
-| `UnionTypeHint` | Represents `Union` type hint and gives access to the union members. | 1.0.0 |
-| `LiteralTypeHint` | Represents a `Literal` type hint and gives access to the literal values. | 1.0.0 |
-| `AnnotatedTypeHint` | Represents an `Annotated` type hint and gives access to the annotated type as well as the metadata. | 1.0.0 |
-| `TypeVarTypeHint` | Represents a `TypeVar` type hint and gives an interface to access the variable's metadata (such as constarints, variance, ...). | 1.0.0 |
-| `ForwardRefTypeHint` | Represents a forward reference. Can be evaluated in Python 3.6+ even if it contains [PEP585][] and [PEP604][] expressions. <sup>1)</sup> | 1.0.0, future support in 1.3.0 |
-| `TupleTypeHint` | Reperesents a `Tuple` type hint, allowing you to differentiate between repeated and explicitly sized tuples. | 1.2.0 |
+| Concrete type        | Description                                                                                                                                | Added in                       |
+|----------------------|--------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------|
+| `ClassTypeHint`      | For any normal or generic type as well as `typing.Any`. Provides access to the underlying type, the type arguments and parameters, if any. | 1.0.0                          |
+| `UnionTypeHint`      | Represents `Union` type hint and gives access to the union members.                                                                        | 1.0.0                          |
+| `LiteralTypeHint`    | Represents a `Literal` type hint and gives access to the literal values.                                                                   | 1.0.0                          |
+| `AnnotatedTypeHint`  | Represents an `Annotated` type hint and gives access to the annotated type as well as the metadata.                                        | 1.0.0                          |
+| `TypeVarTypeHint`    | Represents a `TypeVar` type hint and gives an interface to access the variable's metadata (such as constarints, variance, ...).            | 1.0.0                          |
+| `ForwardRefTypeHint` | Represents a forward reference. Can be evaluated in Python 3.6+ even if it contains [PEP585][] and [PEP604][] expressions. <sup>1)</sup>   | 1.0.0, future support in 1.3.0 |
+| `TupleTypeHint`      | Reperesents a `Tuple` type hint, allowing you to differentiate between repeated and explicitly sized tuples.                               | 1.2.0                          |
 
 <sup>1)</sup> New-style type union evaluation will continue to return a `typing.Union`, even if the same syntax
 evaluated natively by Python 3.10+ results in a `types.UnionType`.
