@@ -1,16 +1,16 @@
 [build-system]
 # NOTE(NiklasRosenstein): We pin this version so we can keep using the old way that Slap supports installing
 #                         the "docs" extra without Poetry complaining about invalid format of the requirements.
-requires = ["poetry-core==1.1.0a6"]
+requires = ["poetry-core>=1.1.0a6"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "typeapi"
-version = "2.1.1"
+version = "2.1.2"
 description = ""
 authors = ["Niklas Rosenstein <rosensteinniklas@gmail.com>"]
 license = "MIT"
-readme = "readme.md"
+readme = "README.md"
 packages = [{ include = "typeapi", from = "src" }]
 classifiers = []
 keywords = []
@@ -22,7 +22,7 @@ Homepage = "https://github.com/NiklasRosenstein/python-typeapi"
 # Repository = ""
 
 [tool.poetry.dependencies]
-python = "^3.6.3"
+python = "^3.8"
 typing-extensions = ">=3.0.0"
 
 [tool.poetry.dev-dependencies]
@@ -34,20 +34,14 @@ flake8 = "^4.0.1"
 black = "^22.3.0"
 astor = "^0.8.1"
 
-[tool.poetry.extras]
-docs = ["novella==0.1.12", "pydoc-markdown==4.6.3", "mkdocs", "mkdocs-material"]
+[tool.poetry.group.docs]
+optional = true
 
-# For newer Poetry Core versions only. We need to stick with the old way that Poetry doesn't complain
-#   about in older versions but work with Slap above.
-#
-# [tool.poetry.group.docs]
-# optional = true
-#
-# [tool.poetry.group.docs.dependencies]
-# mkdocs = "*"
-# mkdocs-material = "*"
-# novella = "0.2.3"
-# pydoc-markdown = "4.6.0"
+[tool.poetry.group.docs.dependencies]
+mkdocs = "*"
+mkdocs-material = "*"
+mkdocstrings = {version = "*", extras = ["python"]}
+mksync = "^0.1.4"
 
 [tool.slap]
 typed = true
@@ -55,18 +49,18 @@ typed = true
 [tool.slap.test]
 check = "slap check"
 mypy = "dmypy run src/"
-pytest = "pytest src/ -vv"
+pytest = "pytest src/ -vv --doctest-modules"
 black = "black --check src/"
 isort = "isort --check-only src/"
 flake8 = "flake8 src/"
 
 [tool.slap.run]
-"docs:build" = "cd docs && novella --base-url python-typeapi/"
-"docs:dev" = "cd docs && novella --serve"
+"docs:build" = "cd docs && mkdocs build --site-dir _site"
+"docs:dev" = "cd docs && mkdocs serve"
 fmt = "black src/ && isort src/"
 
 [tool.mypy]
-python_version = "3.7"
+python_version = "3.8"
 explicit_package_bases = true
 mypy_path = ["src"]
 namespace_packages = true
