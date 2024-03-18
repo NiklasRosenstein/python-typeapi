@@ -31,7 +31,12 @@ jobs:
     - uses: actions/setup-python@v5
       with: { python-version: "${{ matrix.python-version }}" }
     - run: slap install --link --no-venv-check
+
+    # NOTE(@niklas): Flake8 doesn't run on 3.12 yet, so we only run pytest here.
     - run: slap test
+      if: ${{ !startsWith(matrix.python-version, "3.12.") }}
+    - run: slap test pytest
+      if: ${{ startsWith(matrix.python-version, "3.12.") }}
 
   docs:
     runs-on: ubuntu-latest
