@@ -34,9 +34,9 @@ jobs:
 
     # NOTE(@niklas): Flake8 doesn't run on 3.12 yet, so we only run pytest here.
     - run: slap test
-      if: ${{ !startsWith(matrix.python-version, '3.12.') }}
+      if: ${{ !startsWith(matrix.python-version, '3.12.') && matrix.python-version != '3.x' }}
     - run: slap test pytest
-      if: ${{ startsWith(matrix.python-version, '3.12.') }}
+      if: ${{ startsWith(matrix.python-version, '3.12.') || matrix.python-version == '3.x' }}
 
   docs:
     runs-on: ubuntu-latest
