@@ -10,7 +10,7 @@
 The `typeapi` package provides a __unified and consistent API__ for the reflection and introspection of
 Python type hints. In addition, it allows evaluating future annotations such as
 [PEP585](https://peps.python.org/pep-0585/) (such as `list[str]`) and
-[PEP604](https://peps.python.org/pep-0604/) (such as `int | str`) in in versions that don't
+[PEP604](https://peps.python.org/pep-0604/) (such as `int | str`) in versions that don't
 natively support them.
 
 __Requirements__:
