@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.18">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.23">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.66ac8b77.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6543a935.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
@@ -1353,14 +1353,14 @@
 
 
 <h3 id="typeapi" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>          <span class="doc doc-object-name doc-module-name">typeapi</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <span class="doc doc-object-name doc-module-name">typeapi</span>
 
 
 </h3>
 
-  <div class="doc doc-contents first">
+    <div class="doc doc-contents first">
 
-  
+
 
   <div class="doc doc-children">
 
@@ -1376,22 +1376,22 @@
 
 
 <h4 id="typeapi.AnnotatedTypeHint" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>          <span class="doc doc-object-name doc-class-name">AnnotatedTypeHint</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">AnnotatedTypeHint</span>
 
 
 </h4>
 
 
-  <div class="doc doc-contents ">
-          <p class="doc doc-class-bases">
-            Bases: <code><a class="autorefs autorefs-internal" title="typeapi.typehint.TypeHint" href="#typeapi.TypeHint">TypeHint</a></code></p>
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="typeapi.typehint.TypeHint" href="#typeapi.TypeHint">TypeHint</a></code></p>
 
-  
+
       <p>Represents the <code>Annotated</code> type hint.</p>
 
-            <details class="quote">
-              <summary>Source code in <code>typeapi/typehint.py</code></summary>
-              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-420">420</a></span>
+              <details class="quote">
+                <summary>Source code in <code>typeapi/typehint.py</code></summary>
+                <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-420">420</a></span>
 <span class="normal"><a href="#__codelineno-0-421">421</a></span>
 <span class="normal"><a href="#__codelineno-0-422">422</a></span>
 <span class="normal"><a href="#__codelineno-0-423">423</a></span>
@@ -1465,9 +1465,9 @@
 </span><span id="__span-0-455"><a id="__codelineno-0-455" name="__codelineno-0-455"></a>
 </span><span id="__span-0-456"><a id="__codelineno-0-456" name="__codelineno-0-456"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 </span></code></pre></div></td></tr></table></div>
-            </details>
+              </details>
 
-  
+
 
   <div class="doc doc-children">
 
@@ -1482,9 +1482,9 @@
 
 
 <h5 id="typeapi.AnnotatedTypeHint.metadata" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>          <span class="doc doc-object-name doc-attribute-name">metadata</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">metadata</span>
 
-  
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
@@ -1493,13 +1493,13 @@
 <div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">metadata</span><span class="p">:</span> <span class="n"><span title="typing.Tuple">Tuple</span></span><span class="p">[</span><span class="n"><span title="typing.Any">Any</span></span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
 </span></code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Returns the metadata, i.e. all the parameters after the wrapped type.</p>
 <div class="language-text highlight"><pre><span></span><code>&gt;&gt;&gt; TypeHint(Annotated[int, &quot;foobar&quot;]).metadata
 (&#39;foobar&#39;,)
 </code></pre></div>
-  </div>
+    </div>
 
 </div>
 
@@ -1508,9 +1508,9 @@
 
 
 <h5 id="typeapi.AnnotatedTypeHint.type" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>          <span class="doc doc-object-name doc-attribute-name">type</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">type</span>
 
-  
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
@@ -1519,14 +1519,14 @@
 <div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">type</span><span class="p">:</span> <span class="n"><span title="typing.Any">Any</span></span>
 </span></code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Returns the wrapped type of the annotation. It's common to wrap the result in a <code>TypeHint</code> to recursively
 introspect the wrapped type.</p>
 <div class="language-text highlight"><pre><span></span><code>&gt;&gt;&gt; TypeHint(Annotated[int, &quot;foobar&quot;]).type
 &lt;class &#39;int&#39;&gt;
 </code></pre></div>
-  </div>
+    </div>
 
 </div>
 
@@ -1536,8 +1536,7 @@ introspect the wrapped type.</p>
 
   </div>
 
-  </div>
-
+    </div>
 
 </div>
 
@@ -1546,22 +1545,22 @@ introspect the wrapped type.</p>
 
 
 <h4 id="typeapi.ClassTypeHint" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>          <span class="doc doc-object-name doc-class-name">ClassTypeHint</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">ClassTypeHint</span>
 
 
 </h4>
 
 
-  <div class="doc doc-contents ">
-          <p class="doc doc-class-bases">
-            Bases: <code><a class="autorefs autorefs-internal" title="typeapi.typehint.TypeHint" href="#typeapi.TypeHint">TypeHint</a></code></p>
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="typeapi.typehint.TypeHint" href="#typeapi.TypeHint">TypeHint</a></code></p>
 
-  
+
       <p>Represents a real, possibly parameterized, type. For example <code>int</code>, <code>list</code>, <code>list[int]</code> or <code>list[T]</code>.</p>
 
-            <details class="quote">
-              <summary>Source code in <code>typeapi/typehint.py</code></summary>
-              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-283">283</a></span>
+              <details class="quote">
+                <summary>Source code in <code>typeapi/typehint.py</code></summary>
+                <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-283">283</a></span>
 <span class="normal"><a href="#__codelineno-0-284">284</a></span>
 <span class="normal"><a href="#__codelineno-0-285">285</a></span>
 <span class="normal"><a href="#__codelineno-0-286">286</a></span>
@@ -1753,9 +1752,9 @@ introspect the wrapped type.</p>
 </span><span id="__span-0-377"><a id="__codelineno-0-377" name="__codelineno-0-377"></a>            <span class="k">else</span><span class="p">:</span>
 </span><span id="__span-0-378"><a id="__codelineno-0-378" name="__codelineno-0-378"></a>                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid order </span><span class="si">{</span><span class="n">order</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span></code></pre></div></td></tr></table></div>
-            </details>
+              </details>
 
-  
+
 
   <div class="doc doc-children">
 
@@ -1770,9 +1769,9 @@ introspect the wrapped type.</p>
 
 
 <h5 id="typeapi.ClassTypeHint.bases" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>          <span class="doc doc-object-name doc-attribute-name">bases</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">bases</span>
 
-  
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
@@ -1781,11 +1780,11 @@ introspect the wrapped type.</p>
 <div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">bases</span><span class="p">:</span> <span class="n"><span title="typing.Tuple">Tuple</span></span><span class="p">[</span><span class="n"><span title="typing.Any">Any</span></span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
 </span></code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Return the bases of the classes' types. If the type is a generic, the bases of the generic's origin are
 returned in their parameterized form (e.g. <code>Generic[T]</code> instead of <code>Generic</code> is returned).</p>
-  </div>
+    </div>
 
 </div>
 
@@ -1794,9 +1793,9 @@ returned in their parameterized form (e.g. <code>Generic[T]</code> instead of <c
 
 
 <h5 id="typeapi.ClassTypeHint.type" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>          <span class="doc doc-object-name doc-attribute-name">type</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">type</span>
 
-  
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
@@ -1805,30 +1804,28 @@ returned in their parameterized form (e.g. <code>Generic[T]</code> instead of <c
 <div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">type</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-internal" title="typeapi.typehint.ClassTypeHint.type" href="#typeapi.ClassTypeHint.type">type</a></span>
 </span></code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Returns the concrepte type.</p>
-  </div>
+    </div>
 
 </div>
-
 
 
 
 <div class="doc doc-object doc-function">
 
 
-
 <h5 id="typeapi.ClassTypeHint.get_parameter_map" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>          <span class="doc doc-object-name doc-function-name">get_parameter_map</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">get_parameter_map</span>
 
 
 </h5>
 <div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">get_parameter_map</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n"><span title="typing.Dict">Dict</span></span><span class="p">[</span><span class="n"><span title="typing.Any">Any</span></span><span class="p">,</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">]</span>
 </span></code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Returns a dictionary that maps generic parameters to their values.</p>
 <div class="language-text highlight"><pre><span></span><code>&gt;&gt;&gt; TypeHint(List[int]).type
 &lt;class &#39;list&#39;&gt;
@@ -1848,9 +1845,9 @@ returned in their parameterized form (e.g. <code>Generic[T]</code> instead of <c
 {~T: &lt;class &#39;int&#39;&gt;}
 </code></pre></div>
 
-          <details class="quote">
-            <summary>Source code in <code>typeapi/typehint.py</code></summary>
-            <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-317">317</a></span>
+            <details class="quote">
+              <summary>Source code in <code>typeapi/typehint.py</code></summary>
+              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-317">317</a></span>
 <span class="normal"><a href="#__codelineno-0-318">318</a></span>
 <span class="normal"><a href="#__codelineno-0-319">319</a></span>
 <span class="normal"><a href="#__codelineno-0-320">320</a></span>
@@ -1904,33 +1901,31 @@ returned in their parameterized form (e.g. <code>Generic[T]</code> instead of <c
 </span><span id="__span-0-342"><a id="__codelineno-0-342" name="__codelineno-0-342"></a>    <span class="c1"># use self.parameters.</span>
 </span><span id="__span-0-343"><a id="__codelineno-0-343" name="__codelineno-0-343"></a>    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">TypeHint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">)</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">))</span>
 </span></code></pre></div></td></tr></table></div>
-          </details>
-  </div>
+            </details>
+    </div>
 
 </div>
-
 
 <div class="doc doc-object doc-function">
 
 
-
 <h5 id="typeapi.ClassTypeHint.recurse_bases" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>          <span class="doc doc-object-name doc-function-name">recurse_bases</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">recurse_bases</span>
 
 
 </h5>
 <div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">recurse_bases</span><span class="p">(</span><span class="n">order</span><span class="p">:</span> <span class="n"><span title="typing_extensions.Literal">Literal</span></span><span class="p">[</span><span class="s1">&#39;dfs&#39;</span><span class="p">,</span> <span class="s1">&#39;bfs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;bfs&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="typing.Generator">Generator</span></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-internal" title="typeapi.typehint.ClassTypeHint" href="#typeapi.ClassTypeHint">ClassTypeHint</a></span><span class="p">,</span> <span class="n"><span title="typing.Union">Union</span></span><span class="p">[</span><span class="n"><span title="typing_extensions.Literal">Literal</span></span><span class="p">[</span><span class="s1">&#39;skip&#39;</span><span class="p">],</span> <span class="kc">None</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span>
 </span></code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Iterate over all base classes of this type hint, and continues recursively. The iteration order is
 determined by the <em>order</em> parameter, which can be either depth-first or breadh-first. If the generator
 receives the string <code>"skip"</code> from the caller, it will skip the bases of the last yielded type.</p>
 
-          <details class="quote">
-            <summary>Source code in <code>typeapi/typehint.py</code></summary>
-            <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-345">345</a></span>
+            <details class="quote">
+              <summary>Source code in <code>typeapi/typehint.py</code></summary>
+              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-345">345</a></span>
 <span class="normal"><a href="#__codelineno-0-346">346</a></span>
 <span class="normal"><a href="#__codelineno-0-347">347</a></span>
 <span class="normal"><a href="#__codelineno-0-348">348</a></span>
@@ -1998,8 +1993,8 @@ receives the string <code>"skip"</code> from the caller, it will skip the bases 
 </span><span id="__span-0-377"><a id="__codelineno-0-377" name="__codelineno-0-377"></a>        <span class="k">else</span><span class="p">:</span>
 </span><span id="__span-0-378"><a id="__codelineno-0-378" name="__codelineno-0-378"></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid order </span><span class="si">{</span><span class="n">order</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span></code></pre></div></td></tr></table></div>
-          </details>
-  </div>
+            </details>
+    </div>
 
 </div>
 
@@ -2007,8 +2002,7 @@ receives the string <code>"skip"</code> from the caller, it will skip the bases 
 
   </div>
 
-  </div>
-
+    </div>
 
 </div>
 
@@ -2017,22 +2011,22 @@ receives the string <code>"skip"</code> from the caller, it will skip the bases 
 
 
 <h4 id="typeapi.ForwardRefTypeHint" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>          <span class="doc doc-object-name doc-class-name">ForwardRefTypeHint</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">ForwardRefTypeHint</span>
 
 
 </h4>
 
 
-  <div class="doc doc-contents ">
-          <p class="doc doc-class-bases">
-            Bases: <code><a class="autorefs autorefs-internal" title="typeapi.typehint.TypeHint" href="#typeapi.TypeHint">TypeHint</a></code></p>
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="typeapi.typehint.TypeHint" href="#typeapi.TypeHint">TypeHint</a></code></p>
 
-  
+
       <p>Represents a forward reference, i.e. a string in the type annotation or an explicit <code>ForwardRef</code>.</p>
 
-            <details class="quote">
-              <summary>Source code in <code>typeapi/typehint.py</code></summary>
-              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-533">533</a></span>
+              <details class="quote">
+                <summary>Source code in <code>typeapi/typehint.py</code></summary>
+                <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-533">533</a></span>
 <span class="normal"><a href="#__codelineno-0-534">534</a></span>
 <span class="normal"><a href="#__codelineno-0-535">535</a></span>
 <span class="normal"><a href="#__codelineno-0-536">536</a></span>
@@ -2134,9 +2128,9 @@ receives the string <code>"skip"</code> from the caller, it will skip the bases 
 </span><span id="__span-0-582"><a id="__codelineno-0-582" name="__codelineno-0-582"></a>
 </span><span id="__span-0-583"><a id="__codelineno-0-583" name="__codelineno-0-583"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_forward_ref</span><span class="o">.</span><span class="n">__forward_arg__</span>
 </span></code></pre></div></td></tr></table></div>
-            </details>
+              </details>
 
-  
+
 
   <div class="doc doc-children">
 
@@ -2151,9 +2145,9 @@ receives the string <code>"skip"</code> from the caller, it will skip the bases 
 
 
 <h5 id="typeapi.ForwardRefTypeHint.expr" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>          <span class="doc doc-object-name doc-attribute-name">expr</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">expr</span>
 
-  
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
@@ -2162,15 +2156,15 @@ receives the string <code>"skip"</code> from the caller, it will skip the bases 
 <div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">expr</span><span class="p">:</span> <span class="n">str</span>
 </span></code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Returns the expression of the forward reference.</p>
 <div class="language-text highlight"><pre><span></span><code>&gt;&gt;&gt; TypeHint(ForwardRef(&quot;Foobar&quot;)).expr
 &#39;Foobar&#39;
 &gt;&gt;&gt; TypeHint(TypeHint(List[&quot;Foobar&quot;]).args[0]).expr
 &#39;Foobar&#39;
 </code></pre></div>
-  </div>
+    </div>
 
 </div>
 
@@ -2179,9 +2173,9 @@ receives the string <code>"skip"</code> from the caller, it will skip the bases 
 
 
 <h5 id="typeapi.ForwardRefTypeHint.hint" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>          <span class="doc doc-object-name doc-attribute-name">hint</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">hint</span>
 
-  
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
@@ -2190,10 +2184,10 @@ receives the string <code>"skip"</code> from the caller, it will skip the bases 
 <div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">hint</span><span class="p">:</span> <span class="n"><span title="typeapi.utils.ForwardRef">ForwardRef</span></span> <span class="o">|</span> <span class="n">str</span>
 </span></code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Returns the original type hint.</p>
-  </div>
+    </div>
 
 </div>
 
@@ -2202,9 +2196,9 @@ receives the string <code>"skip"</code> from the caller, it will skip the bases 
 
 
 <h5 id="typeapi.ForwardRefTypeHint.ref" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>          <span class="doc doc-object-name doc-attribute-name">ref</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">ref</span>
 
-  
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
@@ -2213,10 +2207,10 @@ receives the string <code>"skip"</code> from the caller, it will skip the bases 
 <div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">ref</span><span class="p">:</span> <span class="n"><span title="typeapi.utils.ForwardRef">ForwardRef</span></span>
 </span></code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Same as <code>hint</code>, but returns it as a <code>ForwardRef</code> always.</p>
-  </div>
+    </div>
 
 </div>
 
@@ -2226,8 +2220,7 @@ receives the string <code>"skip"</code> from the caller, it will skip the bases 
 
   </div>
 
-  </div>
-
+    </div>
 
 </div>
 
@@ -2236,22 +2229,22 @@ receives the string <code>"skip"</code> from the caller, it will skip the bases 
 
 
 <h4 id="typeapi.LiteralTypeHint" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>          <span class="doc doc-object-name doc-class-name">LiteralTypeHint</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">LiteralTypeHint</span>
 
 
 </h4>
 
 
-  <div class="doc doc-contents ">
-          <p class="doc doc-class-bases">
-            Bases: <code><a class="autorefs autorefs-internal" title="typeapi.typehint.TypeHint" href="#typeapi.TypeHint">TypeHint</a></code></p>
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="typeapi.typehint.TypeHint" href="#typeapi.TypeHint">TypeHint</a></code></p>
 
-  
+
       <p>Represents a literal type hint, e.g. <code>Literal["a", 42]</code>.</p>
 
-            <details class="quote">
-              <summary>Source code in <code>typeapi/typehint.py</code></summary>
-              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-395">395</a></span>
+              <details class="quote">
+                <summary>Source code in <code>typeapi/typehint.py</code></summary>
+                <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-395">395</a></span>
 <span class="normal"><a href="#__codelineno-0-396">396</a></span>
 <span class="normal"><a href="#__codelineno-0-397">397</a></span>
 <span class="normal"><a href="#__codelineno-0-398">398</a></span>
@@ -2297,9 +2290,9 @@ receives the string <code>"skip"</code> from the caller, it will skip the bases 
 </span><span id="__span-0-416"><a id="__codelineno-0-416" name="__codelineno-0-416"></a>
 </span><span id="__span-0-417"><a id="__codelineno-0-417" name="__codelineno-0-417"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_args</span>
 </span></code></pre></div></td></tr></table></div>
-            </details>
+              </details>
 
-  
+
 
   <div class="doc doc-children">
 
@@ -2314,9 +2307,9 @@ receives the string <code>"skip"</code> from the caller, it will skip the bases 
 
 
 <h5 id="typeapi.LiteralTypeHint.values" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>          <span class="doc doc-object-name doc-attribute-name">values</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">values</span>
 
-  
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
@@ -2325,13 +2318,13 @@ receives the string <code>"skip"</code> from the caller, it will skip the bases 
 <div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">values</span><span class="p">:</span> <span class="n"><span title="typing.Tuple">Tuple</span></span><span class="p">[</span><span class="n"><span title="typing.Any">Any</span></span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
 </span></code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Returns the values of the literal.</p>
 <div class="language-text highlight"><pre><span></span><code>&gt;&gt;&gt; TypeHint(Literal[&quot;a&quot;, 42]).values
 (&#39;a&#39;, 42)
 </code></pre></div>
-  </div>
+    </div>
 
 </div>
 
@@ -2341,8 +2334,7 @@ receives the string <code>"skip"</code> from the caller, it will skip the bases 
 
   </div>
 
-  </div>
-
+    </div>
 
 </div>
 
@@ -2351,23 +2343,23 @@ receives the string <code>"skip"</code> from the caller, it will skip the bases 
 
 
 <h4 id="typeapi.TupleTypeHint" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>          <span class="doc doc-object-name doc-class-name">TupleTypeHint</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">TupleTypeHint</span>
 
 
 </h4>
 
 
-  <div class="doc doc-contents ">
-          <p class="doc doc-class-bases">
-            Bases: <code><a class="autorefs autorefs-internal" title="typeapi.typehint.ClassTypeHint" href="#typeapi.ClassTypeHint">ClassTypeHint</a></code></p>
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="typeapi.typehint.ClassTypeHint" href="#typeapi.ClassTypeHint">ClassTypeHint</a></code></p>
 
-  
+
       <p>A special class to represent a type hint for a parameterized tuple. This class does not represent a plain tuple
 type without parameterization.</p>
 
-            <details class="quote">
-              <summary>Source code in <code>typeapi/typehint.py</code></summary>
-              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-586">586</a></span>
+              <details class="quote">
+                <summary>Source code in <code>typeapi/typehint.py</code></summary>
+                <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-586">586</a></span>
 <span class="normal"><a href="#__codelineno-0-587">587</a></span>
 <span class="normal"><a href="#__codelineno-0-588">588</a></span>
 <span class="normal"><a href="#__codelineno-0-589">589</a></span>
@@ -2439,9 +2431,9 @@ type without parameterization.</p>
 </span><span id="__span-0-620"><a id="__codelineno-0-620" name="__codelineno-0-620"></a>
 </span><span id="__span-0-621"><a id="__codelineno-0-621" name="__codelineno-0-621"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_repeated</span>
 </span></code></pre></div></td></tr></table></div>
-            </details>
+              </details>
 
-  
+
 
   <div class="doc doc-children">
 
@@ -2456,9 +2448,9 @@ type without parameterization.</p>
 
 
 <h5 id="typeapi.TupleTypeHint.repeated" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>          <span class="doc doc-object-name doc-attribute-name">repeated</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">repeated</span>
 
-  
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
@@ -2467,10 +2459,10 @@ type without parameterization.</p>
 <div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">repeated</span><span class="p">:</span> <span class="n">bool</span>
 </span></code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Returns <code>True</code> if the Tuple is of arbitrary length, but only of one type.</p>
-  </div>
+    </div>
 
 </div>
 
@@ -2480,8 +2472,7 @@ type without parameterization.</p>
 
   </div>
 
-  </div>
-
+    </div>
 
 </div>
 
@@ -2490,22 +2481,22 @@ type without parameterization.</p>
 
 
 <h4 id="typeapi.TypeHint" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>          <span class="doc doc-object-name doc-class-name">TypeHint</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">TypeHint</span>
 
 
 </h4>
 
 
-  <div class="doc doc-contents ">
-          <p class="doc doc-class-bases">
-            Bases: <code>object</code></p>
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code>object</code></p>
 
-  
+
       <p>Base class that provides an object-oriented interface to a Python type hint.</p>
 
-            <details class="quote">
-              <summary>Source code in <code>typeapi/typehint.py</code></summary>
-              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-115">115</a></span>
+              <details class="quote">
+                <summary>Source code in <code>typeapi/typehint.py</code></summary>
+                <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-115">115</a></span>
 <span class="normal"><a href="#__codelineno-0-116">116</a></span>
 <span class="normal"><a href="#__codelineno-0-117">117</a></span>
 <span class="normal"><a href="#__codelineno-0-118">118</a></span>
@@ -2837,9 +2828,9 @@ type without parameterization.</p>
 </span><span id="__span-0-279"><a id="__codelineno-0-279" name="__codelineno-0-279"></a>            <span class="p">)</span>
 </span><span id="__span-0-280"><a id="__codelineno-0-280" name="__codelineno-0-280"></a>        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unable to determine TypeHint.source context from source=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span></code></pre></div></td></tr></table></div>
-            </details>
+              </details>
 
-  
+
 
   <div class="doc doc-children">
 
@@ -2854,9 +2845,9 @@ type without parameterization.</p>
 
 
 <h5 id="typeapi.TypeHint.args" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>          <span class="doc doc-object-name doc-attribute-name">args</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">args</span>
 
-  
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
@@ -2865,13 +2856,13 @@ type without parameterization.</p>
 <div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">args</span><span class="p">:</span> <span class="n"><span title="typing.Tuple">Tuple</span></span><span class="p">[</span><span class="n"><span title="typing.Any">Any</span></span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
 </span></code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Type hint arguments are the values passed into type hint subscripts, e.g. in <code>Union[int, str]</code>, the
 arguments are <code>(int, str)</code>. We only return arguments that are expected to be types or other type hints.
 For example, <code>Literal["foo", 0]</code> has an empty tuple for its <code>args</code>, and instead the values can be
 retrievd using :attr:<code>LiteralTypeHint.valuse</code>.</p>
-  </div>
+    </div>
 
 </div>
 
@@ -2880,9 +2871,9 @@ retrievd using :attr:<code>LiteralTypeHint.valuse</code>.</p>
 
 
 <h5 id="typeapi.TypeHint.hint" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>          <span class="doc doc-object-name doc-attribute-name">hint</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">hint</span>
 
-  
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
@@ -2891,10 +2882,10 @@ retrievd using :attr:<code>LiteralTypeHint.valuse</code>.</p>
 <div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">hint</span><span class="p">:</span> <span class="n">object</span>
 </span></code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>The original type hint.</p>
-  </div>
+    </div>
 
 </div>
 
@@ -2903,9 +2894,9 @@ retrievd using :attr:<code>LiteralTypeHint.valuse</code>.</p>
 
 
 <h5 id="typeapi.TypeHint.origin" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>          <span class="doc doc-object-name doc-attribute-name">origin</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">origin</span>
 
-  
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
@@ -2914,11 +2905,11 @@ retrievd using :attr:<code>LiteralTypeHint.valuse</code>.</p>
 <div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">origin</span><span class="p">:</span> <span class="n">object</span> <span class="o">|</span> <span class="kc">None</span>
 </span></code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>The original type behind a type hint (e.g. the <code>Generic.__origin__</code>). For example, for :class:<code>typing.List</code>,
 it is <code>list</code>. For :class:<code>typing.Sequence</code>, it is :class:<code>collections.abc.Sequence</code>.</p>
-  </div>
+    </div>
 
 </div>
 
@@ -2927,9 +2918,9 @@ it is <code>list</code>. For :class:<code>typing.Sequence</code>, it is :class:<
 
 
 <h5 id="typeapi.TypeHint.parameters" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>          <span class="doc doc-object-name doc-attribute-name">parameters</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">parameters</span>
 
-  
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
@@ -2938,10 +2929,10 @@ it is <code>list</code>. For :class:<code>typing.Sequence</code>, it is :class:<
 <div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">parameters</span><span class="p">:</span> <span class="n"><span title="typing.Tuple">Tuple</span></span><span class="p">[</span><span class="n"><span title="typing.Any">Any</span></span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
 </span></code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>The parameters of a type hint is basically :attr:<code>args</code> but filtered for #typing.TypeVar objects.</p>
-  </div>
+    </div>
 
 </div>
 
@@ -2950,9 +2941,9 @@ it is <code>list</code>. For :class:<code>typing.Sequence</code>, it is :class:<
 
 
 <h5 id="typeapi.TypeHint.source" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>          <span class="doc doc-object-name doc-attribute-name">source</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">source</span>
 
-  
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
@@ -2961,30 +2952,28 @@ it is <code>list</code>. For :class:<code>typing.Sequence</code>, it is :class:<
 <div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">source</span><span class="p">:</span> <span class="n"><span title="typing.Any">Any</span></span> <span class="o">|</span> <span class="kc">None</span>
 </span></code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>The object from which on which the type hint was found, for example a class or a function.</p>
-  </div>
+    </div>
 
 </div>
-
 
 
 
 <div class="doc doc-object doc-function">
 
 
-
 <h5 id="typeapi.TypeHint.evaluate" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>          <span class="doc doc-object-name doc-function-name">evaluate</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">evaluate</span>
 
 
 </h5>
 <div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">evaluate</span><span class="p">(</span><span class="n">context</span><span class="p">:</span> <span class="n"><span title="typeapi.utils.HasGetitem">HasGetitem</span></span><span class="p">[</span><span class="n">str</span><span class="p">,</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-internal" title="typeapi.typehint.TypeHint" href="#typeapi.TypeHint">TypeHint</a></span>
 </span></code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Evaluate forward references in the type hint using the given <em>context</em>.</p>
 <p>This method supports evaluating forward references that use PEP585 and PEP604 syntax even in older
 versions of Python that do not support the PEPs.</p>
@@ -2992,9 +2981,9 @@ versions of Python that do not support the PEPs.</p>
     not specified, the globals of the <code>__module__</code> of the type hint's source :attr:<code>source</code> is
     used instead. If no source exists, a :class:<code>RuntimeError</code> is raised.</p>
 
-          <details class="quote">
-            <summary>Source code in <code>typeapi/typehint.py</code></summary>
-            <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-234">234</a></span>
+            <details class="quote">
+              <summary>Source code in <code>typeapi/typehint.py</code></summary>
+              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-234">234</a></span>
 <span class="normal"><a href="#__codelineno-0-235">235</a></span>
 <span class="normal"><a href="#__codelineno-0-236">236</a></span>
 <span class="normal"><a href="#__codelineno-0-237">237</a></span>
@@ -3034,35 +3023,33 @@ versions of Python that do not support the PEPs.</p>
 </span><span id="__span-0-252"><a id="__codelineno-0-252" name="__codelineno-0-252"></a>    <span class="k">else</span><span class="p">:</span>
 </span><span id="__span-0-253"><a id="__codelineno-0-253" name="__codelineno-0-253"></a>        <span class="k">return</span> <span class="bp">self</span>
 </span></code></pre></div></td></tr></table></div>
-          </details>
-  </div>
+            </details>
+    </div>
 
 </div>
-
 
 <div class="doc doc-object doc-function">
 
 
-
 <h5 id="typeapi.TypeHint.get_context" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>          <span class="doc doc-object-name doc-function-name">get_context</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">get_context</span>
 
 
 </h5>
 <div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">get_context</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n"><span title="typeapi.utils.HasGetitem">HasGetitem</span></span><span class="p">[</span><span class="n">str</span><span class="p">,</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">]</span>
 </span></code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Return the context for this type hint in which forward references must be evaluated.</p>
 <p>The context is derived from the <code>source</code> attribute, which can be either a <code>ModuleType</code>, <code>Mapping</code> or
 <code>type</code>. In case of a <code>type</code>, the context is composed of the class scope (to resolve class-level members)
 and the scope of the module that contains the type (looked up in <code>sys.modules</code>).</p>
 <p>Raises RuntimeError: If <code>source</code> is <code>None</code> or has not one of the three supported types.</p>
 
-          <details class="quote">
-            <summary>Source code in <code>typeapi/typehint.py</code></summary>
-            <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-255">255</a></span>
+            <details class="quote">
+              <summary>Source code in <code>typeapi/typehint.py</code></summary>
+              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-255">255</a></span>
 <span class="normal"><a href="#__codelineno-0-256">256</a></span>
 <span class="normal"><a href="#__codelineno-0-257">257</a></span>
 <span class="normal"><a href="#__codelineno-0-258">258</a></span>
@@ -3114,34 +3101,32 @@ and the scope of the module that contains the type (looked up in <code>sys.modul
 </span><span id="__span-0-279"><a id="__codelineno-0-279" name="__codelineno-0-279"></a>        <span class="p">)</span>
 </span><span id="__span-0-280"><a id="__codelineno-0-280" name="__codelineno-0-280"></a>    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unable to determine TypeHint.source context from source=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span></code></pre></div></td></tr></table></div>
-          </details>
-  </div>
+            </details>
+    </div>
 
 </div>
-
 
 <div class="doc doc-object doc-function">
 
 
-
 <h5 id="typeapi.TypeHint.parameterize" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>          <span class="doc doc-object-name doc-function-name">parameterize</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">parameterize</span>
 
 
 </h5>
 <div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">parameterize</span><span class="p">(</span><span class="n">parameter_map</span><span class="p">:</span> <span class="n"><span title="typing.Mapping">Mapping</span></span><span class="p">[</span><span class="n">object</span><span class="p">,</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-internal" title="typeapi.typehint.TypeHint" href="#typeapi.TypeHint">TypeHint</a></span>
 </span></code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Replace references to the type variables in the keys of <em>parameter_map</em>
 with the type hints of the associated values.</p>
 <p>:param parameter_map: A dictionary that maps :class:<code>TypeVar</code> to other
     type hints.</p>
 
-          <details class="quote">
-            <summary>Source code in <code>typeapi/typehint.py</code></summary>
-            <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-219">219</a></span>
+            <details class="quote">
+              <summary>Source code in <code>typeapi/typehint.py</code></summary>
+              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-219">219</a></span>
 <span class="normal"><a href="#__codelineno-0-220">220</a></span>
 <span class="normal"><a href="#__codelineno-0-221">221</a></span>
 <span class="normal"><a href="#__codelineno-0-222">222</a></span>
@@ -3169,8 +3154,8 @@ with the type hints of the associated values.</p>
 </span><span id="__span-0-231"><a id="__codelineno-0-231" name="__codelineno-0-231"></a>    <span class="k">else</span><span class="p">:</span>
 </span><span id="__span-0-232"><a id="__codelineno-0-232" name="__codelineno-0-232"></a>        <span class="k">return</span> <span class="bp">self</span>
 </span></code></pre></div></td></tr></table></div>
-          </details>
-  </div>
+            </details>
+    </div>
 
 </div>
 
@@ -3178,8 +3163,7 @@ with the type hints of the associated values.</p>
 
   </div>
 
-  </div>
-
+    </div>
 
 </div>
 
@@ -3188,22 +3172,22 @@ with the type hints of the associated values.</p>
 
 
 <h4 id="typeapi.TypeVarTypeHint" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>          <span class="doc doc-object-name doc-class-name">TypeVarTypeHint</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">TypeVarTypeHint</span>
 
 
 </h4>
 
 
-  <div class="doc doc-contents ">
-          <p class="doc doc-class-bases">
-            Bases: <code><a class="autorefs autorefs-internal" title="typeapi.typehint.TypeHint" href="#typeapi.TypeHint">TypeHint</a></code></p>
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="typeapi.typehint.TypeHint" href="#typeapi.TypeHint">TypeHint</a></code></p>
 
-  
+
       <p>Represents a <code>TypeVar</code> type hint.</p>
 
-            <details class="quote">
-              <summary>Source code in <code>typeapi/typehint.py</code></summary>
-              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-459">459</a></span>
+              <details class="quote">
+                <summary>Source code in <code>typeapi/typehint.py</code></summary>
+                <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-459">459</a></span>
 <span class="normal"><a href="#__codelineno-0-460">460</a></span>
 <span class="normal"><a href="#__codelineno-0-461">461</a></span>
 <span class="normal"><a href="#__codelineno-0-462">462</a></span>
@@ -3347,9 +3331,9 @@ with the type hints of the associated values.</p>
 </span><span id="__span-0-529"><a id="__codelineno-0-529" name="__codelineno-0-529"></a>
 </span><span id="__span-0-530"><a id="__codelineno-0-530" name="__codelineno-0-530"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">hint</span><span class="o">.</span><span class="n">__bound__</span>
 </span></code></pre></div></td></tr></table></div>
-            </details>
+              </details>
 
-  
+
 
   <div class="doc doc-children">
 
@@ -3364,9 +3348,9 @@ with the type hints of the associated values.</p>
 
 
 <h5 id="typeapi.TypeVarTypeHint.bound" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>          <span class="doc doc-object-name doc-attribute-name">bound</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">bound</span>
 
-  
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
@@ -3375,13 +3359,13 @@ with the type hints of the associated values.</p>
 <div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">bound</span><span class="p">:</span> <span class="n"><span title="typing.Any">Any</span></span>
 </span></code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Returns what the TypeVar is bound to.</p>
 <div class="language-text highlight"><pre><span></span><code>&gt;&gt;&gt; TypeHint(TypeVar(&quot;T&quot;, bound=str)).bound
 &lt;class &#39;str&#39;&gt;
 </code></pre></div>
-  </div>
+    </div>
 
 </div>
 
@@ -3390,9 +3374,9 @@ with the type hints of the associated values.</p>
 
 
 <h5 id="typeapi.TypeVarTypeHint.constraints" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>          <span class="doc doc-object-name doc-attribute-name">constraints</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">constraints</span>
 
-  
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
@@ -3401,13 +3385,13 @@ with the type hints of the associated values.</p>
 <div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">constraints</span><span class="p">:</span> <span class="n"><span title="typing.Tuple">Tuple</span></span><span class="p">[</span><span class="n"><span title="typing.Any">Any</span></span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
 </span></code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Returns the constraints of the TypeVar.</p>
 <div class="language-text highlight"><pre><span></span><code>&gt;&gt;&gt; TypeHint(TypeVar(&quot;T&quot;, int, str)).constraints
 (&lt;class &#39;int&#39;&gt;, &lt;class &#39;str&#39;&gt;)
 </code></pre></div>
-  </div>
+    </div>
 
 </div>
 
@@ -3416,9 +3400,9 @@ with the type hints of the associated values.</p>
 
 
 <h5 id="typeapi.TypeVarTypeHint.contravariant" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>          <span class="doc doc-object-name doc-attribute-name">contravariant</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">contravariant</span>
 
-  
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
@@ -3427,15 +3411,15 @@ with the type hints of the associated values.</p>
 <div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">contravariant</span><span class="p">:</span> <span class="n">bool</span>
 </span></code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Returns whether the TypeVar is contravariant.</p>
 <div class="language-text highlight"><pre><span></span><code>&gt;&gt;&gt; TypeHint(TypeVar(&quot;T&quot;)).contravariant
 False
 &gt;&gt;&gt; TypeHint(TypeVar(&quot;T&quot;, contravariant=True)).contravariant
 True
 </code></pre></div>
-  </div>
+    </div>
 
 </div>
 
@@ -3444,9 +3428,9 @@ True
 
 
 <h5 id="typeapi.TypeVarTypeHint.covariant" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>          <span class="doc doc-object-name doc-attribute-name">covariant</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">covariant</span>
 
-  
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
@@ -3455,15 +3439,15 @@ True
 <div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">covariant</span><span class="p">:</span> <span class="n">bool</span>
 </span></code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Returns whether the TypeVar is covariant.</p>
 <div class="language-text highlight"><pre><span></span><code>&gt;&gt;&gt; TypeHint(TypeVar(&quot;T&quot;)).covariant
 False
 &gt;&gt;&gt; TypeHint(TypeVar(&quot;T&quot;, covariant=True)).covariant
 True
 </code></pre></div>
-  </div>
+    </div>
 
 </div>
 
@@ -3472,9 +3456,9 @@ True
 
 
 <h5 id="typeapi.TypeVarTypeHint.name" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>          <span class="doc doc-object-name doc-attribute-name">name</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">name</span>
 
-  
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
@@ -3483,13 +3467,13 @@ True
 <div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">name</span><span class="p">:</span> <span class="n">str</span>
 </span></code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Returns the name of the type variable.</p>
 <div class="language-text highlight"><pre><span></span><code>&gt;&gt;&gt; TypeHint(TypeVar(&quot;T&quot;)).name
 &#39;T&#39;
 </code></pre></div>
-  </div>
+    </div>
 
 </div>
 
@@ -3499,8 +3483,7 @@ True
 
   </div>
 
-  </div>
-
+    </div>
 
 </div>
 
@@ -3509,23 +3492,23 @@ True
 
 
 <h4 id="typeapi.TypedDictProtocol" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>          <span class="doc doc-object-name doc-class-name">TypedDictProtocol</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">TypedDictProtocol</span>
 
 
 </h4>
 
 
-  <div class="doc doc-contents ">
-          <p class="doc doc-class-bases">
-            Bases: <code><span title="typing_extensions.Protocol">Protocol</span></code></p>
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="typing_extensions.Protocol">Protocol</span></code></p>
 
-  
+
       <p>A protocol that describes #typing.TypedDict values (which are actually instances of the #typing._TypedDictMeta
 metaclass). Use #is_typed_dict() to check if a hint is matches this protocol.</p>
 
-            <details class="quote">
-              <summary>Source code in <code>typeapi/utils.py</code></summary>
-              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-354">354</a></span>
+              <details class="quote">
+                <summary>Source code in <code>typeapi/utils.py</code></summary>
+                <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-354">354</a></span>
 <span class="normal"><a href="#__codelineno-0-355">355</a></span>
 <span class="normal"><a href="#__codelineno-0-356">356</a></span>
 <span class="normal"><a href="#__codelineno-0-357">357</a></span>
@@ -3541,9 +3524,9 @@ metaclass). Use #is_typed_dict() to check if a hint is matches this protocol.</p
 </span><span id="__span-0-360"><a id="__codelineno-0-360" name="__codelineno-0-360"></a>    <span class="n">__optional_keys__</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
 </span><span id="__span-0-361"><a id="__codelineno-0-361" name="__codelineno-0-361"></a>    <span class="n">__total__</span><span class="p">:</span> <span class="nb">bool</span>
 </span></code></pre></div></td></tr></table></div>
-            </details>
+              </details>
 
-  
+
 
   <div class="doc doc-children">
 
@@ -3559,8 +3542,7 @@ metaclass). Use #is_typed_dict() to check if a hint is matches this protocol.</p
 
   </div>
 
-  </div>
-
+    </div>
 
 </div>
 
@@ -3569,22 +3551,22 @@ metaclass). Use #is_typed_dict() to check if a hint is matches this protocol.</p
 
 
 <h4 id="typeapi.UnionTypeHint" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>          <span class="doc doc-object-name doc-class-name">UnionTypeHint</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">UnionTypeHint</span>
 
 
 </h4>
 
 
-  <div class="doc doc-contents ">
-          <p class="doc doc-class-bases">
-            Bases: <code><a class="autorefs autorefs-internal" title="typeapi.typehint.TypeHint" href="#typeapi.TypeHint">TypeHint</a></code></p>
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="typeapi.typehint.TypeHint" href="#typeapi.TypeHint">TypeHint</a></code></p>
 
-  
+
       <p>Represents a union of types, e.g. <code>typing.Union[A, B]</code> or <code>A | B</code>.</p>
 
-            <details class="quote">
-              <summary>Source code in <code>typeapi/typehint.py</code></summary>
-              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-381">381</a></span>
+              <details class="quote">
+                <summary>Source code in <code>typeapi/typehint.py</code></summary>
+                <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-381">381</a></span>
 <span class="normal"><a href="#__codelineno-0-382">382</a></span>
 <span class="normal"><a href="#__codelineno-0-383">383</a></span>
 <span class="normal"><a href="#__codelineno-0-384">384</a></span>
@@ -3608,9 +3590,9 @@ metaclass). Use #is_typed_dict() to check if a hint is matches this protocol.</p
 </span><span id="__span-0-391"><a id="__codelineno-0-391" name="__codelineno-0-391"></a>        <span class="k">else</span><span class="p">:</span>
 </span><span id="__span-0-392"><a id="__codelineno-0-392" name="__codelineno-0-392"></a>            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_copy_with_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
 </span></code></pre></div></td></tr></table></div>
-            </details>
+              </details>
 
-  
+
 
   <div class="doc doc-children">
 
@@ -3626,27 +3608,24 @@ metaclass). Use #is_typed_dict() to check if a hint is matches this protocol.</p
 
   </div>
 
-  </div>
-
+    </div>
 
 </div>
-
 
 
 <div class="doc doc-object doc-function">
 
 
-
 <h4 id="typeapi.get_annotations" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>          <span class="doc doc-object-name doc-function-name">get_annotations</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">get_annotations</span>
 
 
 </h4>
 <div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">get_annotations</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n"><span title="typing.Union">Union</span></span><span class="p">[</span><span class="n"><span title="typing.Callable">Callable</span></span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">],</span> <span class="n"><span title="types.ModuleType">ModuleType</span></span><span class="p">,</span> <span class="n">type</span><span class="p">],</span> <span class="n">include_bases</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">globalns</span><span class="p">:</span> <span class="n"><span title="typing.Optional">Optional</span></span><span class="p">[</span><span class="n"><span title="typing.Dict">Dict</span></span><span class="p">[</span><span class="n">str</span><span class="p">,</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">localns</span><span class="p">:</span> <span class="n"><span title="typing.Optional">Optional</span></span><span class="p">[</span><span class="n"><span title="typing.Dict">Dict</span></span><span class="p">[</span><span class="n">str</span><span class="p">,</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">eval_str</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="typing.Dict">Dict</span></span><span class="p">[</span><span class="n">str</span><span class="p">,</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">]</span>
 </span></code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Like #typing.get_type_hints(), but always includes extras. This is important when we want to inspect</p>
 <h5 id="typeapi.get_annotations--typingannotated-hints-without-extras-the-annotations-are-removed-in-python-310-and-onwards-this-is">typing.Annotated hints (without extras the annotations are removed). In Python 3.10 and onwards, this is</h5>
 <p>an alias for #inspect.get_annotations() with <code>eval_str=True</code>.</p>
@@ -3654,9 +3633,9 @@ metaclass). Use #is_typed_dict() to check if a hint is matches this protocol.</p
 <p>This function will take into account the locals and globals accessible through the frame associated with
 a function or type by the #scoped() decorator.</p>
 
-          <details class="quote">
-            <summary>Source code in <code>typeapi/utils.py</code></summary>
-            <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-296">296</a></span>
+            <details class="quote">
+              <summary>Source code in <code>typeapi/utils.py</code></summary>
+              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-296">296</a></span>
 <span class="normal"><a href="#__codelineno-0-297">297</a></span>
 <span class="normal"><a href="#__codelineno-0-298">298</a></span>
 <span class="normal"><a href="#__codelineno-0-299">299</a></span>
@@ -3768,59 +3747,56 @@ a function or type by the #scoped() decorator.</p>
 </span><span id="__span-0-350"><a id="__codelineno-0-350" name="__codelineno-0-350"></a>
 </span><span id="__span-0-351"><a id="__codelineno-0-351" name="__codelineno-0-351"></a>    <span class="k">return</span> <span class="n">annotations</span>
 </span></code></pre></div></td></tr></table></div>
-          </details>
-  </div>
+            </details>
+    </div>
 
 </div>
-
 
 <div class="doc doc-object doc-function">
 
 
-
 <h4 id="typeapi.is_typed_dict" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>          <span class="doc doc-object-name doc-function-name">is_typed_dict</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">is_typed_dict</span>
 
 
 </h4>
 <div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">is_typed_dict</span><span class="p">(</span><span class="n">hint</span><span class="p">:</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="typing_extensions.TypeGuard">TypeGuard</span></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-internal" title="typeapi.utils.TypedDictProtocol" href="#typeapi.TypedDictProtocol">TypedDictProtocol</a></span><span class="p">]</span>
 </span></code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
 
 
 
-  <p><strong>Returns:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
         <tr>
-          <td>
-                <code><span title="typing_extensions.TypeGuard">TypeGuard</span>[<a class="autorefs autorefs-internal" title="typeapi.utils.TypedDictProtocol" href="#typeapi.TypedDictProtocol">TypedDictProtocol</a>]</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p><code>True</code> if <em>hint</em> is a #typing.TypedDict.</p>
-            </div>
-          </td>
+          <th>Type</th>
+          <th>Description</th>
         </tr>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="typing_extensions.TypeGuard">TypeGuard</span>[<a class="autorefs autorefs-internal" title="typeapi.utils.TypedDictProtocol" href="#typeapi.TypedDictProtocol">TypedDictProtocol</a>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p><code>True</code> if <em>hint</em> is a #typing.TypedDict.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
       <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Typed dictionaries are actually just type objects. This means #typeapi.of() will represent them as</p>
 <h5 id="typeapi.is_typed_dict--typeapimodelstype">typeapi.models.Type.</h5>
 </div>
 
-          <details class="quote">
-            <summary>Source code in <code>typeapi/utils.py</code></summary>
-            <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-364">364</a></span>
+            <details class="quote">
+              <summary>Source code in <code>typeapi/utils.py</code></summary>
+              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-364">364</a></span>
 <span class="normal"><a href="#__codelineno-0-365">365</a></span>
 <span class="normal"><a href="#__codelineno-0-366">366</a></span>
 <span class="normal"><a href="#__codelineno-0-367">367</a></span>
@@ -3858,31 +3834,29 @@ a function or type by the #scoped() decorator.</p>
 </span><span id="__span-0-381"><a id="__codelineno-0-381" name="__codelineno-0-381"></a>            <span class="k">return</span> <span class="kc">True</span>
 </span><span id="__span-0-382"><a id="__codelineno-0-382" name="__codelineno-0-382"></a>    <span class="k">return</span> <span class="kc">False</span>
 </span></code></pre></div></td></tr></table></div>
-          </details>
-  </div>
+            </details>
+    </div>
 
 </div>
-
 
 <div class="doc doc-object doc-function">
 
 
-
 <h4 id="typeapi.type_repr" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>          <span class="doc doc-object-name doc-function-name">type_repr</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">type_repr</span>
 
 
 </h4>
 <div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">type_repr</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">str</span>
 </span></code></pre></div>
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <h5 id="typeapi.type_repr--typing_type_repr-stolen-from-python-38">typing._type_repr() stolen from Python 3.8.</h5>
 
-          <details class="quote">
-            <summary>Source code in <code>typeapi/utils.py</code></summary>
-            <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-275">275</a></span>
+            <details class="quote">
+              <summary>Source code in <code>typeapi/utils.py</code></summary>
+              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-275">275</a></span>
 <span class="normal"><a href="#__codelineno-0-276">276</a></span>
 <span class="normal"><a href="#__codelineno-0-277">277</a></span>
 <span class="normal"><a href="#__codelineno-0-278">278</a></span>
@@ -3920,8 +3894,8 @@ a function or type by the #scoped() decorator.</p>
 </span><span id="__span-0-292"><a id="__codelineno-0-292" name="__codelineno-0-292"></a>        <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="vm">__name__</span>
 </span><span id="__span-0-293"><a id="__codelineno-0-293" name="__codelineno-0-293"></a>    <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
 </span></code></pre></div></td></tr></table></div>
-          </details>
-  </div>
+            </details>
+    </div>
 
 </div>
 
@@ -3929,7 +3903,7 @@ a function or type by the #scoped() decorator.</p>
 
   </div>
 
-  </div>
+    </div>
 
 </div>
 
@@ -3981,7 +3955,7 @@ a function or type by the #scoped() decorator.</p>
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.sections"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.3220b9d7.min.js"></script>
+      <script src="../../assets/javascripts/bundle.ebd0bdb7.min.js"></script>
       
     
   </body>
