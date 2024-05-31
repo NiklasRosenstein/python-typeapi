@@ -1,0 +1,6 @@
+[[entries]]
+id = "a10b5733-3f9c-472f-a922-9f1fa33a3179"
+type = "feature"
+description = "Support `typing.NewType` in `typeapi.ClassTypeHint`"
+author = "@NiklasRosenstein"
+pr = "https://github.com/NiklasRosenstein/python-typeapi/pull/38"

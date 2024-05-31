@@ -29,6 +29,7 @@ from .utils import (
     get_type_hint_origin_or_none,
     get_type_hint_original_bases,
     get_type_hint_parameters,
+    is_new_type,
     type_repr,
 )
 
@@ -285,10 +286,11 @@ class ClassTypeHint(TypeHint):
 
     def __init__(self, hint: object, source: "Any | None" = None) -> None:
         super().__init__(hint, source)
-        assert isinstance(self.hint, type) or isinstance(self.origin, type), (
-            "ClassTypeHint must be initialized from a real type or a generic that points to a real type. "
-            f'Got "{self.hint!r}" with origin "{self.origin}"'
-        )
+        if not is_new_type(hint):
+            assert isinstance(self.hint, type) or isinstance(self.origin, type), (
+                "ClassTypeHint must be initialized from a real type or a generic that points to a real type. "
+                f'Got "{self.hint!r}" with origin "{self.origin}"'
+            )
 
     def parameterize(self, parameter_map: Mapping[object, Any]) -> "TypeHint":
         if self.type is Generic:  # type: ignore[comparison-overlap]
@@ -303,6 +305,8 @@ class ClassTypeHint(TypeHint):
             return self.origin
         if isinstance(self.hint, type):
             return self.hint
+        if is_new_type(self.hint):
+            return self.hint.__supertype__
         assert False, "ClassTypeHint not initialized from a real type or a generic that points to a real type."
 
     @property
