@@ -173,7 +173,7 @@ class TypeHint(object, metaclass=_TypeHintMeta):
         return self._source
 
     def __eq__(self, other: object) -> bool:
-        if type(self) != type(other):
+        if type(self) is not type(other):
             return False
         assert isinstance(other, TypeHint)
         return (self.hint, self.origin, self.args, self.parameters) == (
