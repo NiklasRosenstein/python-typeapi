@@ -3,3 +3,11 @@ id = "0285c33d-85e6-4d72-bf09-7f8812b75e36"
 type = "fix"
 description = "Fix star import from `typeapi`"
 author = "@NiklasRosenstein"
+pr = "https://github.com/NiklasRosenstein/python-typeapi/pull/39"
+
+[[entries]]
+id = "233e97d3-9e6c-4330-ac8d-fe4a9ad8e3a5"
+type = "tests"
+description = "Add a unit test for the expected behaviour when inheriting from an unparameterized generic base class"
+author = "@NiklasRosenstein"
+pr = "https://github.com/NiklasRosenstein/python-typeapi/pull/40"
