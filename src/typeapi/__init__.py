@@ -3,9 +3,11 @@ __version__ = "2.2.2"
 from .typehint import (
     AnnotatedTypeHint,
     ClassTypeHint,
+    ClassVarTypeHint,
     ForwardRefTypeHint,
     LiteralTypeHint,
     TupleTypeHint,
+    TypeAliasTypeHint,
     TypeHint,
     TypeVarTypeHint,
     UnionTypeHint,
