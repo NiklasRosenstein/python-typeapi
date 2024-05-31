@@ -1,4 +1,4 @@
-from typing import Any, ClassVar, Dict, Generic, List, Optional, Sequence, Tuple, TypeVar, Union
+from typing import Any, ClassVar, Dict, Generic, List, NewType, Optional, Sequence, Tuple, TypeVar, Union
 
 from pytest import mark
 from typing_extensions import Annotated, Literal, TypeAlias
@@ -261,6 +261,17 @@ def test__TypeHint__from_future_syntax_ForwardRef_union() -> None:
     assert hint.origin is Union
     assert hint.args == (int, type(None))
     assert hint.parameters == ()
+
+
+def test__TypeHint__from_newtype() -> None:
+    MyInt = NewType("MyInt", int)
+    hint = TypeHint(MyInt)
+    assert isinstance(hint, ClassTypeHint)
+    assert hint.args == ()
+    assert hint.bases == (object,)
+    assert hint.origin is None
+    assert hint.type is int
+    assert hint.hint is MyInt
 
 
 def test__ClassTypeHint__parametrize() -> None:
