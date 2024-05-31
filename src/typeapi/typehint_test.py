@@ -298,18 +298,21 @@ def test__TypeHint__from_generic_with_unbound_typevar() -> None:
     assert hint.type == Base
     assert hint.bases == (Generic[T],)
     assert hint.origin is None
+    assert "__orig_bases__" in vars(Base)
 
     hint = TypeHint(Incorrect)
     assert isinstance(hint, ClassTypeHint)
     assert hint.type == Incorrect
     assert hint.bases == (Generic[T],)  # Note how this is not (Base,)
     assert hint.origin is None
+    assert "__orig_bases__" not in vars(Incorrect)
 
     hint = TypeHint(Correct)
     assert isinstance(hint, ClassTypeHint)
     assert hint.type == Correct
     assert hint.bases == (Base[U],)
     assert hint.origin is None
+    assert "__orig_bases__" in vars(Correct)
 
 
 def test__ClassTypeHint__parametrize() -> None:
