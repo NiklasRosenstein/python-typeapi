@@ -397,5 +397,5 @@ class NewTypeP(Protocol):
 
 def is_new_type(hint: Any) -> TypeGuard[NewTypeP]:
     # NOTE: Starting with Python 3.10, `typing.NewType` is actually a class instead of a function, but it is
-    #       still typed as a function in Mypy.
+    #       still typed as a function in Mypy until 3.12.
     return hasattr(hint, "__name__") and hasattr(hint, "__supertype__")
