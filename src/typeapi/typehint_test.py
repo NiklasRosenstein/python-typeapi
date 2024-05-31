@@ -274,6 +274,44 @@ def test__TypeHint__from_newtype() -> None:
     assert hint.hint is MyInt
 
 
+def test__TypeHint__from_generic_with_unbound_typevar() -> None:
+    """
+    Inheriting from a generic base class without parameterizing it is not valid and databind cannot handle the
+    case correctly. The `TypeHint.bases` will appear as the bases' bases (that is because `__orig_bases__` is not
+    set on the new subclass and instead it reads the attribute from the parent).
+    """
+
+    T = TypeVar("T")
+    U = TypeVar("U")
+
+    class Base(Generic[T]):
+        a: int
+
+    class Incorrect(Base):  # type: ignore[type-arg]
+        b: str
+
+    class Correct(Base[U]):
+        b: str
+
+    hint = TypeHint(Base)
+    assert isinstance(hint, ClassTypeHint)
+    assert hint.type == Base
+    assert hint.bases == (Generic[T],)
+    assert hint.origin is None
+
+    hint = TypeHint(Incorrect)
+    assert isinstance(hint, ClassTypeHint)
+    assert hint.type == Incorrect
+    assert hint.bases == (Generic[T],)  # Note how this is not (Base,)
+    assert hint.origin is None
+
+    hint = TypeHint(Correct)
+    assert isinstance(hint, ClassTypeHint)
+    assert hint.type == Correct
+    assert hint.bases == (Base[U],)
+    assert hint.origin is None
+
+
 def test__ClassTypeHint__parametrize() -> None:
     """This method tests the infusion of type parameters into other types.
 
