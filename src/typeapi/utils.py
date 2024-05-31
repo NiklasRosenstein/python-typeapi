@@ -52,7 +52,6 @@ def get_type_hint_origin_or_none(hint: object) -> "Any | None":
         and hasattr(hint, "__orig_bases__")
         and getattr(hint, "__module__", None) in TYPING_MODULE_NAMES
     ):
-
         if hint.__name__ == "Annotated" and hint.__args__:  # type: ignore
             from typing_extensions import Annotated
 
