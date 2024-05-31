@@ -310,7 +310,7 @@ def test__TypeHint__from_generic_with_unbound_typevar() -> None:
     hint = TypeHint(Correct)
     assert isinstance(hint, ClassTypeHint)
     assert hint.type == Correct
-    assert hint.bases == (Base[U],)
+    assert hint.bases == (Base[U],)  # type: ignore[valid-type]
     assert hint.origin is None
     assert "__orig_bases__" in vars(Correct)
 
