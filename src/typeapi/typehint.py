@@ -191,10 +191,12 @@ class TypeHint(object, metaclass=_TypeHintMeta):
         return len(self.args)
 
     @overload
-    def __getitem__(self, __index: int) -> "TypeHint": ...
+    def __getitem__(self, __index: int) -> "TypeHint":
+        ...
 
     @overload
-    def __getitem__(self, __slice: slice) -> List["TypeHint"]: ...
+    def __getitem__(self, __slice: slice) -> List["TypeHint"]:
+        ...
 
     def __getitem__(self, index: "int | slice") -> "TypeHint | List[TypeHint]":
         if isinstance(index, int):
