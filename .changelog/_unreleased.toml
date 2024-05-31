@@ -1,0 +1,5 @@
+[[entries]]
+id = "0285c33d-85e6-4d72-bf09-7f8812b75e36"
+type = "fix"
+description = "Fix star import from `typeapi`"
+author = "@NiklasRosenstein"

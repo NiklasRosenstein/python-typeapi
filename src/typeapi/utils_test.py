@@ -25,7 +25,6 @@ U = TypeVar("U")
 
 
 def test__typing_List__introspection():
-
     # Origin:
 
     if sys.version_info[:2] <= (3, 6):
@@ -99,7 +98,6 @@ def test__typing_Collection__origin():
     ],
 )
 def test__mapping_types__introspection(hint: object, origin_type: type, mutable: bool):
-
     # Origin:
 
     if sys.version_info[:2] <= (3, 6):
@@ -242,7 +240,6 @@ def test__typing_Generic__class_hierarchy():
     argvalues=[(typing_extensions.Annotated,)] + ([(t.Annotated,)] if hasattr(t, "Annotated") else []),
 )
 def test__typing_Annotated__introspection(Annotated):
-
     # Origin:
 
     if sys.version_info[:2] <= (3, 6):
@@ -289,7 +286,6 @@ def test__typing_Annotated__introspection(Annotated):
 
 
 def test__typing_Union__introspection():
-
     # Origin:
 
     if sys.version_info[:2] <= (3, 6):
@@ -328,7 +324,6 @@ def test__typing_Union__introspection():
     argnames=["Literal"], argvalues=[(typing_extensions.Literal,)] + ([(t.Literal,)] if hasattr(t, "Literal") else [])
 )
 def test__typing_Literal__introspection(Literal):
-
     # Origin:
 
     if sys.version_info[:2] <= (3, 6):
@@ -365,7 +360,6 @@ def test__typing_Literal__introspection(Literal):
 
 
 def test__typing_Any__introspection():
-
     # Origin:
 
     assert not hasattr(Any, "__origin__")
@@ -380,7 +374,6 @@ def test__typing_Any__introspection():
 
 
 def test__TypeVar__introspection():
-
     # Origin:
 
     assert not hasattr(T, "__origin__")
