@@ -382,8 +382,7 @@ def is_typed_dict(hint: Any) -> TypeGuard[TypedDictProtocol]:
 
 
 class HasGetitem(Protocol, Generic[T_contra, U_co]):
-    def __getitem__(self, __key: T_contra) -> U_co:
-        ...
+    def __getitem__(self, __key: T_contra) -> U_co: ...
 
 
 class NewTypeP(Protocol):
