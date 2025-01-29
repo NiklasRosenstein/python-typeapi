@@ -2,31 +2,39 @@ name: Documentation
 
 on:
   push:
-    branches: [ "develop" ]
-    tags: [ "*" ]
+    branches: ["develop"]
+    tags: ["*"]
   pull_request:
-    branches: [ "develop" ]
+    branches: ["develop"]
 
 jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: NiklasRosenstein/slap@gha/install/v1
-    - run: slap install --only-extras docs --no-venv-check
-    - run: slap run --no-venv-check docs:build
-    - uses: actions/upload-artifact@v4
-      with:
-        name: docs
-        path: docs/_site
+      - uses: actions/checkout@v4
+      - uses: NiklasRosenstein/slap@gha/install/v1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "0.5.25"
+      - run: slap run --no-venv-check docs:build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: docs
+          path: docs/_site
 
   docs-publish:
-    needs: [ docs ]
+    needs: [docs]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/develop'
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/download-artifact@v4
-      with: { name: docs, path: docs/site }
-    - uses: JamesIves/github-pages-deploy-action@v4.7.2
-      with: { branch: gh-pages, folder: docs/site, ssh-key: "${{ secrets.DEPLOY_KEY }}" }
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with: { name: docs, path: docs/site }
+      - uses: JamesIves/github-pages-deploy-action@v4.7.2
+        with:
+          {
+            branch: gh-pages,
+            folder: docs/site,
+            ssh-key: "${{ secrets.DEPLOY_KEY }}",
+          }
