@@ -1,4 +1,3 @@
-
 import sys
 
 assert (3, 7) <= sys.version_info[:2] < (3, 8), "Need Python 3.7 or 3.8."

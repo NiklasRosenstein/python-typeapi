@@ -1,9 +1,8 @@
-
 import os
 from pathlib import Path
-import subprocess as sp
-from mkdocs.structure.pages import Page
+
 from mkdocs.config.defaults import MkDocsConfig
+from mkdocs.structure.pages import Page
 from mksync import mksync_file
 
 

@@ -38,12 +38,12 @@ typed = true
 [tool.slap.test]
 mypy = "uv run dmypy run src/"
 pytest = "uv run pytest src/ -vv --doctest-modules"
-ruff = "uv run ruff check src/ && uv run ruff format --check src/"
+ruff = "uv run ruff check . && uv run ruff format --check ."
 
 [tool.slap.run]
 "docs:build" = "cd docs && uv run mkdocs build --site-dir _site"
 "docs:dev" = "cd docs && uv run mkdocs serve"
-fmt = "uv run ruff format src/ && uv run ruff check --fix src/"
+fmt = "uv run ruff format . && uv run ruff check --fix-only ."
 
 [tool.mypy]
 explicit_package_bases = true
