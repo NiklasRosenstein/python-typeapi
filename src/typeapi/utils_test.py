@@ -28,7 +28,8 @@ def test__typing_List__introspection():
     # Origin:
 
     if sys.version_info[:2] <= (3, 6):
-        from typing import MutableSequence, T as _T
+        from typing import MutableSequence
+        from typing import T as _T
 
         assert List.__origin__ is None
         assert List[int].__origin__ is List

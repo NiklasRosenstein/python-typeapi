@@ -550,8 +550,7 @@ class ForwardRefTypeHint(TypeHint):
 
     def parameterize(self, parameter_map: Mapping[object, Any]) -> TypeHint:
         raise RuntimeError(
-            "ForwardRef cannot be parameterized. Ensure that your type hint is fully "
-            "evaluated before parameterization."
+            "ForwardRef cannot be parameterized. Ensure that your type hint is fully evaluated before parameterization."
         )
 
     def evaluate(self, context: "HasGetitem[str, Any] | None" = None) -> TypeHint:
