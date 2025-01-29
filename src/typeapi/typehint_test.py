@@ -35,7 +35,7 @@ def test__TypeHint__any() -> None:
 def test__TypeHint__int() -> None:
     hint = TypeHint(int)
     assert isinstance(hint, ClassTypeHint)
-    assert hint.hint == int
+    assert hint.hint is int
     assert hint.origin is None
     assert hint.type is int
     assert hint.args == ()
@@ -80,7 +80,7 @@ def test__TypeHint__list_specialized() -> None:
 
     hint_0 = hint[0]
     assert isinstance(hint_0, ClassTypeHint)
-    assert hint_0.type == int
+    assert hint_0.type is int
     assert hint_0.bases == (object,)
 
 
@@ -105,11 +105,11 @@ def test__TypeHint__union(is_at_least_3_10: bool) -> None:
 
     hint_0 = hint[0]
     assert isinstance(hint_0, ClassTypeHint)
-    assert hint_0.type == int
+    assert hint_0.type is int
 
     hint_1 = hint[1]
     assert isinstance(hint_1, ClassTypeHint)
-    assert hint_1.type == str
+    assert hint_1.type is str
 
 
 def test__UnionTypeHint__none_type() -> None:
@@ -151,7 +151,7 @@ def test__TypeHint__annotated() -> None:
 
     hint_0 = hint[0]
     assert isinstance(hint_0, ClassTypeHint)
-    assert hint_0.type == int
+    assert hint_0.type is int
 
 
 def test__TypeHint__custom_generic_class() -> None:
@@ -349,7 +349,7 @@ def test__ClassTypeHint__parametrize() -> None:
 
     member1_hint = field_types["member1"]
     assert isinstance(member1_hint, ClassTypeHint)
-    assert member1_hint.hint == int
+    assert member1_hint.hint is int
     assert member1_hint.type is int
 
     member2_hint = field_types["member2"]
@@ -495,7 +495,7 @@ def test__TypeHint__native_tuple_type() -> None:
     hint = TypeHint(tuple)
     assert isinstance(hint, ClassTypeHint), hint
     assert len(hint) == 0
-    assert hint.hint == tuple
+    assert hint.hint is tuple
     assert hint.origin is None
     assert hint.args == ()
     assert hint.parameters == ()
@@ -505,7 +505,7 @@ def test__TypeHint__native_tuple_type() -> None:
     assert isinstance(hint, TupleTypeHint), hint
     assert len(hint) == 1
     assert hint.hint == Tuple[Any, ...]
-    assert hint.origin == tuple
+    assert hint.origin is tuple
     assert hint.args == (Any,)
     assert hint.parameters == ()
     assert hint.repeated
@@ -517,7 +517,7 @@ def test__TypeHint__empty_tuple() -> None:
     assert isinstance(hint, TupleTypeHint), hint
     assert len(hint) == 0
     assert hint.hint == Tuple[()]
-    assert hint.origin == tuple
+    assert hint.origin is tuple
     assert hint.args == ()
     assert hint.parameters == ()
     assert not hint.repeated
@@ -528,7 +528,7 @@ def test__TypeHint__single_item() -> None:
     assert isinstance(hint, TupleTypeHint), hint
     assert len(hint) == 1
     assert hint.hint == Tuple[int]
-    assert hint.origin == tuple
+    assert hint.origin is tuple
     assert hint.args == (int,)
     assert hint.parameters == ()
     assert not hint.repeated
@@ -539,7 +539,7 @@ def test__TypeHint__two_items() -> None:
     assert isinstance(hint, TupleTypeHint), hint
     assert len(hint) == 2
     assert hint.hint == Tuple[int, str]
-    assert hint.origin == tuple
+    assert hint.origin is tuple
     assert hint.args == (int, str)
     assert hint.parameters == ()
     assert not hint.repeated
@@ -550,7 +550,7 @@ def test__TypeHint__repeated() -> None:
     assert isinstance(hint, TupleTypeHint), hint
     assert len(hint) == 1
     assert hint.hint == Tuple[int, ...]
-    assert hint.origin == tuple
+    assert hint.origin is tuple
     assert hint.args == (int,)
     assert hint.parameters == ()
     assert hint.repeated

@@ -14,7 +14,7 @@ license = "MIT"
 name = "typeapi"
 packages = [{include = "typeapi", from = "src"}]
 readme = "README.md"
-required-python = ">=3.8"
+requires-python = ">=3.8"
 version = "2.2.3"
 
 [project.urls]

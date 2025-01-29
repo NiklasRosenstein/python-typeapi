@@ -91,7 +91,7 @@ class _TypeHintMeta(abc.ABCMeta):
             return AnnotatedTypeHint(hint, source)
         elif isinstance(hint, TypeVar):
             return TypeVarTypeHint(hint, source)
-        elif origin == tuple:
+        elif origin is tuple:
             return TupleTypeHint(hint, source)
 
         elif origin is None and type(hint).__name__ == "_TypeAliasBase":  # Python 3.6
@@ -596,7 +596,7 @@ class TupleTypeHint(ClassTypeHint):
         super().__init__(hint, source)
         if self._args == ((),):
             self._args = ()
-        elif self._args == () and self._hint == tuple:
+        elif self._args == () and self._hint is tuple:
             raise ValueError("TupleTypeHint can only represent a parameterized tuple.")
         if ... in self._args:
             assert self._args[-1] == ..., "Tuple Ellipsis not as last arg"
