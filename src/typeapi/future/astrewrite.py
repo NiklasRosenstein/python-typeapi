@@ -83,7 +83,7 @@ class DynamicLookupRewriter(ast.NodeTransformer):
             return node
         return ast.Subscript(
             value=ast.Name(id=self.lookup_target, ctx=ast.Load()),
-            slice=ast.Index(value=ast.Constant(value=node.id)),
+            slice=ast.Constant(value=node.id),
             ctx=node.ctx,
         )
 

@@ -1,0 +1,8 @@
+[tools]
+"cargo:tire" = "0.1.3"
+python = "3.8"
+uv = "latest"
+
+[tasks.build-docs]
+dir = "docs"
+run = "uv run mkdocs build"
