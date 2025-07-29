@@ -27,7 +27,7 @@ jobs:
       - uses: jdx/mise-action@v2
       - run: tire lint
   test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
@@ -103,8 +103,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: jdx/mise-action@v2
-      - uses: actions/setup-python@v5
-        with: { python-version: "${{ matrix.python-version }}" }
+      - uses: astral-sh/setup-uv@v1
+        with:
+          python-version: "${{ matrix.python-version }}"
       - run: tire test
   fmt:
     name: Format
