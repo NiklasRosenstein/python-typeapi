@@ -1,0 +1,12 @@
+[project]
+name = "docs"
+version = "0.1.0"
+dependencies = [
+    "mkdocs",
+    "mkdocs-material",
+    "mkdocstrings[python]",
+    "mksync",
+    "pymdown-extensions",
+]
+[tool.uv]
+dev-dependencies = []
