@@ -103,7 +103,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: jdx/mise-action@v2
-      - uses: astral-sh/setup-uv@v1
+      - uses: astral-sh/setup-uv@v6
         with:
           python-version: "${{ matrix.python-version }}"
       - run: tire test
