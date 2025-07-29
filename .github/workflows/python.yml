@@ -8,6 +8,20 @@ on:
     branches: ["develop"]
 
 jobs:
+  check:
+    name: Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jdx/mise-action@v2
+      - run: tire check
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jdx/mise-action@v2
+      - run: tire lint
   test:
     runs-on: ubuntu-20.04
     strategy:
@@ -84,18 +98,21 @@ jobs:
           ]
     steps:
       - uses: actions/checkout@v4
-      - uses: NiklasRosenstein/slap@gha/install/v1
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5
-        with:
-          version: "0.5.25"
+      - uses: jdx/mise-action@v2
       - uses: actions/setup-python@v5
         with: { python-version: "${{ matrix.python-version }}" }
-      - run: slap test
+      - run: tire test
+  fmt:
+    name: Format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jdx/mise-action@v2
+      - run: tire fmt --check
 
   publish:
     runs-on: ubuntu-latest
-    needs: test
+    needs: [check, lint, test, fmt]
     environment: release
     permissions:
       id-token: write

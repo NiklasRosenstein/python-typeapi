@@ -8,12 +8,12 @@ versions = [x["version"] for x in payload]
 versions = [x for x in versions if "-" not in x]
 
 # Map orderable keys to string values.
-versions = {tuple(map(int, x.split("."))): x for x in versions}
+versions_map = {tuple(map(int, x.split("."))): x for x in versions}
 
 # Minimum Python 3.8.0.
-versions = {k: v for k, v in versions.items() if k >= (3, 8, 0)}
+versions_map = {k: v for k, v in versions_map.items() if k >= (3, 8, 0)}
 
-versions = [it[1] for it in sorted(versions.items(), key=lambda it: it[0])]
+versions = [it[1] for it in sorted(versions_map.items(), key=lambda it: it[0])]
 
 versions += ["3.x", "pypy-3.8"]
 
