@@ -4,4 +4,5 @@ python = "3.8"
 uv = "latest"
 
 [tasks.build-docs]
-run = "uv run -p 3.12 -- sh -c 'cd docs && mkdocs build'"
+dir = "docs"
+run = "uv run mkdocs build"
