@@ -1,6 +1,7 @@
 # type: ignore
 
 import collections.abc
+import inspect
 import sys
 import typing as t
 from typing import Any, Dict, Generic, List, Mapping, MutableMapping, Optional, TypeVar, Union
@@ -9,6 +10,7 @@ import pytest
 import typing_extensions
 
 from typeapi.utils import (
+    IS_PYTHON_AT_LAST_3_14,
     IS_PYTHON_AT_LEAST_3_7,
     IS_PYTHON_AT_LEAST_3_9,
     ForwardRef,
@@ -292,6 +294,8 @@ def test__typing_Union__introspection():
     if sys.version_info[:2] <= (3, 6):
         assert Union.__origin__ is None
         assert Union[int, str].__origin__ is Union
+    elif IS_PYTHON_AT_LAST_3_14:
+        assert inspect.isgetsetdescriptor(Union.__origin__)
     else:
         assert not hasattr(Union, "__origin__")
         assert Union[int, str].__origin__ is Union
@@ -304,6 +308,9 @@ def test__typing_Union__introspection():
     if sys.version_info[:2] <= (3, 6):
         assert Union.__args__ is None
         assert Union.__parameters__ is None
+    elif IS_PYTHON_AT_LAST_3_14:
+        assert inspect.ismemberdescriptor(Union.__args__)
+        assert inspect.isgetsetdescriptor(Union.__parameters__)
     else:
         assert not hasattr(Union, "__args__")
         assert not hasattr(Union, "__parameters__")
