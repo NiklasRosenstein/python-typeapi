@@ -1,0 +1,5 @@
+[[entries]]
+id = "df78684d-421d-46e4-952d-393a80ae027e"
+type = "improvement"
+description = "Support Python 3.14"
+author = "@NiklasRosenstein"
