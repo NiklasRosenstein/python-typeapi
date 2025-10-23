@@ -282,7 +282,7 @@ _TYPEVARS_CACHE = {
 }
 
 
-def type_repr(obj: Any) -> str:
+def _type_repr_pre_3_14(obj: Any) -> str:
     """#typing._type_repr() stolen from Python 3.8."""
 
     if (getattr(obj, "__module__", None) or getattr(type(obj), "__module__", None)) in TYPING_MODULE_NAMES or hasattr(
@@ -301,6 +301,12 @@ def type_repr(obj: Any) -> str:
     if isinstance(obj, FunctionType):
         return obj.__name__
     return repr(obj)
+
+
+if sys.version_info[:2] >= (3, 14):  # Can't use IS_PYTHON_AT_LEAST_3_14 because Mypy won't recognize it
+    from annotationlib import type_repr
+else:
+    type_repr = _type_repr_pre_3_14
 
 
 def get_annotations(
