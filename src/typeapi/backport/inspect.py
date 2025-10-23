@@ -63,15 +63,10 @@ def get_annotations(
     ann: Any = None
 
     if sys.version_info[:2] >= (3, 14):
-        if (annotate := getattr(obj, "__annotate__", None)) is not None:
-            from annotationlib import Format
+        from annotationlib import Format
+        from annotationlib import get_annotations as _get_annotations
 
-            try:
-                ann = annotate(Format.STRING)  # We do our own evaluation later
-            except NotImplementedError:
-                pass
-        if ann is None:
-            ann = getattr(obj, "__annotations__", None)
+        ann = _get_annotations(obj, format=Format.VALUE, eval_str=False)
     else:
         if isinstance(obj, type):
             # class
