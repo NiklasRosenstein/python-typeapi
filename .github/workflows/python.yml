@@ -91,7 +91,7 @@ jobs:
           version: "0.9.5"
           python-version: "${{ matrix.python-version }}"
 
-      - run: uvx --from slap-cli slap test
+      - run: uvx --python 3.13 --from slap-cli slap test
 
   publish:
     runs-on: ubuntu-latest
