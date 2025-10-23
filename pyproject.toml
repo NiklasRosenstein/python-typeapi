@@ -3,7 +3,7 @@ build-backend = "hatchling.build"
 requires = ["hatchling"]
 
 [project]
-authors = [{name = "Niklas Rosenstein", mail = "rosensteinniklas@gmail.com"}]
+authors = [{name = "Niklas Rosenstein", email = "rosensteinniklas@gmail.com"}]
 classifiers = []
 dependencies = [
   "typing-extensions>=3.0.0",
@@ -12,7 +12,6 @@ description = ""
 keywords = []
 license = "MIT"
 name = "typeapi"
-packages = [{include = "typeapi", from = "src"}]
 readme = "README.md"
 requires-python = ">=3.8"
 version = "2.2.4"
@@ -23,8 +22,8 @@ Documentation = "https://niklasrosenstein.github.io/python-typeapi/"
 Homepage = "https://github.com/NiklasRosenstein/python-typeapi"
 # Repository = ""
 
-[tool.uv]
-dev-dependencies = [
+[dependency-groups]
+dev = [
   "astor>=0.8.1,<1.0.0",
   "mypy>=1.14.1",
   "pytest>=8.3.4",
