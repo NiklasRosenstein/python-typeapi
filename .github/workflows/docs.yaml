@@ -18,7 +18,7 @@ jobs:
         with:
           version: "0.5.25"
       - run: slap run --no-venv-check docs:build
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: docs
           path: docs/_site
@@ -29,7 +29,7 @@ jobs:
     if: github.ref == 'refs/heads/develop'
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with: { name: docs, path: docs/site }
       - uses: JamesIves/github-pages-deploy-action@v4.7.3
         with:
