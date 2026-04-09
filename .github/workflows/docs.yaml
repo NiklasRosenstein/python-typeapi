@@ -16,7 +16,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7
         with:
-          version: "0.10.0"
+          version: "0.11.6"
       - run: slap run --no-venv-check docs:build
       - uses: actions/upload-artifact@v6
         with:
